@@ -9,8 +9,6 @@ export default defineNuxtConfig({
         },
     },
     runtimeConfig: {
-        openaiApiKey: '',
-        openaiModelName: 'text-davinci-003',
         public: {
             appName: appName
         }
