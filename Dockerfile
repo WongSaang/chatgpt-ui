@@ -10,6 +10,16 @@ COPY . .
 
 RUN yarn build
 
-EXPOSE 3000
 
-ENTRYPOINT ["node", ".output/server/index.mjs"]
+FROM node:18-alpine3.16
+
+ENV NITRO_HOST=0.0.0.0
+ENV NITRO_PORT=80
+
+WORKDIR /app
+
+COPY --from=builder /app/.output .
+
+EXPOSE 80
+
+ENTRYPOINT ["node", "server/index.mjs"]

@@ -1,4 +1,7 @@
 import Keyv from 'keyv'
+import KeyvSqlite from "@keyv/sqlite";
+
+const sqlite = new KeyvSqlite()
 
 const cacheOptions = {
     namespace: 'settings',
