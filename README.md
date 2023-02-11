@@ -5,9 +5,8 @@ A web client for ChatGPT, using OpenAI's API. The implementation of the interfac
 This project is based on [nuxt3](https://nuxt.com/docs/getting-started/introduction)
 
 ## Quick start with docker
-Clone the repository and run:
 ```bash
-docker-compose up
+docker run -p 80:80 wongsaang/chatgpt-ui:latest
 ```
 
 ## Development
