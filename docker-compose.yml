@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - '${APP_PORT:-3000}:3000'
