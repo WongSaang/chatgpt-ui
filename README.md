@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="demo" src="./demos/demo.gif?v=1">
+</p>
+
 # ChatGPT UI
 
 A web client for ChatGPT, using OpenAI's API. The implementation of the interface part uses [waylaidwanderer/node-chatgpt-api](https://github.com/waylaidwanderer/node-chatgpt-api)
