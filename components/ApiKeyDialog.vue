@@ -33,16 +33,16 @@
               clearable
               :disabled="!editable"
           ></v-text-field>
-          <v-div
+          <div
               v-if="editable"
           >
             <v-btn class="ml-3" icon="done" @click="save"></v-btn>
-          </v-div>
-          <v-div
+          </div>
+          <div
               v-else
           >
             <v-btn class="ml-3" icon="edit" @click="editable = true"></v-btn>
-          </v-div>
+          </div>
         </div>
       </v-card-text>
       <v-divider></v-divider>

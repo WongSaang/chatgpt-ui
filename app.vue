@@ -120,17 +120,13 @@ onNuxtReady(() => {
         permanent
     >
       <v-list>
-        <ClientOnly>
-          <ModelDialog/>
-        </ClientOnly>
+        <ModelDialog/>
       </v-list>
 
       <template v-slot:append>
         <v-divider></v-divider>
         <v-list>
-          <ClientOnly>
-            <ApiKeyDialog/>
-          </ClientOnly>
+          <ApiKeyDialog/>
 
           <v-list-item
               rounded="xl"

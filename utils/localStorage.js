@@ -1,13 +1,10 @@
 
 const get = (key) => {
-    if (typeof window !== 'undefined') {
-        let val = localStorage.getItem(key)
-        if (val) {
-            val = JSON.parse(val)
-        }
-        return val
+    let val = localStorage.getItem(key)
+    if (val) {
+        val = JSON.parse(val)
     }
-    return null
+    return val
 }
 
 const set = (key, val) => {
