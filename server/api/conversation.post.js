@@ -38,7 +38,6 @@ export default defineEventHandler(async (event) => {
         'Connection': 'keep-alive'
     })
 
-    const modelName = await getSetting('modelName')
     const apiKey = await getSetting('apiKey')
 
     if (!apiKey) {
@@ -57,7 +56,7 @@ export default defineEventHandler(async (event) => {
         modelOptions: {
             // The model is set to text-chat-davinci-002-20221122 by default, but you can override
             // it and any other parameters here
-            model: modelName,
+            model: body.model,
         },
         // (Optional) Set custom instructions instead of "You are ChatGPT...".
         // promptPrefix: 'You are Bob, a cowboy in Western times...',

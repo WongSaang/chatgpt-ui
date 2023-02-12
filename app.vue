@@ -1,8 +1,8 @@
 <script setup>
 import { fetchEventSource } from '@microsoft/fetch-event-source'
-import ApiKeyEditor from "./components/ApiKeyEditor";
 
 const runtimeConfig = useRuntimeConfig()
+const currentModel = useCurrentModel()
 const fetchingResponse = ref(false)
 const fetchReply = async (message, parentMessageId) => {
   const ctrl = new AbortController()
@@ -14,6 +14,7 @@ const fetchReply = async (message, parentMessageId) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        model: currentModel.value,
         message: message,
         parentMessageId: parentMessageId,
         conversationId: currentConversation.value.id
@@ -114,18 +115,18 @@ onNuxtReady(() => {
       :theme="theme"
   >
     <v-navigation-drawer
-        theme="dark"
         permanent
     >
       <v-list>
-        <ModelNameEditor/>
-        <ApiKeyEditor/>
+        <ClientOnly>
+          <ModelDialog/>
+        </ClientOnly>
       </v-list>
 
       <template v-slot:append>
         <v-divider></v-divider>
         <v-list>
-<!--          <v-list-item title="Clear conversations"></v-list-item>-->
+          <ApiKeyEditor/>
           <v-list-item
               :prepend-icon="theme === 'light' ? 'dark_mode' : 'light_mode'"
               :title="(theme === 'light' ? 'Dark' : 'Light') + ' mode'"
