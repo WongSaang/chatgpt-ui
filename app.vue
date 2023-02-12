@@ -1,15 +1,20 @@
 <script setup>
 const runtimeConfig = useRuntimeConfig()
-const theme = ref('light')
-const toggleTheme = () => {
-  theme.value = theme.value === 'light' ? 'dark' : 'light'
-}
+const colorMode = useColorMode()
 const drawer = ref(null)
+const themes = ref([
+  { title: 'Light', value: 'light' },
+  { title: 'Dark', value: 'dark' },
+  { title: 'System', value: 'system'}
+])
+const setTheme = (theme) => {
+  colorMode.preference = theme
+}
 </script>
 
 <template>
   <v-app
-      :theme="theme"
+      :theme="$colorMode.value"
   >
     <v-navigation-drawer
         v-model="drawer"
@@ -23,12 +28,26 @@ const drawer = ref(null)
         <v-list>
           <ApiKeyDialog/>
 
-          <v-list-item
-              rounded="xl"
-              :prepend-icon="theme === 'light' ? 'dark_mode' : 'light_mode'"
-              :title="(theme === 'light' ? 'Dark' : 'Light') + ' mode'"
-              @click="toggleTheme"
-          ></v-list-item>
+          <v-menu
+          >
+            <template v-slot:activator="{ props }">
+              <v-list-item
+                  v-bind="props"
+                  rounded="xl"
+                  :prepend-icon="$colorMode.value === 'light' ? 'light_mode' : 'dark_mode'"
+                  title="Theme mode"
+              ></v-list-item>
+            </template>
+            <v-list>
+              <v-list-item
+                  v-for="(theme, idx) in themes"
+                  :key="idx"
+                  @click="setTheme(theme.value)"
+              >
+                <v-list-item-title>{{ theme.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-list>
       </template>
     </v-navigation-drawer>

@@ -21,5 +21,6 @@ export default defineNuxtConfig({
         'vuetify/styles',
         'material-design-icons-iconfont/dist/material-design-icons.css',
         'highlight.js/styles/panda-syntax-dark.css',
-    ]
+    ],
+    modules: ['@nuxtjs/color-mode']
 })
