@@ -4,10 +4,7 @@ const theme = ref('light')
 const toggleTheme = () => {
   theme.value = theme.value === 'light' ? 'dark' : 'light'
 }
-const drawer = ref(false)
-const showAppBar = computed(() => {
-  return !drawer.value
-})
+const drawer = ref(null)
 </script>
 
 <template>
