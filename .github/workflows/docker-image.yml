@@ -1,10 +1,8 @@
 name: Docker Image CI
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  release:
+    types: [published]
 
 jobs:
 
@@ -34,4 +32,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: wongsaang/chatgpt-ui:latest
+        tags: wongsaang/chatgpt-ui:latest,wongsaang/chatgpt-ui:${{ github.ref_name }}
