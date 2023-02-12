@@ -3,6 +3,7 @@ import { fetchEventSource } from '@microsoft/fetch-event-source'
 
 const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
+const openaiApiKey = useApiKey()
 const fetchingResponse = ref(false)
 const fetchReply = async (message, parentMessageId) => {
   const ctrl = new AbortController()
@@ -15,6 +16,7 @@ const fetchReply = async (message, parentMessageId) => {
       },
       body: JSON.stringify({
         model: currentModel.value,
+        openaiApiKey: openaiApiKey.value,
         message: message,
         parentMessageId: parentMessageId,
         conversationId: currentConversation.value.id
@@ -126,8 +128,12 @@ onNuxtReady(() => {
       <template v-slot:append>
         <v-divider></v-divider>
         <v-list>
-          <ApiKeyEditor/>
+          <ClientOnly>
+            <ApiKeyDialog/>
+          </ClientOnly>
+
           <v-list-item
+              rounded="xl"
               :prepend-icon="theme === 'light' ? 'dark_mode' : 'light_mode'"
               :title="(theme === 'light' ? 'Dark' : 'Light') + ' mode'"
               @click="toggleTheme"

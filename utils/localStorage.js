@@ -1,11 +1,13 @@
-import {useCurrentModel, useModels} from "~/composables/states";
 
 const get = (key) => {
-    let val = localStorage.getItem(key)
-    if (val) {
-        val = JSON.parse(val)
+    if (typeof window !== 'undefined') {
+        let val = localStorage.getItem(key)
+        if (val) {
+            val = JSON.parse(val)
+        }
+        return val
     }
-    return val
+    return null
 }
 
 const set = (key, val) => {
@@ -40,4 +42,14 @@ export const getCurrentModel = () => {
         model = DEFAULT_OPENAI_MODEL
     }
     return model
+}
+
+export const setApiKey = (val) => {
+    const apiKey = useApiKey()
+    set(STORAGE_KEY.OPENAI_API_KEY, val)
+    apiKey.value = val
+}
+
+export const getStoredApiKey = () => {
+    return get(STORAGE_KEY.OPENAI_API_KEY)
 }

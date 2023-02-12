@@ -18,17 +18,17 @@
     <v-card>
       <v-card-title>
         <span class="text-h5">OpenAI Models</span>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-card-text>
         <div>
           About the models:
           <a target="_blank" href="https://platform.openai.com/docs/models/overview">https://platform.openai.com/docs/models/overview</a>
         </div>
-      </v-card-title>
-      <v-divider></v-divider>
-      <v-card-text>
         <div
             v-for="(model, index) in models"
             :key="index"
-            class="d-flex align-center"
+            class="mt-5 d-flex align-center"
         >
           <v-switch
               v-model="currentModel"
@@ -109,7 +109,6 @@ const removeModel = (index) => {
   models.value.splice(index, 1)
 }
 const save = async () => {
-  console.log(currentModel.value)
   if (!currentModel.value) {
     showWarning('Please select at least one model.')
     return

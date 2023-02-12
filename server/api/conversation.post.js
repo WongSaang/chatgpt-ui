@@ -1,6 +1,5 @@
 import ChatGPTClient from '@waylaidwanderer/chatgpt-api'
 import { PassThrough } from 'node:stream'
-import {getSetting, setSetting} from "~/utils/keyv";
 
 const serializeSSEEvent = (chunk) => {
     let payload = "";
@@ -24,7 +23,6 @@ const serializeSSEEvent = (chunk) => {
 }
 
 export default defineEventHandler(async (event) => {
-    const runtimeConfig = useRuntimeConfig()
     const body = await readBody(event)
     const conversationId = body.conversationId ? body.conversationId.toString() : undefined
     const parentMessageId = body.parentMessageId ? body.parentMessageId.toString() : undefined
@@ -38,9 +36,7 @@ export default defineEventHandler(async (event) => {
         'Connection': 'keep-alive'
     })
 
-    const apiKey = await getSetting('apiKey')
-
-    if (!apiKey) {
+    if (!body.openaiApiKey) {
         writeToTunnel({
             event: 'error',
             data: JSON.stringify({
@@ -76,7 +72,7 @@ export default defineEventHandler(async (event) => {
         uri: 'sqlite://database.sqlite'
     };
 
-    const chatGptClient = new ChatGPTClient(apiKey, clientOptions, cacheOptions);
+    const chatGptClient = new ChatGPTClient(body.openaiApiKey, clientOptions, cacheOptions);
 
     try {
         const response = await chatGptClient.sendMessage(body.message, {
