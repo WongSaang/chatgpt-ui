@@ -10,10 +10,9 @@
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.2.0",
     "material-design-icons-iconfont": "^6.7.0",
-    "nuxt": "^3.1.2"
+    "nuxt": "^3.2.0"
   },
   "dependencies": {
-    "@keyv/sqlite": "^3.6.4",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@waylaidwanderer/chatgpt-api": "^1.12.2",
     "highlight.js": "^11.7.0",

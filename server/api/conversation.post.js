@@ -69,7 +69,6 @@ export default defineEventHandler(async (event) => {
         // This is used for storing conversations, and supports additional drivers (conversations are stored in memory by default)
         // For example, to use a JSON file (`npm i keyv-file`) as a database:
         // store: new KeyvFile({ filename: 'cache.json' }),
-        uri: 'sqlite://database.sqlite'
     };
 
     const chatGptClient = new ChatGPTClient(body.openaiApiKey, clientOptions, cacheOptions);
