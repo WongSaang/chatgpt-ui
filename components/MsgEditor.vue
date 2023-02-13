@@ -1,21 +1,21 @@
 <template>
   <v-textarea
       v-model="message"
-      clearable
-      label="Message"
-      placeholder="Type your message here"
+      label="Write a message..."
+      placeholder="Write a message..."
       rows="1"
       :auto-grow="autoGrow"
       :disabled="disabled"
       :loading="loading"
-      hide-details
+      :hint="hint"
       append-inner-icon="send"
-      @keyup.enter="send"
-      @click:append="send"
+      @keyup.enter.exact="enterOnly"
+      @click:appendInner="clickSendBtn"
   ></v-textarea>
 </template>
 
 <script>
+import { isMobile } from 'is-mobile'
 export default {
   name: "MsgEditor",
   props: {
@@ -29,6 +29,11 @@ export default {
       rows: 1,
       autoGrow: true,
     };
+  },
+  computed: {
+    hint() {
+      return isMobile() ? "" : "Press Enter to send your message or Shift+Enter to add a new line.";
+    },
   },
   watch: {
     message(val) {
@@ -44,10 +49,24 @@ export default {
   },
   methods: {
     send() {
-      const msg = this.message
+      let msg = this.message
+      // remove the last "\n"
+      if (msg[msg.length - 1] === "\n") {
+        msg = msg.slice(0, -1)
+      }
+      if (msg.length > 0) {
+        this.sendMessage(msg)
+      }
       this.message = ""
-      this.sendMessage(msg);
     },
+    clickSendBtn () {
+      this.send()
+    },
+    enterOnly () {
+      if (!isMobile()) {
+        this.send()
+      }
+    }
   },
 }
 </script>
