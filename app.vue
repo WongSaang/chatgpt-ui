@@ -38,7 +38,9 @@ const setTheme = (theme) => {
                   title="Theme mode"
               ></v-list-item>
             </template>
-            <v-list>
+            <v-list
+                bg-color="white"
+            >
               <v-list-item
                   v-for="(theme, idx) in themes"
                   :key="idx"
