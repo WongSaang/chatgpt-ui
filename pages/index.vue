@@ -112,7 +112,7 @@ createNewConversation()
         elevation="0"
         v-for="(conversation, index) in currentConversation.messages"
         :key="index"
-        :variant="conversation.from === 'ai' ? 'tonal' : ''"
+        :variant="conversation.from === 'ai' ? 'tonal' : 'text'"
     >
       <v-container>
         <v-card-text class="text-caption text-disabled">{{ conversation.from }}</v-card-text>
