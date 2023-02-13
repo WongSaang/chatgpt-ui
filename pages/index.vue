@@ -106,7 +106,10 @@ createNewConversation()
 </script>
 
 <template>
-  <div ref="chatWindow">
+  <div
+      v-if="currentConversation.messages.length > 0"
+      ref="chatWindow"
+  >
     <v-card
         rounded="0"
         elevation="0"
@@ -124,6 +127,7 @@ createNewConversation()
     </v-card>
     <div ref="grab" class="w-100" style="height: 150px;"></div>
   </div>
+  <Welcome v-else />
   <v-footer app class="d-flex flex-column">
     <div class="px-md-16 w-100 d-flex align-center">
       <v-btn
@@ -137,7 +141,7 @@ createNewConversation()
     </div>
 
     <div class="px-4 py-2 text-disabled text-caption font-weight-light text-center w-100">
-      {{ new Date().getFullYear() }} — {{ runtimeConfig.public.appName }}
+      © {{ new Date().getFullYear() }} — {{ runtimeConfig.public.appName }}
     </div>
   </v-footer>
   <v-snackbar
