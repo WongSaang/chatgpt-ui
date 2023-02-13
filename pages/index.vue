@@ -147,6 +147,7 @@ createNewConversation()
   <v-snackbar
       v-model="snackbar"
       multi-line
+      location="top"
   >
     {{ snackbarText }}
 
