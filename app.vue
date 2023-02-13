@@ -10,6 +10,9 @@ const themes = ref([
 const setTheme = (theme) => {
   colorMode.preference = theme
 }
+const feedback = () => {
+  window.open('https://github.com/WongSaang/chatgpt-ui/issues', '_blank')
+}
 </script>
 
 <template>
@@ -50,6 +53,13 @@ const setTheme = (theme) => {
               </v-list-item>
             </v-list>
           </v-menu>
+
+          <v-list-item
+              rounded="xl"
+              prepend-icon="help_outline"
+              title="Feedback"
+              @click="feedback"
+          ></v-list-item>
         </v-list>
       </template>
     </v-navigation-drawer>
@@ -60,6 +70,27 @@ const setTheme = (theme) => {
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>{{ runtimeConfig.public.appName }}</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-menu
+      >
+        <template v-slot:activator="{ props }">
+          <v-btn
+              v-bind="props"
+              icon="help_outline"
+              title="Feedback"
+          ></v-btn>
+        </template>
+        <v-list
+        >
+          <v-list-item
+              @click="feedback"
+          >
+            <v-list-item-title>Feedback</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-main>
