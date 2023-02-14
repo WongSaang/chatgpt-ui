@@ -27,32 +27,29 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n'
     ],
     i18n: {
-        // add `vueI18n` option to `@nuxtjs/i18n` module options
-        vueI18n: {
-            legacy: false,
-            locale: 'en',
-            fallbackLocale: 'en',
-            messages: {
-                en: {
-                    welcome: 'Welcome'
-                },
-                fr: {
-                    welcome: 'Bienvenue'
-                }
-            }
+        detectBrowserLanguage: {
+            useCookie: true,
+            cookieKey: 'i18n_redirected',
+            redirectOn: 'root',  // recommended
+            alwaysRedirect: true
         },
         locales: [
             {
                 code: 'en',
-                file: 'en-US.js',
+                name: 'English',
+                file: 'en-US.json',
             },
             {
                 code: 'cn',
-                file: 'zn-CN.js',
+                name: '简体中文',
+                file: 'zn-CN.json',
             }
         ],
         lazy: true,
         langDir: 'lang',
-        defaultLocale: 'en'
+        defaultLocale: 'en',
+        vueI18n: {
+            fallbackLocale: 'en',
+        },
     }
 })

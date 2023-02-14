@@ -13,6 +13,11 @@ const setTheme = (theme) => {
 const feedback = () => {
   window.open('https://github.com/WongSaang/chatgpt-ui/issues', '_blank')
 }
+
+const { locale, locales } = useI18n()
+const setLang = (lang) => {
+  locale.value = lang
+}
 </script>
 
 <template>
@@ -22,6 +27,7 @@ const feedback = () => {
     <v-navigation-drawer
         v-model="drawer"
     >
+      {{ $t('hello') }}
       <v-list>
         <ModelDialog/>
       </v-list>
@@ -50,6 +56,29 @@ const feedback = () => {
                   @click="setTheme(theme.value)"
               >
                 <v-list-item-title>{{ theme.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+
+          <v-menu
+          >
+            <template v-slot:activator="{ props }">
+              <v-list-item
+                  v-bind="props"
+                  rounded="xl"
+                  prepend-icon="language"
+                  title="Language"
+              ></v-list-item>
+            </template>
+            <v-list
+                bg-color="white"
+            >
+              <v-list-item
+                  v-for="locale in locales"
+                  :key="locale.code"
+                  @click="setLang(locale.code)"
+              >
+                <v-list-item-title>{{ locale.name }}</v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
