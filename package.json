@@ -18,6 +18,7 @@
     "highlight.js": "^11.7.0",
     "is-mobile": "^3.1.1",
     "marked": "^4.2.12",
+    "nanoid": "^4.0.1",
     "vuetify": "^3.0.6"
   },
   "license": "MIT"

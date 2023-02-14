@@ -1,12 +1,20 @@
 <script setup>
-import { fetchEventSource } from '@microsoft/fetch-event-source'
+import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 
 const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
 const fetchingResponse = ref(false)
+
+let ctrl
+const abortFetch = () => {
+  if (ctrl) {
+    ctrl.abort()
+  }
+  fetchingResponse.value = false
+}
 const fetchReply = async (message, parentMessageId) => {
-  const ctrl = new AbortController()
+  ctrl = new AbortController()
   try {
     await fetchEventSource('/api/conversation', {
       signal: ctrl.signal,
@@ -22,43 +30,50 @@ const fetchReply = async (message, parentMessageId) => {
         conversationId: currentConversation.value.id
       }),
       onopen(response) {
-        if (response.status === 200) {
+        if (response.ok && response.headers.get('content-type') === EventStreamContentType) {
           return;
         }
         throw new Error(`Failed to send message. HTTP ${response.status} - ${response.statusText}`);
       },
       onclose() {
+        if (ctrl.signal.aborted === true) {
+          return;
+        }
         throw new Error(`Failed to send message. Server closed the connection unexpectedly.`);
       },
       onerror(err) {
         throw err;
       },
       onmessage(message) {
-        if (message.event === 'error') {
-          throw new Error(JSON.parse(message.data).error);
+        const event = message.event
+        const data = JSON.parse(message.data)
+
+        if (event === 'error') {
+          throw new Error(data.error);
         }
-        const { type, data } = JSON.parse(message.data);
-        if (type === 'done') {
+
+        if (event === 'done') {
           if (currentConversation.value.id === null) {
             currentConversation.value.id = data.conversationId
           }
           currentConversation.value.messages[currentConversation.value.messages.length - 1].id = data.messageId
-          ctrl.abort();
-          fetchingResponse.value = false
+          abortFetch()
           return;
         }
+
         if (currentConversation.value.messages[currentConversation.value.messages.length - 1].from === 'ai') {
-          currentConversation.value.messages[currentConversation.value.messages.length - 1].message += data
+          currentConversation.value.messages[currentConversation.value.messages.length - 1].message += data.content
         } else {
-          currentConversation.value.messages.push({id: null, from: 'ai', message: data})
+          currentConversation.value.messages.push({id: null, from: 'ai', message: data.content})
         }
+
         scrollChatWindow()
       },
     })
   } catch (err) {
-    ctrl.abort()
+    console.log(err)
+    abortFetch()
     showSnackbar(err.message)
-    fetchingResponse.value = false
   }
 }
 
@@ -70,6 +85,9 @@ const currentConversation = ref({})
 
 const grab = ref(null)
 const scrollChatWindow = () => {
+  if (grab.value === null) {
+    return;
+  }
   grab.value.scrollIntoView({behavior: 'smooth'})
 }
 
@@ -91,8 +109,7 @@ const send = (message) => {
   scrollChatWindow()
 }
 const stop = () => {
-  ctrl.abort();
-  fetchingResponse.value = false
+  abortFetch()
 }
 
 const snackbar = ref(false)
@@ -125,7 +142,7 @@ createNewConversation()
       </v-container>
       <v-divider></v-divider>
     </v-card>
-    <div ref="grab" class="w-100" style="height: 150px;"></div>
+    <div ref="grab" class="w-100" style="height: 200px;"></div>
   </div>
   <Welcome v-else />
   <v-footer app class="d-flex flex-column">

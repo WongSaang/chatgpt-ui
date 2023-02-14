@@ -1,25 +1,13 @@
 import ChatGPTClient from '@waylaidwanderer/chatgpt-api'
 import { PassThrough } from 'node:stream'
+import { nanoid } from 'nanoid'
 
-const serializeSSEEvent = (chunk) => {
-    let payload = "";
-    if (chunk.id) {
-        payload += `id: ${chunk.id}\n`;
-    }
-    if (chunk.event) {
-        payload += `event: ${chunk.event}\n`;
-    }
-    if (chunk.data) {
-        payload += `data: ${chunk.data}\n`;
-    }
-    if (chunk.retry) {
-        payload += `retry: ${chunk.retry}\n`;
-    }
-    if (!payload) {
-        return "";
-    }
-    payload += "\n";
-    return payload;
+const serializeSSEEvent = (event, data) => {
+    const id = nanoid();
+    const eventStr = event ? `event: ${event}\n` : '';
+    const dataStr = data ? `data: ${JSON.stringify(data)}\n` : '';
+
+    return `id: ${id}\n${eventStr}${dataStr}\n`;
 }
 
 export default defineEventHandler(async (event) => {
@@ -27,9 +15,13 @@ export default defineEventHandler(async (event) => {
     const conversationId = body.conversationId ? body.conversationId.toString() : undefined
     const parentMessageId = body.parentMessageId ? body.parentMessageId.toString() : undefined
     const tunnel = new PassThrough()
-    const writeToTunnel = (data) => {
-        tunnel.write(serializeSSEEvent(data))
+    const writeToTunnel = (event, data) => {
+        tunnel.write(serializeSSEEvent(event, data))
     }
+    const endTunnel = () => {
+        tunnel.end()
+    }
+
     setResponseHeaders(event, {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
@@ -37,13 +29,11 @@ export default defineEventHandler(async (event) => {
     })
 
     if (!body.openaiApiKey) {
-        writeToTunnel({
-            event: 'error',
-            data: JSON.stringify({
-                code: 503,
-                error: 'You haven\'t set the api key of openai',
-            }),
+        writeToTunnel('error', {
+            code: 503,
+            error: 'You haven\'t set the api key of openai',
         })
+        endTunnel()
         return sendStream(event, tunnel)
     }
 
@@ -79,29 +69,19 @@ export default defineEventHandler(async (event) => {
             parentMessageId,
             onProgress: (token) => {
                 // console.log(token)
-                writeToTunnel({ data: JSON.stringify({
-                        type: 'token',
-                        data: token
-                    })
-                })
+                writeToTunnel('message',{content: token})
             }
         });
-        writeToTunnel({ data: JSON.stringify({
-                type: 'done',
-                data: response
-            }) })
-        console.log(response)
+        writeToTunnel('done',response)
+        console.info(response)
     } catch (e) {
         const code = e?.json?.data?.code || 503;
         const message = e?.json?.error?.message || 'There was an error communicating with ChatGPT.';
-        writeToTunnel({
-            event: 'error',
-            data: JSON.stringify({
-                code,
-                error: message,
-            }),
+        writeToTunnel('error', {
+            code,
+            error: message
         })
     }
-
+    tunnel.end()
     return sendStream(event, tunnel)
 })

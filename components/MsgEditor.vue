@@ -8,6 +8,7 @@
       :disabled="disabled"
       :loading="loading"
       :hint="hint"
+      :hide-details="loading"
       append-inner-icon="send"
       @keyup.enter.exact="enterOnly"
       @click:appendInner="clickSendBtn"
