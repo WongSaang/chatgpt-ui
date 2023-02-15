@@ -27,22 +27,19 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n'
     ],
     i18n: {
-        detectBrowserLanguage: {
-            useCookie: true,
-            cookieKey: 'i18n_redirected',
-            redirectOn: 'root',  // recommended
-            alwaysRedirect: true
-        },
+        strategy: 'no_prefix',
         locales: [
             {
                 code: 'en',
+                iso: 'en-US',
                 name: 'English',
                 file: 'en-US.json',
             },
             {
-                code: 'cn',
+                code: 'zh-CN',
+                iso: 'zh-CN',
                 name: '简体中文',
-                file: 'zn-CN.json',
+                file: 'zh-CN.json',
             }
         ],
         lazy: true,

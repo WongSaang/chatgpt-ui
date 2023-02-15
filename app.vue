@@ -18,6 +18,10 @@ const { locale, locales } = useI18n()
 const setLang = (lang) => {
   locale.value = lang
 }
+console.log('------------')
+console.log(locale.value)
+console.log(useBrowserLocale())
+console.log(navigator.languages)
 </script>
 
 <template>
