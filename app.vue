@@ -1,11 +1,12 @@
 <script setup>
+const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const colorMode = useColorMode()
 const drawer = ref(null)
 const themes = ref([
-  { title: 'Light', value: 'light' },
-  { title: 'Dark', value: 'dark' },
-  { title: 'System', value: 'system'}
+  { title: $i18n.t('lightMode'), value: 'light' },
+  { title: $i18n.t('darkMode'), value: 'dark' },
+  { title: $i18n.t('followSystem'), value: 'system'}
 ])
 const setTheme = (theme) => {
   colorMode.preference = theme
@@ -14,14 +15,10 @@ const feedback = () => {
   window.open('https://github.com/WongSaang/chatgpt-ui/issues', '_blank')
 }
 
-const { locale, locales } = useI18n()
+const { locale, locales, setLocale } = useI18n()
 const setLang = (lang) => {
-  locale.value = lang
+  setLocale(lang)
 }
-console.log('------------')
-console.log(locale.value)
-console.log(useBrowserLocale())
-console.log(navigator.languages)
 </script>
 
 <template>
@@ -31,7 +28,6 @@ console.log(navigator.languages)
     <v-navigation-drawer
         v-model="drawer"
     >
-      {{ $t('hello') }}
       <v-list>
         <ModelDialog/>
       </v-list>
@@ -48,7 +44,7 @@ console.log(navigator.languages)
                   v-bind="props"
                   rounded="xl"
                   :prepend-icon="$colorMode.value === 'light' ? 'light_mode' : 'dark_mode'"
-                  title="Theme mode"
+                  :title="$t('themeMode')"
               ></v-list-item>
             </template>
             <v-list
@@ -64,33 +60,12 @@ console.log(navigator.languages)
             </v-list>
           </v-menu>
 
-          <v-menu
-          >
-            <template v-slot:activator="{ props }">
-              <v-list-item
-                  v-bind="props"
-                  rounded="xl"
-                  prepend-icon="language"
-                  title="Language"
-              ></v-list-item>
-            </template>
-            <v-list
-                bg-color="white"
-            >
-              <v-list-item
-                  v-for="locale in locales"
-                  :key="locale.code"
-                  @click="setLang(locale.code)"
-              >
-                <v-list-item-title>{{ locale.name }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+          <SettingsLanguages/>
 
           <v-list-item
               rounded="xl"
               prepend-icon="help_outline"
-              title="Feedback"
+              :title="$t('feedback')"
               @click="feedback"
           ></v-list-item>
         </v-list>
@@ -120,7 +95,7 @@ console.log(navigator.languages)
           <v-list-item
               @click="feedback"
           >
-            <v-list-item-title>Feedback</v-list-item-title>
+            <v-list-item-title>{{ $t('feedback') }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>

@@ -3,11 +3,11 @@
     <v-row>
       <v-col cols="12">
         <div class="text-center">
-          <h2 class="text-h2">Welcome to <span class="text-primary">{{ runtimeConfig.public.appName }}</span></h2>
+          <h2 class="text-h2">{{ $t('welcomeTo') }} <span class="text-primary">{{ runtimeConfig.public.appName }}</span></h2>
           <p class="text-caption mt-5">
-            {{ runtimeConfig.public.appName }} is an unofficial client for ChatGPT, but uses the official OpenAI API.
+            {{ runtimeConfig.public.appName }} {{ $t('welcomeScreen.introduction1') }}
             <br>
-            You will need an OpenAI API Key before you can use this client.
+            {{ $t('welcomeScreen.introduction2') }}
           </p>
         </div>
       </v-col>
@@ -23,7 +23,7 @@
               <v-col>
                 <div class="d-flex flex-column align-center">
                   <v-icon icon="sunny"></v-icon>
-                  <h3 class="text-h6">Examples</h3>
+                  <h3 class="text-h6">{{ $t('welcomeScreen.examples.title') }}</h3>
                 </div>
               </v-col>
             </v-row>
@@ -37,7 +37,7 @@
               <v-col>
                 <div class="d-flex flex-column align-center">
                   <v-icon icon="bolt"></v-icon>
-                  <h3 class="text-h6">Capabilities</h3>
+                  <h3 class="text-h6">{{ $t('welcomeScreen.capabilities.title') }}</h3>
                 </div>
               </v-col>
             </v-row>
@@ -51,7 +51,7 @@
               <v-col>
                 <div class="d-flex flex-column align-center">
                   <v-icon icon="warning_amber"></v-icon>
-                  <h3 class="text-h6">Limitations</h3>
+                  <h3 class="text-h6">{{ $t('welcomeScreen.limitations.title') }}</h3>
                 </div>
               </v-col>
             </v-row>
@@ -65,19 +65,20 @@
 
 <script setup>
 const runtimeConfig = useRuntimeConfig()
+const { $i18n } = useNuxtApp()
 const examples = ref([
-    '"Explain quantum computing in simple terms"',
-    '"Got any creative ideas for a 10 year old’s birthday?"',
-    '"How do I make an HTTP request in Javascript?"'
+  $i18n.t('welcomeScreen.examples.item1'),
+  $i18n.t('welcomeScreen.examples.item2'),
+  $i18n.t('welcomeScreen.examples.item3')
 ])
 const capabilities = ref([
-    'Remembers what user said earlier in the conversation',
-    'Allows user to provide follow-up corrections',
-    'Trained to decline inappropriate requests'
+  $i18n.t('welcomeScreen.capabilities.item1'),
+  $i18n.t('welcomeScreen.capabilities.item2'),
+  $i18n.t('welcomeScreen.capabilities.item3')
 ])
 const limitations = ref([
-    'May occasionally generate incorrect information',
-    'May occasionally produce harmful instructions or biased content',
-    'Limited knowledge of world and events after 2021'
+  $i18n.t('welcomeScreen.limitations.item1'),
+  $i18n.t('welcomeScreen.limitations.item2'),
+  $i18n.t('welcomeScreen.limitations.item3')
 ])
 </script>

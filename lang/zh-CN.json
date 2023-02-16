@@ -1,3 +1,45 @@
 {
-  "hello": "你好"
+  "welcomeTo": "欢迎来到",
+  "language": "语言",
+  "setApiKey": "设置API密钥",
+  "setOpenAIApiKey": "设置OpenAI的API密钥",
+  "openAIApiKey": "OpenAI的API密钥",
+  "getAKey": "获取钥匙",
+  "openAIModels": "OpenAI模型",
+  "aboutTheModels": "关于模型",
+  "saveAndClose": "保存并关闭",
+  "pleaseSelectAtLeastOneModelDot": "请至少选择一个模型",
+  "writeAMessage": "输入信息",
+  "pressEnterToSendYourMessageOrShiftEnterToAddANewLine": "按回车键发送您的信息，或按Shift+Enter键添加新行",
+  "lightMode": "明亮模式",
+  "darkMode": "暗色模式",
+  "followSystem": "跟随系统",
+  "themeMode": "主题模式",
+  "feedback": "反馈",
+  "roles": {
+    "me": "我",
+    "ai": "AI"
+  },
+  "welcomeScreen": {
+    "introduction1": "是一个非官方的ChatGPT客户端，但使用OpenAI的官方API",
+    "introduction2": "在使用本客户端之前，您需要一个OpenAI API密钥。",
+    "examples": {
+      "title": "例子",
+      "item1": "\"用简单的语言解释量子计算\"",
+      "item2": "\"为10岁的孩子过生日，有什么创造性的想法吗？\"",
+      "item3": "\"我如何在Javascript中进行HTTP请求？\""
+    },
+    "capabilities": {
+      "title": "能力",
+      "item1": "记得用户在谈话中早先说过的话",
+      "item2": "允许用户提供后续更正",
+      "item3": "经过培训，可以拒绝不适当的请求"
+    },
+    "limitations": {
+      "title": "局限",
+      "item1": "偶尔可能会产生不正确的信息",
+      "item2": "可能偶尔会产生有害的指示或有偏见的内容",
+      "item3": "对2021年以后的世界和事件了解有限"
+    }
+  }
 }

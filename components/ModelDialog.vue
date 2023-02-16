@@ -17,12 +17,12 @@
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">OpenAI Models</span>
+        <span class="text-h5">{{ $t('openAIModels') }}</span>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
         <div>
-          About the models:
+          {{ $t('aboutTheModels') }}:
           <a target="_blank" href="https://platform.openai.com/docs/models/overview">https://platform.openai.com/docs/models/overview</a>
         </div>
         <div
@@ -77,7 +77,7 @@
             color="primary"
             @click="save"
         >
-          Save & Close
+          {{ $t('saveAndClose') }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -85,6 +85,7 @@
 </template>
 
 <script setup>
+const { $i18n } = useNuxtApp()
 const dialog = ref(false)
 const models = useModels()
 const currentModel = useCurrentModel()
@@ -110,7 +111,7 @@ const removeModel = (index) => {
 }
 const save = async () => {
   if (!currentModel.value) {
-    showWarning('Please select at least one model.')
+    showWarning($i18n.t('pleaseSelectAtLeastOneModelDot'))
     return
   }
   setModels(models.value)
