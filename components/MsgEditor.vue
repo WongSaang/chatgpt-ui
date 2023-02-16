@@ -1,8 +1,8 @@
 <template>
   <v-textarea
       v-model="message"
-      label="Write a message..."
-      placeholder="Write a message..."
+      :label="$t('writeAMessage')"
+      :placeholder="$t('writeAMessage') + '...'"
       rows="1"
       :auto-grow="autoGrow"
       :disabled="disabled"
@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     hint() {
-      return isMobile() ? "" : "Press Enter to send your message or Shift+Enter to add a new line.";
+      return isMobile() ? "" : "Press Enter to send your message or Shift+Enter to add a new line";
     },
   },
   watch: {

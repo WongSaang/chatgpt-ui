@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@nuxtjs/color-mode": "^3.2.0",
+    "@nuxtjs/i18n": "^8.0.0-beta.9",
     "material-design-icons-iconfont": "^6.7.0",
     "nuxt": "^3.2.0"
   },

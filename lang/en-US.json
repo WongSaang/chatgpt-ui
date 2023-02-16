@@ -1,0 +1,45 @@
+{
+  "welcomeTo": "Welcome to",
+  "language": "Language",
+  "setApiKey": "Set API Key",
+  "setOpenAIApiKey": "Set OpenAI API Key",
+  "openAIApiKey": "OpenAI API Key",
+  "getAKey": "Get a key",
+  "openAIModels": "OpenAI Models",
+  "aboutTheModels": "About the models",
+  "saveAndClose": "Save & Close",
+  "pleaseSelectAtLeastOneModelDot": "Please select at least one model.",
+  "writeAMessage": "Write a message",
+  "pressEnterToSendYourMessageOrShiftEnterToAddANewLine": "Press Enter to send your message or Shift+Enter to add a new line",
+  "lightMode": "Light Mode",
+  "darkMode": "Dark Mode",
+  "followSystem": "Follow system",
+  "themeMode": "Theme Mode",
+  "feedback": "Feedback",
+  "roles": {
+    "me": "Me",
+    "ai": "AI"
+  },
+  "welcomeScreen": {
+    "introduction1": "is an unofficial client for ChatGPT, but uses the official OpenAI API.",
+    "introduction2": "You will need an OpenAI API Key before you can use this client.",
+    "examples": {
+      "title": "Examples",
+      "item1": "\"Explain quantum computing in simple terms\"",
+      "item2": "\"Got any creative ideas for a 10 year old’s birthday?\"",
+      "item3": "\"How do I make an HTTP request in Javascript?\""
+    },
+    "capabilities": {
+      "title": "Capabilities",
+      "item1": "Remembers what user said earlier in the conversation",
+      "item2": "Allows user to provide follow-up corrections",
+      "item3": "Trained to decline inappropriate requests"
+    },
+    "limitations": {
+      "title": "Limitations",
+      "item1": "May occasionally generate incorrect information",
+      "item2": "May occasionally produce harmful instructions or biased content",
+      "item3": "Limited knowledge of world and events after 2021"
+    }
+  }
+}

@@ -10,17 +10,17 @@
           prepend-icon="vpn_key"
           color="primary"
       >
-        Set OpenAI Api Key
+        {{ $t('setApiKey') }}
       </v-list-item>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">OpenAI Api Key</span>
+        <span class="text-h5">{{ $t('openAIApiKey') }}</span>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text>
         <div>
-          Get a key:
+          {{ $t('getAKey') }}:
           <a target="_blank" href="https://platform.openai.com/account/api-keys">https://platform.openai.com/account/api-keys</a>
         </div>
         <div

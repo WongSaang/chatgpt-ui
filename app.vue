@@ -1,17 +1,23 @@
 <script setup>
+const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const colorMode = useColorMode()
 const drawer = ref(null)
 const themes = ref([
-  { title: 'Light', value: 'light' },
-  { title: 'Dark', value: 'dark' },
-  { title: 'System', value: 'system'}
+  { title: $i18n.t('lightMode'), value: 'light' },
+  { title: $i18n.t('darkMode'), value: 'dark' },
+  { title: $i18n.t('followSystem'), value: 'system'}
 ])
 const setTheme = (theme) => {
   colorMode.preference = theme
 }
 const feedback = () => {
   window.open('https://github.com/WongSaang/chatgpt-ui/issues', '_blank')
+}
+
+const { locale, locales, setLocale } = useI18n()
+const setLang = (lang) => {
+  setLocale(lang)
 }
 </script>
 
@@ -38,7 +44,7 @@ const feedback = () => {
                   v-bind="props"
                   rounded="xl"
                   :prepend-icon="$colorMode.value === 'light' ? 'light_mode' : 'dark_mode'"
-                  title="Theme mode"
+                  :title="$t('themeMode')"
               ></v-list-item>
             </template>
             <v-list
@@ -54,10 +60,12 @@ const feedback = () => {
             </v-list>
           </v-menu>
 
+          <SettingsLanguages/>
+
           <v-list-item
               rounded="xl"
               prepend-icon="help_outline"
-              title="Feedback"
+              :title="$t('feedback')"
               @click="feedback"
           ></v-list-item>
         </v-list>
@@ -87,7 +95,7 @@ const feedback = () => {
           <v-list-item
               @click="feedback"
           >
-            <v-list-item-title>Feedback</v-list-item-title>
+            <v-list-item-title>{{ $t('feedback') }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>

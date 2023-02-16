@@ -1,6 +1,7 @@
 <script setup>
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 
+const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
@@ -135,7 +136,7 @@ createNewConversation()
         :variant="conversation.from === 'ai' ? 'tonal' : 'text'"
     >
       <v-container>
-        <v-card-text class="text-caption text-disabled">{{ conversation.from }}</v-card-text>
+        <v-card-text class="text-caption text-disabled">{{ $t(`roles.${conversation.from}`) }}</v-card-text>
         <v-card-text>
           <MsgContent :content="conversation.message" />
         </v-card-text>
@@ -158,7 +159,7 @@ createNewConversation()
     </div>
 
     <div class="px-4 py-2 text-disabled text-caption font-weight-light text-center w-100">
-      © {{ new Date().getFullYear() }} — {{ runtimeConfig.public.appName }}
+      © {{ new Date().getFullYear() }} {{ runtimeConfig.public.appName }}
     </div>
   </v-footer>
   <v-snackbar
