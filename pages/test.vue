@@ -1,16 +1,28 @@
 <template>
   <v-container>
-    <v-btn @click="stop">Cancel</v-btn>
-<v-text-field
-        v-model="message"
-        label="Message"
-        outlined
-    ></v-text-field>
-    <v-btn @click="fetchReply">Send</v-btn>
+<!--    <v-btn @click="stop">Cancel</v-btn>-->
+<!--<v-text-field-->
+<!--        v-model="message"-->
+<!--        label="Message"-->
+<!--        outlined-->
+<!--    ></v-text-field>-->
+<!--    <v-btn @click="fetchReply">Send</v-btn>-->
+    <v-btn color="green">{{ $auth.loginIn }}</v-btn>
+    <br>
+    <br>
+    <br>
+    <v-btn @click="$auth.login()">Login</v-btn>
   </v-container>
 </template>
 
 <script setup>
+
+definePageMeta({
+  middleware: ["auth"],
+  layout: false
+})
+
+
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 const message = ref('')
 let ctrl

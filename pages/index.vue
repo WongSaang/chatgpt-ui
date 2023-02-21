@@ -1,4 +1,7 @@
 <script setup>
+definePageMeta({
+  middleware: ["auth"]
+})
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 
 const { $i18n } = useNuxtApp()
