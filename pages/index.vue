@@ -4,7 +4,7 @@ definePageMeta({
 })
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 
-const { $i18n } = useNuxtApp()
+const { $i18n, $auth } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
@@ -18,13 +18,16 @@ const abortFetch = () => {
   fetchingResponse.value = false
 }
 const fetchReply = async (message, parentMessageId) => {
+  const token = await $auth.retrieveToken()
   ctrl = new AbortController()
   try {
     await fetchEventSource('/api/conversation', {
       signal: ctrl.signal,
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         model: currentModel.value,
@@ -49,6 +52,7 @@ const fetchReply = async (message, parentMessageId) => {
         throw err;
       },
       onmessage(message) {
+        console.log(message)
         const event = message.event
         const data = JSON.parse(message.data)
 
@@ -71,7 +75,7 @@ const fetchReply = async (message, parentMessageId) => {
           currentConversation.value.messages.push({id: null, from: 'ai', message: data.content})
         }
 
-        scrollChatWindow()
+        // scrollChatWindow()
       },
     })
   } catch (err) {

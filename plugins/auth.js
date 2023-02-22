@@ -26,7 +26,7 @@ const ENDPOINTS = {
 
 export default defineNuxtPlugin(() => {
     const token = useCookie(COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.tokenName, {
-        maxAge: 60 * 30,
+        maxAge: 60 * 5,
     })
     const refreshToken = useCookie(COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.refreshTokenName, {
         maxAge: 60 * 60 * 24,
@@ -80,6 +80,7 @@ export default defineNuxtPlugin(() => {
                     'refresh': refreshToken.value
                 }
             })
+            console.log('refresh', data, error)
             if (!error.value) {
                 token.value = data.value.access
             }
