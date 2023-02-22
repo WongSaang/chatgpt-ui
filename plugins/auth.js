@@ -1,4 +1,3 @@
-import login from "~/pages/login.vue";
 
 const AUTH_ROUTE = {
     home: '/',
@@ -19,9 +18,6 @@ const ENDPOINTS = {
     refresh: {
         url: '/api/auth/token/refresh'
     },
-    logout: {
-        url: '/api/auth/signout'
-    },
     user: {
         url: '/api/auth/session'
     }
@@ -35,8 +31,6 @@ export default defineNuxtPlugin(() => {
     const refreshToken = useCookie(COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.refreshTokenName, {
         maxAge: 60 * 60 * 24,
     })
-    console.log('token', token.value)
-    console.log('refreshToken', refreshToken.value)
 
     class Auth {
         constructor() {
@@ -44,37 +38,39 @@ export default defineNuxtPlugin(() => {
             this.user = useState('user')
         }
 
-        async login () {
+        async login (username, password) {
             const { data, error } = await useFetch(ENDPOINTS.login.url, {
                 method: 'POST',
                 body: {
-                    username: 'admin',
-                    password: 'admin'
+                    username,
+                    password
                 }
             })
             if (!error.value) {
                 token.value = data.value.access
                 refreshToken.value = data.value.refresh
+                return null
             }
-            console.log(error.value)
+            if (error.value.status === 401) {
+                return error.value.data.detail
+            }
+            return 'Request failed, please try again.'
         }
 
-        logout () {
+        async logout () {
             this.loginIn.value = false
             this.user.value = null
+            await this.redirectToLogin()
         }
 
         async fetchUser () {
-            const { data, error } = await useFetch(ENDPOINTS.user.url, {
-                headers: {
-                    'Authorization': 'Bearer ' + token.value
-                }
-            })
+            const { data, error } = await useAuthFetch(ENDPOINTS.user.url)
             if (!error.value) {
                 this.user = data.value
                 this.loginIn.value = true
+                return null
             }
-            console.log('fetchUser', error.value)
+            return error
         }
 
         async refresh () {
@@ -84,29 +80,43 @@ export default defineNuxtPlugin(() => {
                     'refresh': refreshToken.value
                 }
             })
-            console.log('refresh', data)
             if (!error.value) {
                 token.value = data.value.access
             }
-            console.log('refresh', error.value)
+        }
+
+        async callback () {
+            return await navigateTo(AUTH_ROUTE.home)
+        }
+
+        async redirectToLogin () {
+            return await navigateTo(AUTH_ROUTE.login)
+        }
+
+        async retrieveToken () {
+            if (!refreshToken.value) {
+                return null
+            }
+            if (!token.value) {
+                await this.refresh()
+            }
+            return token.value || null
         }
 
     }
 
     const auth = new Auth()
 
-    addRouteMiddleware('auth', async () => {
+    addRouteMiddleware('auth', async (to, from) => {
         if (!auth.loginIn.value) {
-            console.log('check', token.value, refreshToken.value)
-            // Refresh token has expired
-            if (!refreshToken.value) {
-                console.log('refreshToken expired')
-                return navigateTo(AUTH_ROUTE.login)
+            const token = await auth.retrieveToken()
+            if (!token) {
+                return await auth.redirectToLogin()
             }
-            if (!token.value) {
-                await auth.refresh()
+            const error = await auth.fetchUser()
+            if (error) {
+                return await auth.redirectToLogin()
             }
-            await auth.fetchUser()
         }
     })
 
