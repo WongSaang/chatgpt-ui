@@ -25,12 +25,16 @@ const ENDPOINTS = {
 
 
 export default defineNuxtPlugin(() => {
-    const token = useCookie(COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.tokenName, {
+    const tokenKey = COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.tokenName
+    const refreshTokenKey = COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.refreshTokenName
+    const tokenOptions = {
         maxAge: 60 * 5,
-    })
-    const refreshToken = useCookie(COOKIE_OPTIONS.prefix + '.' + COOKIE_OPTIONS.refreshTokenName, {
+    }
+    const refreshTokenOptions = {
         maxAge: 60 * 60 * 24,
-    })
+    }
+    const token = useCookie(tokenKey, tokenOptions)
+    const refreshToken = useCookie(refreshTokenKey, refreshTokenOptions)
 
     class Auth {
         constructor() {
@@ -95,6 +99,8 @@ export default defineNuxtPlugin(() => {
         }
 
         async retrieveToken () {
+            const token = useCookie(tokenKey, tokenOptions)
+            const refreshToken = useCookie(refreshTokenKey, refreshTokenOptions)
             if (!refreshToken.value) {
                 return null
             }
