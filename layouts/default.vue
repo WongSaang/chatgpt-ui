@@ -1,4 +1,7 @@
 <script setup>
+import {useConversions} from "../composables/states";
+import {getConversions} from "../utils/helper";
+
 const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const colorMode = useColorMode()
@@ -19,6 +22,13 @@ const { locale, locales, setLocale } = useI18n()
 const setLang = (lang) => {
   setLocale(lang)
 }
+
+const conversations = useConversions()
+
+onNuxtReady(async () => {
+  conversations.value = await getConversions()
+})
+
 </script>
 
 <template>
@@ -28,47 +38,66 @@ const setLang = (lang) => {
     <v-navigation-drawer
         v-model="drawer"
     >
-      <v-list>
-        <ModelDialog/>
-      </v-list>
-
-      <template v-slot:append>
-        <v-divider></v-divider>
+      <div class="px-2 py-2">
+        <v-btn
+            block
+            variant="outlined"
+            prepend-icon="add"
+            size="large"
+            @click="createNewConversion()"
+        >
+          New conversation
+        </v-btn>
         <v-list>
-          <ApiKeyDialog/>
-
-          <v-menu
-          >
-            <template v-slot:activator="{ props }">
-              <v-list-item
-                  v-bind="props"
-                  rounded="xl"
-                  :prepend-icon="$colorMode.value === 'light' ? 'light_mode' : 'dark_mode'"
-                  :title="$t('themeMode')"
-              ></v-list-item>
-            </template>
-            <v-list
-                bg-color="white"
-            >
-              <v-list-item
-                  v-for="(theme, idx) in themes"
-                  :key="idx"
-                  @click="setTheme(theme.value)"
-              >
-                <v-list-item-title>{{ theme.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
-          <SettingsLanguages/>
-
           <v-list-item
-              rounded="xl"
-              prepend-icon="help_outline"
-              :title="$t('feedback')"
-              @click="feedback"
+              v-for="conversation in conversations"
+              :key="conversation.id"
+              :title="conversation.topic"
+              active-color="primary"
+              @click="openConversationMessages(conversation)"
           ></v-list-item>
         </v-list>
+      </div>
+
+      <template v-slot:append>
+        <div class="px-1">
+          <v-divider></v-divider>
+          <v-list>
+            <ApiKeyDialog/>
+
+            <v-menu
+            >
+              <template v-slot:activator="{ props }">
+                <v-list-item
+                    v-bind="props"
+                    rounded="xl"
+                    :prepend-icon="$colorMode.value === 'light' ? 'light_mode' : 'dark_mode'"
+                    :title="$t('themeMode')"
+                ></v-list-item>
+              </template>
+              <v-list
+                  bg-color="white"
+              >
+                <v-list-item
+                    v-for="(theme, idx) in themes"
+                    :key="idx"
+                    @click="setTheme(theme.value)"
+                >
+                  <v-list-item-title>{{ theme.title }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+
+            <SettingsLanguages/>
+
+            <v-list-item
+                rounded="xl"
+                prepend-icon="help_outline"
+                :title="$t('feedback')"
+                @click="feedback"
+            ></v-list-item>
+          </v-list>
+        </div>
       </template>
     </v-navigation-drawer>
 
@@ -106,3 +135,16 @@ const setLang = (lang) => {
     </v-main>
   </v-app>
 </template>
+
+<style>
+.v-navigation-drawer__content::-webkit-scrollbar {
+  width: 0;
+}
+.v-navigation-drawer__content:hover::-webkit-scrollbar {
+  width: 6px;
+}
+.v-navigation-drawer__content:hover::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 3px;
+}
+</style>

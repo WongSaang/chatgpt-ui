@@ -84,10 +84,11 @@ export default defineNuxtPlugin(() => {
                     'refresh': refreshToken.value
                 }
             })
-            console.log('refresh', data, error)
             if (!error.value) {
                 token.value = data.value.access
+                return data.value.access
             }
+            return null
         }
 
         async callback () {
@@ -105,9 +106,9 @@ export default defineNuxtPlugin(() => {
                 return null
             }
             if (!token.value) {
-                await this.refresh()
+                return await this.refresh()
             }
-            return token.value || null
+            return token.value
         }
 
     }

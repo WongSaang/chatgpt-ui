@@ -52,7 +52,7 @@ const fetchReply = async (message, parentMessageId) => {
         throw err;
       },
       onmessage(message) {
-        console.log(message)
+        // console.log(message)
         const event = message.event
         const data = JSON.parse(message.data)
 
@@ -63,19 +63,20 @@ const fetchReply = async (message, parentMessageId) => {
         if (event === 'done') {
           if (currentConversation.value.id === null) {
             currentConversation.value.id = data.conversationId
+            genTitle(currentConversation.value.id)
           }
           currentConversation.value.messages[currentConversation.value.messages.length - 1].id = data.messageId
           abortFetch()
           return;
         }
 
-        if (currentConversation.value.messages[currentConversation.value.messages.length - 1].from === 'ai') {
+        if (currentConversation.value.messages[currentConversation.value.messages.length - 1].is_bot) {
           currentConversation.value.messages[currentConversation.value.messages.length - 1].message += data.content
         } else {
-          currentConversation.value.messages.push({id: null, from: 'ai', message: data.content})
+          currentConversation.value.messages.push({id: null, is_bot: true, message: data.content})
         }
 
-        // scrollChatWindow()
+        scrollChatWindow()
       },
     })
   } catch (err) {
@@ -85,11 +86,7 @@ const fetchReply = async (message, parentMessageId) => {
   }
 }
 
-const defaultConversation = ref({
-  id: null,
-  messages: []
-})
-const currentConversation = ref({})
+const currentConversation = useConversion()
 
 const grab = ref(null)
 const scrollChatWindow = () => {
@@ -99,20 +96,17 @@ const scrollChatWindow = () => {
   grab.value.scrollIntoView({behavior: 'smooth'})
 }
 
-const createNewConversation = () => {
-  currentConversation.value = Object.assign(defaultConversation.value, {
-  })
-}
+
 const send = (message) => {
   fetchingResponse.value = true
   let parentMessageId = null
   if (currentConversation.value.messages.length > 0) {
     const lastMessage = currentConversation.value.messages[currentConversation.value.messages.length - 1]
-    if (lastMessage.from === 'ai' && lastMessage.id !== null) {
+    if (lastMessage.is_bot && lastMessage.id !== null) {
       parentMessageId = lastMessage.id
     }
   }
-  currentConversation.value.messages.push({from: 'me', parentMessageId: parentMessageId, message: message})
+  currentConversation.value.messages.push({parentMessageId: parentMessageId, message: message})
   fetchReply(message, parentMessageId)
   scrollChatWindow()
 }
@@ -127,7 +121,6 @@ const showSnackbar = (text) => {
   snackbar.value = true
 }
 
-createNewConversation()
 </script>
 
 <template>
@@ -140,10 +133,10 @@ createNewConversation()
         elevation="0"
         v-for="(conversation, index) in currentConversation.messages"
         :key="index"
-        :variant="conversation.from === 'ai' ? 'tonal' : 'text'"
+        :variant="conversation.is_bot ? 'tonal' : 'text'"
     >
       <v-container>
-        <v-card-text class="text-caption text-disabled">{{ $t(`roles.${conversation.from}`) }}</v-card-text>
+        <v-card-text class="text-caption text-disabled">{{ $t(`roles.${conversation.is_bot?'ai':'me'}`) }}</v-card-text>
         <v-card-text>
           <MsgContent :content="conversation.message" />
         </v-card-text>
