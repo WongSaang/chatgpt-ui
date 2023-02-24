@@ -1,8 +1,31 @@
 version: '3'
 services:
-  app:
+  client:
     build:
       context: .
       dockerfile: ./Dockerfile
+    environment:
+      - SERVER_DOMAIN=http://backend:8000
+    depends_on:
+      - backend
+    volumes:
+      - backend_static:/app/static
     ports:
-      - '${APP_PORT:-80}:80'
+      - '80:80'
+    networks:
+        - chatgpt_ui_network
+  backend:
+    image: 'wongsaang/chatgpt-ui-server:latest'
+    volumes:
+      - backend_static:/app/static
+    ports:
+      - '8000:8000'
+    networks:
+      - chatgpt_ui_network
+
+networks:
+  chatgpt_ui_network:
+    driver: bridge
+
+volumes:
+  backend_static:

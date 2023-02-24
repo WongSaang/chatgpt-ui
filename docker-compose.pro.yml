@@ -1,0 +1,34 @@
+version: '3'
+services:
+  client:
+    image: wongsaang/chatgpt-ui-client:latest
+    environment:
+      - SERVER_DOMAIN=http://backend:8000
+    depends_on:
+      - backend
+    volumes:
+      - backend_static:/app/static
+    ports:
+      - '80:80'
+    networks:
+        - chatgpt_ui_network
+  backend:
+    image: wongsaang/chatgpt-ui-server:latest
+    environment:
+#      - DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
+      - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
+      - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
+    volumes:
+      - backend_static:/app/static
+    ports:
+      - '8000:8000'
+    networks:
+      - chatgpt_ui_network
+
+networks:
+  chatgpt_ui_network:
+    driver: bridge
+
+volumes:
+  backend_static:
