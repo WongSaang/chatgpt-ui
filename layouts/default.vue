@@ -63,7 +63,6 @@ onNuxtReady(async () => {
         <div class="px-1">
           <v-divider></v-divider>
           <v-list>
-            <ApiKeyDialog/>
 
             <v-menu
             >
