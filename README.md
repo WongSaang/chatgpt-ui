@@ -74,7 +74,11 @@ networks:
 
 ### Set API key
 
-After running the services, you can access the web client at http://localhost, and an admin panel at http://localhost/admin.
+After running the services, you can access the web client at `http://localhost`, and an admin panel at `http://localhost:9000/admin`.
+
+Default superuser: `admin`
+
+Default password: `password`
 
 Before you can start chatting, you need to log in to the admin panel to add an OpenAI API key. In the Settings model, add a record with the name `openai_api_key` and the value as your API key.
 
