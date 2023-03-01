@@ -39,10 +39,9 @@ services:
       - '80:80'
     networks:
       - chatgpt_ui_network
-  backend-asgi-server:
-    image: wongsaang/chatgpt-ui-asgi-server:latest
+  backend-wsgi-server:
+    image: wongsaang/chatgpt-ui-wsgi-server:latest
     environment:
-      - APP_DOMAIN=locahlost:9000 # The URL of the api server
       #      - DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
@@ -54,11 +53,11 @@ services:
   backend-web-server:
     image: wongsaang/chatgpt-ui-web-server:latest
     environment:
-      - BACKEND_URL=http://backend-asgi-server:8000
+      - BACKEND_URL=http://backend-wsgi-server:8000
     ports:
       - '9000:80'
     depends_on:
-      - backend-asgi-server
+      - backend-wsgi-server
     networks:
       - chatgpt_ui_network
 
