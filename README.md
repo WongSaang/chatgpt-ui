@@ -4,13 +4,9 @@
 
 # ChatGPT UI
 
----
-
 A web client for ChatGPT, using OpenAI's API.
 
 ## 📢Updates
-
----
 
 Version 2 is a major update that separates the backend functionality as an independent project, hosted at [chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server). 
 
@@ -26,7 +22,6 @@ Version 2 introduces the following new features:
 
 ## Quick start with Docker Compose
 
----
 ### Run services
 
 Below is a docker-compose.yml template:
@@ -84,8 +79,6 @@ Before you can start chatting, you need to log in to the admin panel to add an O
 
 
 ## Development
-
----
 
 ### Setup
 
