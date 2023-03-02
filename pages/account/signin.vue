@@ -78,7 +78,6 @@ const submit = async () => {
     submitting.value = true
     const { data, error } = await useFetch('/api/account/login/', {
       method: 'POST',
-      credentials: 'omit',
       body: JSON.stringify(formData.value)
     })
     if (error.value) {
