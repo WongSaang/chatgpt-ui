@@ -1,7 +1,7 @@
 
 const AUTH_ROUTE = {
     home: '/',
-    login: '/login'
+    login: '/account/signin',
 }
 
 const COOKIE_OPTIONS = {
@@ -13,13 +13,13 @@ const COOKIE_OPTIONS = {
 
 const ENDPOINTS = {
     login: {
-        url: '/api/auth/signin'
+        url: '/api/account/login/'
     },
     refresh: {
         url: '/api/auth/token/refresh'
     },
     user: {
-        url: '/api/auth/session'
+        url: '/api/account/user/'
     }
 }
 
@@ -68,7 +68,9 @@ export default defineNuxtPlugin(() => {
         }
 
         async fetchUser () {
-            const { data, error } = await useAuthFetch(ENDPOINTS.user.url)
+            const { data, error } = await useFetch(ENDPOINTS.user.url, {
+                // withCredentials: true
+            })
             if (!error.value) {
                 this.user = data.value
                 this.loginIn.value = true
@@ -117,10 +119,10 @@ export default defineNuxtPlugin(() => {
 
     addRouteMiddleware('auth', async (to, from) => {
         if (!auth.loginIn.value) {
-            const token = await auth.retrieveToken()
-            if (!token) {
-                return await auth.redirectToLogin()
-            }
+            // const token = await auth.retrieveToken()
+            // if (!token) {
+            //     return await auth.redirectToLogin()
+            // }
             const error = await auth.fetchUser()
             if (error) {
                 return await auth.redirectToLogin()
