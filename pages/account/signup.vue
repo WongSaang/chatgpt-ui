@@ -3,6 +3,8 @@ definePageMeta({
   layout: 'vuetify-app'
 })
 
+const { $auth } = useNuxtApp()
+
 const formData = ref({
   username: '',
   email: '',
@@ -52,6 +54,8 @@ const submit = async () => {
       body: JSON.stringify(formData.value)
     })
 
+    console.log(error.value)
+
     if (error.value) {
       if (error.value.status === 400) {
         for (const key in formData.value) {
@@ -66,6 +70,7 @@ const submit = async () => {
         errorMsg.value = 'Something went wrong. Please try again.'
       }
     } else {
+      $auth.setUser(data.value.user)
       navigateTo('/account/onboarding')
     }
 
@@ -141,14 +146,23 @@ const handleFieldUpdate = (field) => {
 
               <div v-if="errorMsg" class="text-red">{{ errorMsg }}</div>
 
-              <v-btn
-                  block
-                  size="large"
-                  color="primary"
-                  :loading="submitting"
-                  @click="submit"
-                  class="mt-5"
-              >Submit</v-btn>
+              <div
+                  class="mt-5 d-flex justify-space-between"
+              >
+                <v-btn
+                    @click="navigateTo('/account/signin')"
+                    variant="text"
+                    color="primary"
+                >Sign in instead</v-btn>
+
+                <v-btn
+                    size="large"
+                    color="primary"
+                    :loading="submitting"
+                    @click="submit"
+                >Submit</v-btn>
+              </div>
+
             </v-card-text>
           </v-card>
         </v-col>

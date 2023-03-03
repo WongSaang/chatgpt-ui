@@ -9,7 +9,7 @@ export const getDefaultConversionData = () => {
 }
 
 export const getConversions = async () => {
-    const { data, error } = await useAuthFetch('/api/chat/conversations')
+    const { data, error } = await useAuthFetch('/api/chat/conversations/')
     if (!error.value) {
         return data.value
     }
@@ -33,7 +33,7 @@ export const openConversationMessages = async (currentConversation) => {
 }
 
 export const genTitle = async (conversationId) => {
-    const { data, error } = await useAuthFetch('/api/gen_title', {
+    const { data, error } = await useAuthFetch('/api/gen_title/', {
         method: 'POST',
         body: {
             conversationId: conversationId

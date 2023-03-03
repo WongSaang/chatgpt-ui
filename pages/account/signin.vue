@@ -28,19 +28,30 @@
                     :rules="formRules.password"
                     label="Password"
                     variant="underlined"
+                    @keyup.enter="submit"
                 ></v-text-field>
 
               </v-form>
 
               <div v-if="errorMsg" class="text-red">{{ errorMsg }}</div>
 
-              <v-btn
-                  block
-                  color="primary"
-                  :loading="submitting"
-                  @click="submit"
-                  class="mt-5"
-              >Submit</v-btn>
+              <div
+                class="mt-5 d-flex justify-space-between"
+              >
+                <v-btn
+                    @click="navigateTo('/account/signup')"
+                    variant="text"
+                    color="primary"
+                >Create account</v-btn>
+
+                <v-btn
+                    color="primary"
+                    :loading="submitting"
+                    @click="submit"
+                    size="large"
+                >Submit</v-btn>
+              </div>
+
             </v-card-text>
           </v-card>
         </v-col>
@@ -71,6 +82,8 @@ const errorMsg = ref(null)
 const signInForm = ref(null)
 const valid = ref(true)
 const submitting = ref(false)
+const route = useRoute()
+
 const submit = async () => {
   errorMsg.value = null
   const { valid } = await signInForm.value.validate()
@@ -89,6 +102,8 @@ const submit = async () => {
         errorMsg.value = 'Something went wrong. Please try again.'
       }
     } else {
+      $auth.setUser(data.value.user)
+      navigateTo(route.query.callback || '/')
     }
     submitting.value = false
   }
