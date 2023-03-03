@@ -8,6 +8,12 @@ A web client for ChatGPT, using OpenAI's API.
 
 ## 📢Updates
 
+<details open>
+<summary><strong>2023-03-04</strong></summary>
+
+**Update to the latest official chat model `gpt-3.5-turbo` **
+</details>
+
 Version 2 is a major update that separates the backend functionality as an independent project, hosted at [chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server). 
 
 If you still wish to use the old version, please visit the [v1 branch](https://github.com/WongSaang/chatgpt-ui/tree/v1).
