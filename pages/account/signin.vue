@@ -1,6 +1,5 @@
 <template>
   <v-card
-      color="red-lighten-5"
       style="height: 100vh"
   >
     <v-container>
@@ -8,13 +7,14 @@
         <v-col
             sm="9"
             offset-sm="1"
-            md="8"
-            offset-md="2"
+            md="6"
+            offset-md="3"
         >
           <v-card
               class="mt-15"
+              elevation="0"
           >
-            <v-card-title>Sign in</v-card-title>
+            <div class="text-center text-h4">Sign in</div>
             <v-card-text>
               <v-form ref="signInForm">
                 <v-text-field
@@ -28,18 +28,30 @@
                     :rules="formRules.password"
                     label="Password"
                     variant="underlined"
+                    @keyup.enter="submit"
                 ></v-text-field>
-                <div v-if="errorMsg" class="text-red">{{ errorMsg }}</div>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                      variant="elevated"
-                      color="primary"
-                      :loading="submitting"
-                      @click="submit"
-                  >Submit</v-btn>
-                </v-card-actions>
+
               </v-form>
+
+              <div v-if="errorMsg" class="text-red">{{ errorMsg }}</div>
+
+              <div
+                class="mt-5 d-flex justify-space-between"
+              >
+                <v-btn
+                    @click="navigateTo('/account/signup')"
+                    variant="text"
+                    color="primary"
+                >Create account</v-btn>
+
+                <v-btn
+                    color="primary"
+                    :loading="submitting"
+                    @click="submit"
+                    size="large"
+                >Submit</v-btn>
+              </div>
+
             </v-card-text>
           </v-card>
         </v-col>
@@ -70,17 +82,30 @@ const errorMsg = ref(null)
 const signInForm = ref(null)
 const valid = ref(true)
 const submitting = ref(false)
+const route = useRoute()
+
 const submit = async () => {
   errorMsg.value = null
   const { valid } = await signInForm.value.validate()
   if (valid) {
     submitting.value = true
-    const error = await $auth.login(formData.value.username, formData.value.password)
-    submitting.value = false
-    if (!error) {
-      return await $auth.callback()
+    const { data, error } = await useFetch('/api/account/login/', {
+      method: 'POST',
+      body: JSON.stringify(formData.value)
+    })
+    if (error.value) {
+      if (error.value.status === 400) {
+        if (error.value.data.non_field_errors) {
+          errorMsg.value = error.value.data.non_field_errors[0]
+        }
+      } else {
+        errorMsg.value = 'Something went wrong. Please try again.'
+      }
+    } else {
+      $auth.setUser(data.value.user)
+      navigateTo(route.query.callback || '/')
     }
-    errorMsg.value = error
+    submitting.value = false
   }
 }
 

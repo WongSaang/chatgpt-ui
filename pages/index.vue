@@ -18,16 +18,14 @@ const abortFetch = () => {
   fetchingResponse.value = false
 }
 const fetchReply = async (message, parentMessageId) => {
-  const token = await $auth.retrieveToken()
   ctrl = new AbortController()
   try {
-    await fetchEventSource('/api/conversation', {
+    await fetchEventSource('/api/conversation/', {
       signal: ctrl.signal,
       method: 'POST',
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
         model: currentModel.value,
