@@ -11,9 +11,12 @@ A web client for ChatGPT, using OpenAI's API.
 <details open>
 <summary><strong>2023-03-04</strong></summary>
 
-**Update to the latest official chat model `gpt-3.5-turbo` **
+**Update to the latest official chat model ** `gpt-3.5-turbo`
 </details>
 
+<details open>
+
+<summary><strong>2023-02-24</strong></summary>
 Version 2 is a major update that separates the backend functionality as an independent project, hosted at [chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server). 
 
 If you still wish to use the old version, please visit the [v1 branch](https://github.com/WongSaang/chatgpt-ui/tree/v1).
@@ -24,6 +27,8 @@ Version 2 introduces the following new features:
 - 😘 User authentication, supporting multiple users.
 - 😀 Ability to store data in an external database (defaulting to Sqlite).
 - 😎 Session persistence, allowing the API to answer questions based on your context.
+
+</details>
 
 
 ## Quick start with Docker Compose
