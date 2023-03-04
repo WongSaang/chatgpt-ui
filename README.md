@@ -4,14 +4,17 @@
 
 # ChatGPT UI
 
-A web client for ChatGPT, using OpenAI's API.
+A web client for ChatGPT, using OpenAI's API. Provides Docker images and also supports quick deployment to servers using shell scripts.
 
 ## 📢Updates
 
 <details open>
 <summary><strong>2023-03-04</strong></summary>
 
-**Update to the latest official chat model ** `gpt-3.5-turbo`
+**Update to the latest official chat model**  `gpt-3.5-turbo`
+
+**🎉🎉🎉Provide a shell script that can be used to quickly deploy the service to server** [Quick start](#one-click-depolyment)
+
 </details>
 
 <details open>
@@ -30,6 +33,30 @@ Version 2 introduces the following new features:
 
 </details>
 
+## 🚀 One-click deployment <a name="one-click-depolyment"></a>
+
+Note: This script has only been tested on Ubuntu Server 22.04 LTS.
+
+```bash
+bash <(curl -Ls https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/deployment.sh)
+```
+
+> If you have a domain name, you can point it to the server's IP address using DNS resolution. Of course, using the server's IP address directly is also possible. 
+> During the script's execution, you will be prompted to enter a domain name. If you do not have a domain name, you can enter the server's IP address directly.
+
+### After the deployment is complete
+
+Access `http(s)://your.domain:9000/admin` / IP `http(s)://123.123.123.123:9000/admin` to log in to the administration panel.
+
+Default superuser: `admin`
+
+Default password: `password`
+
+Before you can start chatting, you need to add an OpenAI API key. In the Settings model, add a record with the name `openai_api_key` and the value as your API key.
+
+Now you can access the web client at `http(s)://your.domain` or `http://123.123.123.123` to start chatting.
+
+🎉🎉🎉 Enjoy it!
 
 ## Quick start with Docker Compose
 
