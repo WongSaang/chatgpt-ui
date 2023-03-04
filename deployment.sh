@@ -2,8 +2,6 @@
 
 read -p "Please enter a resolved domain name: " domain
 
-export APP_DOMAIN="${domain}:9000"
-
 if [[ $(which docker) ]]; then
     echo "Docker is already installed"
 else
@@ -45,6 +43,6 @@ sudo curl -L "https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/docker
 
 echo "Starting services..."
 
-sudo docker-compose up -d
+sudo APP_DOMAIN="${domain}:9000" docker-compose up -d
 
 echo "Done"
