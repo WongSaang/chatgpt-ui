@@ -20,6 +20,7 @@ const contentHtml = computed(() => {
 <template>
   <div
       v-html="contentHtml"
+      class="text-body-1 text-justify"
   ></div>
 
 </template>
