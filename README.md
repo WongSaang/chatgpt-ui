@@ -80,10 +80,18 @@ services:
   backend-wsgi-server:
     image: wongsaang/chatgpt-ui-wsgi-server:latest
     environment:
-      #      - DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
+      - APP_DOMAIN=${APP_DOMAIN:-localhost:9000} # CSRF whitelist，Add the address of your chatgpt-ui-web-server here, default is localhost:9000
+      #- DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
+      #- OPENAI_API_PROXY=https://openai.proxy.com # If you are in China, you can use the proxy provided by the author to speed up the connection to the OpenAI API. If you do not need to use the proxy, you can delete this parameter.
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
+      # If you want to use the email verification function, you need to configure the following parameters
+    #      - EMAIL_HOST=SMTP server address
+    #      - EMAIL_PORT=SMTP server port
+    #      - EMAIL_HOST_USER=
+    #      - EMAIL_HOST_PASSWORD=
+    #      - EMAIL_USE_TLS=True
     ports:
       - '8000:8000'
     networks:
