@@ -4,7 +4,7 @@
 
 # ChatGPT UI
 
-A web client for ChatGPT, using OpenAI's API. Provides Docker images and also supports quick deployment to servers using shell scripts.
+A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
 
 ## 📢Updates
 
