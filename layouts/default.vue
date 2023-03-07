@@ -25,8 +25,62 @@ const setLang = (lang) => {
 
 const conversations = useConversions()
 
-onNuxtReady(async () => {
+const editingConversation = ref(null)
+const deletingConversationIndex = ref(null)
+
+const editConversation = (index) => {
+  editingConversation.value = conversations.value[index]
+}
+
+const updateConversation = async (index) => {
+  editingConversation.value.updating = true
+  const { data, error } = await useAuthFetch(`/api/chat/conversations/${editingConversation.value.id}/`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      topic: editingConversation.value.topic
+    })
+  })
+  if (!error.value) {
+    conversations.value[index] = editingConversation.value
+  }
+  editingConversation.value = null
+}
+
+const deleteConversation = async (index) => {
+  deletingConversationIndex.value = index
+  const { data, error } = await useAuthFetch(`/api/chat/conversations/${conversations.value[index].id}/`, {
+    method: 'DELETE'
+  })
+  deletingConversationIndex.value = null
+  if (!error.value) {
+    conversations.value.splice(index, 1)
+  }
+}
+
+const clearConversations = async () => {
+  deletingConversations.value = true
+  const { data, error } = await useAuthFetch(`/api/chat/conversations/delete_all`, {
+    method: 'DELETE'
+  })
+  if (!error.value) {
+    loadConversations()
+    clearConfirmDialog.value = false
+  }
+  deletingConversations.value = false
+}
+
+const clearConfirmDialog = ref(false)
+const deletingConversations = ref(false)
+const loadingConversations = ref(false)
+
+const loadConversations = async () => {
+  loadingConversations.value = true
   conversations.value = await getConversions()
+  loadingConversations.value = false
+}
+
+onNuxtReady(async () => {
+  loadConversations()
 })
 
 </script>
@@ -39,23 +93,75 @@ onNuxtReady(async () => {
         v-model="drawer"
     >
       <div class="px-2 py-2">
-        <v-btn
-            block
-            variant="outlined"
-            prepend-icon="add"
-            size="large"
-            @click="createNewConversion()"
-        >
-          New conversation
-        </v-btn>
         <v-list>
-          <v-list-item
-              v-for="conversation in conversations"
+          <v-list-item>
+            <v-btn
+                block
+                variant="outlined"
+                prepend-icon="add"
+                @click="createNewConversion()"
+                class="text-none"
+            >
+              New conversation
+            </v-btn>
+          </v-list-item>
+          <v-list-item v-show="loadingConversations">
+            <v-list-item-title class="d-flex justify-center">
+              <v-progress-circular indeterminate></v-progress-circular>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+
+        <v-list>
+          <template
+              v-for="(conversation, cIdx) in conversations"
               :key="conversation.id"
-              :title="conversation.topic"
-              active-color="primary"
-              @click="openConversationMessages(conversation)"
-          ></v-list-item>
+          >
+            <v-list-item
+                active-color="primary"
+                v-if="editingConversation && editingConversation.id === conversation.id"
+            >
+              <v-text-field
+                  v-model="editingConversation.topic"
+                  :loading="editingConversation.updating"
+                  variant="underlined"
+                  append-icon="done"
+                  hide-details
+                  density="compact"
+                  autofocus
+                  @click:append="updateConversation(cIdx)"
+              ></v-text-field>
+            </v-list-item>
+            <v-hover
+                v-if="!editingConversation || editingConversation.id !== conversation.id"
+                v-slot="{ isHovering, props }"
+            >
+              <v-list-item
+                  active-color="primary"
+                  @click="openConversationMessages(conversation)"
+                  v-bind="props"
+              >
+                <v-list-item-title>{{ conversation.topic }}</v-list-item-title>
+                <v-list-item-action v-show="isHovering">
+                  <v-btn
+                      icon="edit"
+                      size="small"
+                      variant="text"
+                      @click="editConversation(cIdx)"
+                  >
+                  </v-btn>
+                  <v-btn
+                      icon="delete"
+                      size="small"
+                      variant="text"
+                      :loading="deletingConversationIndex === cIdx"
+                      @click="deleteConversation(cIdx)"
+                  >
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </v-hover>
+          </template>
         </v-list>
       </div>
 
@@ -63,6 +169,47 @@ onNuxtReady(async () => {
         <div class="px-1">
           <v-divider></v-divider>
           <v-list>
+
+            <v-dialog
+                v-model="clearConfirmDialog"
+                persistent
+                width="auto"
+            >
+              <template v-slot:activator="{ props }">
+                <v-list-item
+                    v-bind="props"
+                    rounded="xl"
+                    prepend-icon="delete_forever"
+                    :title="$t('clearConversations')"
+                ></v-list-item>
+              </template>
+              <v-card>
+                <v-card-title class="text-h5">
+                  Are you sure you want to delete all conversations?
+                </v-card-title>
+                <v-card-text>This will be a permanent deletion and cannot be retrieved once deleted. Please proceed with caution.</v-card-text>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="clearConfirmDialog = false"
+                      class="text-none"
+                  >
+                    Cancel deletion
+                  </v-btn>
+                  <v-btn
+                      color="green-darken-1"
+                      variant="text"
+                      @click="clearConversations"
+                      class="text-none"
+                      :loading="deletingConversations"
+                  >
+                    Confirm deletion
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
 
             <v-menu
             >

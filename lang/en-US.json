@@ -16,6 +16,7 @@
   "followSystem": "Follow system",
   "themeMode": "Theme Mode",
   "feedback": "Feedback",
+  "clearConversations": "Clear conversations",
   "roles": {
     "me": "Me",
     "ai": "AI"
