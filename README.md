@@ -2,6 +2,8 @@
   <img alt="demo" src="./demos/demo.png?v=1">
 </p>
 
+[English](./README.md) | [中文](./docs/zh/README.md)
+
 # ChatGPT UI
 
 A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
@@ -82,7 +84,7 @@ services:
     environment:
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000} # CSRF whitelist，Add the address of your chatgpt-ui-web-server here, default is localhost:9000
       #- DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
-      #- OPENAI_API_PROXY=https://openai.proxy.com # If you are in China, you can use the proxy provided by the author to speed up the connection to the OpenAI API. If you do not need to use the proxy, you can delete this parameter.
+      #- OPENAI_API_PROXY=https://openai.proxy.com # Proxy for https://api.openai.com
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
@@ -112,16 +114,30 @@ networks:
     driver: bridge
 ```
 
+## DB_URL schema
+
++----------------------+--------------------------------------------------+
+| Engine               | URL                                              |
++======================+==================================================+
+| PostgreSQL           | ``postgres://USER:PASSWORD@HOST:PORT/NAME``      |
++----------------------+--------------------------------------------------+
+| MySQL                | ``mysql://USER:PASSWORD@HOST:PORT/NAME``         |
++----------------------+--------------------------------------------------+
+| SQLite               | ``sqlite:///PATH``                               |
++----------------------+--------------------------------------------------+
+
+
 ### Set API key
 
-After running the services, you can access the web client at `http://localhost`, and an admin panel at `http://localhost:9000/admin`.
+Access `http(s)://your.domain:9000/admin` / IP `http(s)://123.123.123.123:9000/admin` to log in to the administration panel.
 
 Default superuser: `admin`
 
 Default password: `password`
 
-Before you can start chatting, you need to log in to the admin panel to add an OpenAI API key. In the Settings model, add a record with the name `openai_api_key` and the value as your API key.
+Before you can start chatting, you need to add an OpenAI API key. In the Settings model, add a record with the name `openai_api_key` and the value as your API key.
 
+Now you can access the web client at `http(s)://your.domain` or `http://123.123.123.123` to start chatting.
 
 ## Development
 
