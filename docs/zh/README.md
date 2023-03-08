@@ -83,7 +83,7 @@ services:
     environment:
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000} # CSRF 白名单，在这里设置为 chatgpt-ui-web-server 的地址+端口, 默认： localhost:9000
       #- DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # 连接外部数据库，如果不设置这个参数，则默认使用内置的 Sqlite。需要注意的是，如果不连接外部数据库，数据将在容器销毁后丢失。链接格式请看下面的 DB_URL 格式对照表
-      #- OPENAI_API_PROXY=https://openai.proxy.com # https://api.openai.com 的代理地址
+      #- OPENAI_API_PROXY=https://openai.proxy.com/v1 # https://api.openai.com/v1 的代理地址
       - DJANGO_SUPERUSER_USERNAME=admin # 默认超级用户
       - DJANGO_SUPERUSER_PASSWORD=password # 默认超级用户的密码
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # 默认超级用户邮箱

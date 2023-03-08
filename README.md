@@ -84,7 +84,7 @@ services:
     environment:
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000} # CSRF whitelist，Add the address of your chatgpt-ui-web-server here, default is localhost:9000
       #- DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
-      #- OPENAI_API_PROXY=https://openai.proxy.com # Proxy for https://api.openai.com
+      #- OPENAI_API_PROXY=https://openai.proxy.com/v1 # Proxy for https://api.openai.com/v1
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
@@ -114,7 +114,7 @@ networks:
     driver: bridge
 ```
 
-## DB_URL schema
+### DB_URL schema
 
 | Engine               | URL                                              |
 |----------------------|--------------------------------------------------|
