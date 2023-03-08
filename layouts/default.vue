@@ -1,6 +1,7 @@
 <script setup>
 import {useConversions} from "../composables/states";
 import {getConversions} from "../utils/helper";
+import {useDisplay} from "vuetify";
 
 const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
@@ -79,6 +80,12 @@ const loadConversations = async () => {
   loadingConversations.value = false
 }
 
+const {mdAndUp} = useDisplay()
+
+const drawerPermanent = computed(() => {
+  return mdAndUp.value
+})
+
 onNuxtReady(async () => {
   loadConversations()
 })
@@ -90,7 +97,7 @@ onNuxtReady(async () => {
       :theme="$colorMode.value"
   >
     <v-navigation-drawer
-        v-model="drawer"
+        :permanent="drawerPermanent"
     >
       <div class="px-2 py-2">
         <v-list>
@@ -173,7 +180,6 @@ onNuxtReady(async () => {
             <v-dialog
                 v-model="clearConfirmDialog"
                 persistent
-                width="auto"
             >
               <template v-slot:activator="{ props }">
                 <v-list-item
@@ -248,7 +254,7 @@ onNuxtReady(async () => {
     </v-navigation-drawer>
 
     <v-app-bar
-        class="d-lg-none"
+        class="d-md-none"
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
