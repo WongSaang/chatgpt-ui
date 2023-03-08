@@ -102,7 +102,7 @@ onNuxtReady(async () => {
                 @click="createNewConversion()"
                 class="text-none"
             >
-              New conversation
+              {{ $t('newConversation') }}
             </v-btn>
           </v-list-item>
           <v-list-item v-show="loadingConversations">

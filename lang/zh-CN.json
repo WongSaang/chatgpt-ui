@@ -16,7 +16,8 @@
   "followSystem": "跟随系统",
   "themeMode": "主题模式",
   "feedback": "反馈",
-  "clearConversations": "清除会话",
+  "newConversation": "新的对话",
+  "clearConversations": "清除对话",
   "roles": {
     "me": "我",
     "ai": "AI"
