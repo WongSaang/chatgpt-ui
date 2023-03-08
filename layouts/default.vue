@@ -99,6 +99,7 @@ onNuxtReady(async () => {
     <v-navigation-drawer
         v-model="drawer"
         :permanent="drawerPermanent"
+        width="300"
     >
       <div class="px-2 py-2">
         <v-list>
@@ -127,6 +128,7 @@ onNuxtReady(async () => {
           >
             <v-list-item
                 active-color="primary"
+                rounded="xl"
                 v-if="editingConversation && editingConversation.id === conversation.id"
             >
               <v-text-field
@@ -137,6 +139,7 @@ onNuxtReady(async () => {
                   hide-details
                   density="compact"
                   autofocus
+                  @keyup.enter="updateConversation(cIdx)"
                   @click:append="updateConversation(cIdx)"
               ></v-text-field>
             </v-list-item>
@@ -145,28 +148,33 @@ onNuxtReady(async () => {
                 v-slot="{ isHovering, props }"
             >
               <v-list-item
+                  rounded="xl"
                   active-color="primary"
                   @click="openConversationMessages(conversation)"
                   v-bind="props"
               >
                 <v-list-item-title>{{ conversation.topic }}</v-list-item-title>
-                <v-list-item-action v-show="isHovering">
-                  <v-btn
-                      icon="edit"
-                      size="small"
-                      variant="text"
-                      @click="editConversation(cIdx)"
+                <template v-slot:append>
+                  <div
+                      v-show="isHovering"
                   >
-                  </v-btn>
-                  <v-btn
-                      icon="delete"
-                      size="small"
-                      variant="text"
-                      :loading="deletingConversationIndex === cIdx"
-                      @click="deleteConversation(cIdx)"
-                  >
-                  </v-btn>
-                </v-list-item-action>
+                    <v-btn
+                        icon="edit"
+                        size="small"
+                        variant="text"
+                        @click="editConversation(cIdx)"
+                    >
+                    </v-btn>
+                    <v-btn
+                        icon="delete"
+                        size="small"
+                        variant="text"
+                        :loading="deletingConversationIndex === cIdx"
+                        @click="deleteConversation(cIdx)"
+                    >
+                    </v-btn>
+                  </div>
+                </template>
               </v-list-item>
             </v-hover>
           </template>
