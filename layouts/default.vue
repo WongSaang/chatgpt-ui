@@ -97,6 +97,7 @@ onNuxtReady(async () => {
       :theme="$colorMode.value"
   >
     <v-navigation-drawer
+        v-model="drawer"
         :permanent="drawerPermanent"
     >
       <div class="px-2 py-2">
@@ -262,24 +263,30 @@ onNuxtReady(async () => {
 
       <v-spacer></v-spacer>
 
-      <v-menu
-      >
-        <template v-slot:activator="{ props }">
-          <v-btn
-              v-bind="props"
-              icon="help_outline"
-              title="Feedback"
-          ></v-btn>
-        </template>
-        <v-list
-        >
-          <v-list-item
-              @click="feedback"
-          >
-            <v-list-item-title>{{ $t('feedback') }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <v-btn
+          :title="$t('newConversation')"
+          icon="add"
+          @click="createNewConversion()"
+      ></v-btn>
+
+<!--      <v-menu-->
+<!--      >-->
+<!--        <template v-slot:activator="{ props }">-->
+<!--          <v-btn-->
+<!--              v-bind="props"-->
+<!--              icon="help_outline"-->
+<!--              title="Feedback"-->
+<!--          ></v-btn>-->
+<!--        </template>-->
+<!--        <v-list-->
+<!--        >-->
+<!--          <v-list-item-->
+<!--              @click="feedback"-->
+<!--          >-->
+<!--            <v-list-item-title>{{ $t('feedback') }}</v-list-item-title>-->
+<!--          </v-list-item>-->
+<!--        </v-list>-->
+<!--      </v-menu>-->
     </v-app-bar>
 
     <v-main>
