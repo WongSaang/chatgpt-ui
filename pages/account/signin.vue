@@ -22,6 +22,7 @@
                     :rules="formRules.username"
                     label="User name"
                     variant="underlined"
+                    clearable
                 ></v-text-field>
                 <v-text-field
                     v-model="formData.password"
@@ -29,6 +30,10 @@
                     label="Password"
                     variant="underlined"
                     @keyup.enter="submit"
+                    clearable
+                    :type="passwordInputType"
+                    :append-inner-icon="passwordInputType === 'password' ? 'visibility' : 'visibility_off'"
+                    @click:append-inner="passwordInputType = passwordInputType === 'password' ? 'text' : 'password'"
                 ></v-text-field>
 
               </v-form>
@@ -83,6 +88,7 @@ const signInForm = ref(null)
 const valid = ref(true)
 const submitting = ref(false)
 const route = useRoute()
+const passwordInputType = ref('password')
 
 const submit = async () => {
   errorMsg.value = null
