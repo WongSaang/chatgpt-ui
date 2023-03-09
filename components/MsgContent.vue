@@ -3,32 +3,33 @@ import { marked } from "marked"
 import hljs from "highlight.js"
 import copy from 'copy-to-clipboard'
 
-// Part of the code comes from this project https://github.com/arronhunt/highlightjs-copy, thanks to the author's contribution
+marked.setOptions({
+  highlight: function (code, lang) {
+    const language = hljs.getLanguage(lang) ? lang : 'plaintext'
+    return `<div class="hljs-code-header d-flex align-center justify-space-between bg-grey-darken-3 pa-1"><span class="pl-2 text-caption">${language}</span><button class="hljs-copy-button" data-copied="false">Copy</button></div><div class="hljs-code-body">${hljs.highlight(code, { language }).value}</div>`
+  },
+  langPrefix: 'hljs-code-container my-3 hljs language-', // highlight.js css class prefix
+})
 
-hljs.addPlugin({
-  'after:highlightElement': ({ el, result, text }) => {
-    let header = el.parentElement.querySelector(".hljs-code-header");
-    if (header) {
-      header.remove();
-    }
+const props = defineProps(['content'])
 
-    header = Object.assign(document.createElement("div"), {
-      className: "hljs-code-header d-flex align-center justify-space-between bg-grey-darken-3 pa-1",
-      innerHTML: `<div class="pl-2 text-caption">${result.language}</div>`
-    });
+const contentHtml = ref('')
 
-    let copyButton = Object.assign(document.createElement("button"), {
-      innerHTML: "Copy",
-      className: "hljs-copy-button",
-    });
-    copyButton.dataset.copied = false;
+const contentElm = ref(null)
 
-    header.append(copyButton);
-    //
-    el.parentElement.classList.add("d-flex","flex-column", "my-3");
-    el.parentElement.prepend(header);
+watchEffect(() => {
+  contentHtml.value = props.content ? marked(props.content) : ''
+})
+
+const bindCopyCodeToButtons = () => {
+  if (!contentElm.value) {
+    return
+  }
+  contentElm.value.querySelectorAll('.hljs-code-container').forEach((codeContainer) => {
+    const copyButton = codeContainer.querySelector('.hljs-copy-button');
+    const codeBody = codeContainer.querySelector('.hljs-code-body');
     copyButton.onclick = function () {
-      copy(text);
+      copy(codeBody.textContent ?? '');
 
       copyButton.innerHTML = "Copied!";
       copyButton.dataset.copied = 'true';
@@ -38,39 +39,15 @@ hljs.addPlugin({
         copyButton.dataset.copied = 'false';
       }, 2000);
     };
-  }
-});
-
-marked.setOptions({
-  // highlight: function (code, lang) {
-  //   const language = hljs.getLanguage(lang) ? lang : 'plaintext'
-  //   return hljs.highlight(code, { language }).value
-  // },
-  langPrefix: 'hljs language-', // highlight.js css class prefix
-})
-
-const props = defineProps(['content'])
-
-const contentHtml = ref('')
-
-const contentElm = ref(null)
-
-const highlightCode = () => {
-  if (!contentElm.value) {
-    return
-  }
-  contentElm.value.querySelectorAll('pre code').forEach((block) => {
-    hljs.highlightElement(block)
   })
 }
 
-watchEffect(() => {
-  contentHtml.value = props.content ? marked(props.content) : ''
-  if (props.content && props.content.endsWith('```')) {
-    nextTick(() => {
-      highlightCode()
-    })
-  }
+onMounted(() => {
+  bindCopyCodeToButtons()
+})
+
+onUpdated(() => {
+  bindCopyCodeToButtons()
 })
 
 </script>
@@ -86,6 +63,12 @@ watchEffect(() => {
 <style>
 .chat-msg-content ol {
   list-style-position: inside;
+}
+.hljs-code-container {
+  border-radius: 3px;
+}
+.hljs-code-header {
+  margin: -1em -1em 10px -1em;
 }
 .hljs-copy-button{
   width:2rem;height:2rem;text-indent:-9999px;color:#fff;
