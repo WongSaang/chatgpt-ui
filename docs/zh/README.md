@@ -2,7 +2,7 @@
   <img alt="demo" src="../../demos/demo.gif?v=1">
 </p>
 
-[English](./README.md) | [中文](./docs/zh/README.md)
+[English](../../README.md) | [中文](./docs/zh/README.md)
 
 # ChatGPT UI
 
