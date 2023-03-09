@@ -13,7 +13,7 @@ hljs.addPlugin({
     }
 
     header = Object.assign(document.createElement("div"), {
-      className: "hljs-code-header d-flex align-center justify-space-between bg-black pa-1",
+      className: "hljs-code-header d-flex align-center justify-space-between bg-grey-darken-3 pa-1",
       innerHTML: `<div class="pl-2 text-caption">${result.language}</div>`
     });
 
@@ -56,16 +56,22 @@ const contentHtml = ref('')
 const contentElm = ref(null)
 
 const highlightCode = () => {
+  if (!contentElm.value) {
+    return
+  }
   contentElm.value.querySelectorAll('pre code').forEach((block) => {
     hljs.highlightElement(block)
   })
 }
 
 watchEffect(() => {
+  console.log('content changed', props.content)
   contentHtml.value = props.content ? marked(props.content) : ''
-  nextTick(() => {
-    highlightCode()
-  })
+  if (props.content && props.content.endsWith('```')) {
+    nextTick(() => {
+      highlightCode()
+    })
+  }
 })
 
 </script>

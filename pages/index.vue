@@ -10,6 +10,29 @@ const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
 const fetchingResponse = ref(false)
+const messageQueue = []
+let isProcessingQueue = false
+
+const processMessageQueue = () => {
+  if (isProcessingQueue || messageQueue.length === 0) {
+    return
+  }
+  if (!currentConversation.value.messages[currentConversation.value.messages.length - 1].is_bot) {
+    currentConversation.value.messages.push({id: null, is_bot: true, message: ''})
+  }
+  isProcessingQueue = true
+  const nextMessage = messageQueue.shift()
+  let wordIndex = 0;
+  const intervalId = setInterval(() => {
+    currentConversation.value.messages[currentConversation.value.messages.length - 1].message += nextMessage[wordIndex]
+    wordIndex++
+    if (wordIndex === nextMessage.length) {
+      clearInterval(intervalId)
+      isProcessingQueue = false
+      processMessageQueue()
+    }
+  }, 50)
+}
 
 let ctrl
 const abortFetch = () => {
@@ -69,11 +92,8 @@ const fetchReply = async (message, parentMessageId) => {
           return;
         }
 
-        if (currentConversation.value.messages[currentConversation.value.messages.length - 1].is_bot) {
-          currentConversation.value.messages[currentConversation.value.messages.length - 1].message += data.content
-        } else {
-          currentConversation.value.messages.push({id: null, is_bot: true, message: data.content})
-        }
+        messageQueue.push(data.content)
+        processMessageQueue()
 
         scrollChatWindow()
       },
