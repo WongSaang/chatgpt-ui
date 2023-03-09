@@ -26,14 +26,14 @@ Version 2 is a major update that separates the backend functionality as an indep
 
 If you still wish to use the old version, please visit the [v1 branch](https://github.com/WongSaang/chatgpt-ui/tree/v1).
 
-Version 2 introduces the following new features:
+</details>
+
+## Version 2 introduces the following new features:
 
 - 😉 Separation of the frontend and backend, with the backend now using the Python-based Django framework.
 - 😘 User authentication, supporting multiple users.
 - 😀 Ability to store data in an external database (defaulting to Sqlite).
 - 😎 Session persistence, allowing the API to answer questions based on your context.
-
-</details>
 
 ## 🚀 One-click deployment <a name="one-click-depolyment"></a>
 
