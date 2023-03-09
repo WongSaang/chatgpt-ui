@@ -65,7 +65,6 @@ const highlightCode = () => {
 }
 
 watchEffect(() => {
-  console.log('content changed', props.content)
   contentHtml.value = props.content ? marked(props.content) : ''
   if (props.content && props.content.endsWith('```')) {
     nextTick(() => {

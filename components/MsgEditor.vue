@@ -2,13 +2,12 @@
   <v-textarea
       v-model="message"
       :label="$t('writeAMessage')"
-      :placeholder="$t('writeAMessage') + '...'"
+      :placeholder="hint"
       rows="1"
       :auto-grow="autoGrow"
       :disabled="disabled"
       :loading="loading"
-      :hint="hint"
-      :hide-details="loading"
+      :hide-details="true"
       append-inner-icon="send"
       @keyup.enter.exact="enterOnly"
       @click:appendInner="clickSendBtn"
@@ -59,6 +58,9 @@ export default {
         this.sendMessage(msg)
       }
       this.message = ""
+    },
+    usePrompt(prompt) {
+      this.message = prompt
     },
     clickSendBtn () {
       this.send()

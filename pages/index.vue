@@ -1,4 +1,6 @@
 <script setup>
+import Prompt from "~/components/Prompt.vue";
+
 definePageMeta({
   middleware: ["auth"]
 })
@@ -140,6 +142,10 @@ const showSnackbar = (text) => {
   snackbar.value = true
 }
 
+const editor = ref(null)
+const usePrompt = (prompt) => {
+  editor.value.usePrompt(prompt)
+}
 
 </script>
 
@@ -188,6 +194,7 @@ const showSnackbar = (text) => {
   <Welcome v-else />
   <v-footer app class="d-flex flex-column">
     <div class="px-md-16 w-100 d-flex align-center">
+      <Prompt v-show="!fetchingResponse" :use-prompt="usePrompt" />
       <v-btn
           v-show="fetchingResponse"
           icon="close"
@@ -195,7 +202,7 @@ const showSnackbar = (text) => {
           class="mr-3"
           @click="stop"
       ></v-btn>
-      <MsgEditor :send-message="send" :disabled="fetchingResponse" :loading="fetchingResponse" />
+      <MsgEditor ref="editor" :send-message="send" :disabled="fetchingResponse" :loading="fetchingResponse" />
     </div>
 
     <div class="px-4 py-2 text-disabled text-caption font-weight-light text-center w-100">
