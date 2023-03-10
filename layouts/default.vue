@@ -1,6 +1,4 @@
 <script setup>
-import {useConversions} from "../composables/states";
-import {getConversions} from "../utils/helper";
 import {useDisplay} from "vuetify";
 
 const { $i18n } = useNuxtApp()
@@ -25,6 +23,7 @@ const setLang = (lang) => {
 }
 
 const conversations = useConversions()
+const currentConversation = useConversion()
 
 const editingConversation = ref(null)
 const deletingConversationIndex = ref(null)
@@ -54,6 +53,9 @@ const deleteConversation = async (index) => {
   })
   deletingConversationIndex.value = null
   if (!error.value) {
+    if (conversations.value[index].id === currentConversation.value.id) {
+      createNewConversion()
+    }
     conversations.value.splice(index, 1)
   }
 }
@@ -162,7 +164,7 @@ onNuxtReady(async () => {
                         icon="edit"
                         size="small"
                         variant="text"
-                        @click="editConversation(cIdx)"
+                        @click.stop="editConversation(cIdx)"
                     >
                     </v-btn>
                     <v-btn
@@ -170,7 +172,7 @@ onNuxtReady(async () => {
                         size="small"
                         variant="text"
                         :loading="deletingConversationIndex === cIdx"
-                        @click="deleteConversation(cIdx)"
+                        @click.stop="deleteConversation(cIdx)"
                     >
                     </v-btn>
                   </div>
