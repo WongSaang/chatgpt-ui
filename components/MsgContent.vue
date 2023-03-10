@@ -63,7 +63,7 @@ onUpdated(() => {
 
 <style>
 .chat-msg-content ol {
-  list-style-position: inside;
+  padding-left: 2em;
 }
 .hljs-code-container {
   border-radius: 3px;
