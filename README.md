@@ -9,6 +9,15 @@
 A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
 
 ## 📢Updates
+<details open>
+<summary><strong>2023-03-10</strong></summary>
+
+Add 2 environment variables to control the typewriter effect:
+
+- `NUXT_PUBLIC_TYPEWRITER=true` to enable/disable the typewriter effect
+- `NUXT_PUBLIC_TYPEWRITER_DELAY=50` to set the delay time for each character in milliseconds.
+
+</details>
 
 <details open>
 <summary><strong>2023-03-04</strong></summary>
@@ -19,7 +28,7 @@ A ChatGPT web client that supports multiple users, multiple database connections
 
 </details>
 
-<details open>
+<details>
 
 <summary><strong>2023-02-24</strong></summary>
 Version 2 is a major update that separates the backend functionality as an independent project, hosted at [chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server). 
@@ -73,6 +82,9 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
+      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # App name
+      - NUXT_PUBLIC_TYPEWRITER=true # Enable typewriter effect, default is false
+      - NUXT_PUBLIC_TYPEWRITER_DELAY=100 # Typewriter effect delay time, default is 50ms
     depends_on:
       - backend-web-server
     ports:

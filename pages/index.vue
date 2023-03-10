@@ -24,19 +24,22 @@ const processMessageQueue = () => {
   }
   isProcessingQueue = true
   const nextMessage = messageQueue.shift()
-  currentConversation.value.messages[currentConversation.value.messages.length - 1].message += nextMessage
-  isProcessingQueue = false
-  processMessageQueue()
-  // let wordIndex = 0;
-  // const intervalId = setInterval(() => {
-  //   currentConversation.value.messages[currentConversation.value.messages.length - 1].message += nextMessage[wordIndex]
-  //   wordIndex++
-  //   if (wordIndex === nextMessage.length) {
-  //     clearInterval(intervalId)
-  //     isProcessingQueue = false
-  //     processMessageQueue()
-  //   }
-  // }, 50)
+  if (runtimeConfig.public.typewriter) {
+    let wordIndex = 0;
+    const intervalId = setInterval(() => {
+      currentConversation.value.messages[currentConversation.value.messages.length - 1].message += nextMessage[wordIndex]
+      wordIndex++
+      if (wordIndex === nextMessage.length) {
+        clearInterval(intervalId)
+        isProcessingQueue = false
+        processMessageQueue()
+      }
+    }, runtimeConfig.public.typewriterDelay)
+  } else {
+    currentConversation.value.messages[currentConversation.value.messages.length - 1].message += nextMessage
+    isProcessingQueue = false
+    processMessageQueue()
+  }
 }
 
 let ctrl
