@@ -10,7 +10,7 @@ services:
     depends_on:
       - backend-web-server
     ports:
-      - '80:80'
+      - '${CLIENT_PORT:-80}:80'
     networks:
       - chatgpt_ui_network
   backend-wsgi-server:
@@ -28,7 +28,7 @@ services:
 #      - EMAIL_HOST_PASSWORD=
 #      - EMAIL_USE_TLS=True
     ports:
-      - '8000:8000'
+      - '${WSGI_PORT:-8000}:8000'
     networks:
       - chatgpt_ui_network
   backend-web-server:
@@ -36,7 +36,7 @@ services:
     environment:
       - BACKEND_URL=http://backend-wsgi-server:8000
     ports:
-      - '9000:80'
+      - '${SERVER_PORT:-9000}:80'
     depends_on:
       - backend-wsgi-server
     networks:
