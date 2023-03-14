@@ -13,6 +13,7 @@ services:
       - '${CLIENT_PORT:-80}:80'
     networks:
       - chatgpt_ui_network
+    restart: always
   backend-wsgi-server:
     image: wongsaang/chatgpt-ui-wsgi-server:latest
     environment:
@@ -31,6 +32,7 @@ services:
       - '${WSGI_PORT:-8000}:8000'
     networks:
       - chatgpt_ui_network
+    restart: always
   backend-web-server:
     image: wongsaang/chatgpt-ui-web-server:latest
     environment:
@@ -41,6 +43,7 @@ services:
       - backend-wsgi-server
     networks:
       - chatgpt_ui_network
+    restart: always
 
 networks:
   chatgpt_ui_network:
