@@ -10,6 +10,14 @@ A ChatGPT web client that supports multiple users, multiple database connections
 
 ## 📢Updates
 <details open>
+<summary><strong>2023-03-15</strong></summary>
+
+Add "open_registration" setting option in the admin panel to control whether user registration is enabled. You can log in to the admin panel and find this setting option under `Chat->Setting`. The default value of this setting is `True` (allow user registration). If you do not need it, please change it to `False`.
+
+
+</details>
+
+<details open>
 <summary><strong>2023-03-10</strong></summary>
 
 Add 2 environment variables to control the typewriter effect:

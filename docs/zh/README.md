@@ -10,6 +10,13 @@ ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数
 
 ## 📢 更新
 <details open>
+<summary><strong>2023-03-15</strong></summary>
+
+在管理后台增加 `open_registration` 设置项，用于控制是否开放用户注册。你可以登录管理后台，在 `Chat->Setting` 中看到这个设置项，默认是 `True` (允许用户注册)，如果不需要，请改成 `False`。
+
+</details>
+
+<details open>
 <summary><strong>2023-03-10</strong></summary>
 
 增加 2 个环境变量来控制打字机效果, 详见下方 docker-compose 配置的环境变量说明
