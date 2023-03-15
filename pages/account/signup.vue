@@ -67,7 +67,11 @@ const submit = async () => {
           errorMsg.value = error.value.data.non_field_errors[0]
         }
       } else {
-        errorMsg.value = 'Something went wrong. Please try again.'
+        if (error.value.data.detail) {
+          errorMsg.value = error.value.data.detail
+        } else {
+          errorMsg.value = 'Something went wrong. Please try again.'
+        }
       }
     } else {
       $auth.setUser(data.value.user)
