@@ -228,6 +228,8 @@ onNuxtReady(async () => {
               </v-card>
             </v-dialog>
 
+            <ModelParameters/>
+
             <v-menu
             >
               <template v-slot:activator="{ props }">

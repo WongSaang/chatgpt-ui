@@ -18,6 +18,13 @@
   "feedback": "反馈",
   "newConversation": "新的对话",
   "clearConversations": "清除对话",
+  "modelParameters": "模型参数",
+  "model": "模型",
+  "temperature": "Temperature",
+  "topP": "Top P",
+  "frequencyPenalty": "Frequency Penalty",
+  "presencePenalty": "Presence Penalty",
+  "maxTokens": "Max Tokens",
   "roles": {
     "me": "我",
     "ai": "AI"

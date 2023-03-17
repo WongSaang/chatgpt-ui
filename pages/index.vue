@@ -51,6 +51,14 @@ const abortFetch = () => {
 }
 const fetchReply = async (message, parentMessageId) => {
   ctrl = new AbortController()
+
+  const data = Object.assign({}, currentModel.value, {
+    openaiApiKey: openaiApiKey.value,
+    message: message,
+    parentMessageId: parentMessageId,
+    conversationId: currentConversation.value.id
+  })
+
   try {
     await fetchEventSource('/api/conversation/', {
       signal: ctrl.signal,
@@ -59,13 +67,7 @@ const fetchReply = async (message, parentMessageId) => {
         'accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        model: currentModel.value,
-        openaiApiKey: openaiApiKey.value,
-        message: message,
-        parentMessageId: parentMessageId,
-        conversationId: currentConversation.value.id
-      }),
+      body: JSON.stringify(data),
       onopen(response) {
         if (response.ok && response.headers.get('content-type') === EventStreamContentType) {
           return;

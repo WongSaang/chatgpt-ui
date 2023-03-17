@@ -18,6 +18,13 @@
   "feedback": "Feedback",
   "newConversation": "New conversation",
   "clearConversations": "Clear conversations",
+  "modelParameters": "Model Parameters",
+  "model": "Model",
+  "temperature": "Temperature",
+  "topP": "Top P",
+  "frequencyPenalty": "Frequency Penalty",
+  "presencePenalty": "Presence Penalty",
+  "maxTokens": "Max Tokens",
   "roles": {
     "me": "Me",
     "ai": "AI"

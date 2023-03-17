@@ -11,32 +11,28 @@ const set = (key, val) => {
     localStorage.setItem(key, JSON.stringify(val))
 }
 
-const DEFAULT_OPENAI_MODEL = 'text-davinci-003'
-
 export const setModels = (val) => {
     const models = useModels()
-    set(STORAGE_KEY.OPENAI_MODELS, val)
+    set(STORAGE_KEY.MODELS, val)
     models.value = val
 }
 
 export const getStoredModels = () => {
-    let models = get(STORAGE_KEY.OPENAI_MODELS)
+    let models = get(STORAGE_KEY.MODELS)
     if (!models) {
-        models = [DEFAULT_OPENAI_MODEL]
+        models = [DEFAULT_MODEL]
     }
     return models
 }
 
-export const setCurrentModel = (val) => {
-    const model = useCurrentModel()
-    set(STORAGE_KEY.CURRENT_OPENAI_MODEL, val)
-    model.value = val
+export const saveCurrentModel = (val) => {
+    set(STORAGE_KEY.CURRENT_MODEL, val)
 }
 
 export const getCurrentModel = () => {
-    let model = get(STORAGE_KEY.CURRENT_OPENAI_MODEL)
+    let model = get(STORAGE_KEY.CURRENT_MODEL)
     if (!model) {
-        model = DEFAULT_OPENAI_MODEL
+        model = DEFAULT_MODEL
     }
     return model
 }
