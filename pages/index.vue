@@ -181,6 +181,7 @@ const deleteMessage = (index) => {
                 v-if="!message.is_bot"
                 :message="message"
                 :message-index="index"
+                :use-prompt="usePrompt"
             />
             <v-card
                 :color="message.is_bot ? '' : 'primary'"
@@ -195,6 +196,7 @@ const deleteMessage = (index) => {
                 v-if="message.is_bot"
                 :message="message"
                 :message-index="index"
+                :use-prompt="usePrompt"
             />
           </div>
         </v-col>

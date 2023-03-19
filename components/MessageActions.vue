@@ -9,6 +9,10 @@ const props = defineProps({
   messageIndex: {
     type: Number,
     required: true
+  },
+  usePrompt: {
+    type: Function,
+    required: true
   }
 })
 
@@ -22,6 +26,10 @@ const showSnackbar = (text) => {
 const copyMessage = () => {
   copy(props.message.message)
   showSnackbar('Copied!')
+}
+
+const editMessage = () => {
+  props.usePrompt(props.message.message)
 }
 
 const deleteMessage = async () => {
@@ -53,8 +61,15 @@ const deleteMessage = async () => {
     <v-list>
       <v-list-item
           @click="copyMessage()"
+          :title="$t('copy')"
+          prepend-icon="content_copy"
       >
-        <v-list-item-title>{{ $t('copy') }}</v-list-item-title>
+      </v-list-item>
+      <v-list-item
+          @click="editMessage()"
+          :title="$t('edit')"
+          prepend-icon="edit"
+      >
       </v-list-item>
 <!--      <v-list-item-->
 <!--          @click="deleteMessage()"-->
