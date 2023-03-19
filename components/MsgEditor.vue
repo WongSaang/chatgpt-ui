@@ -1,17 +1,29 @@
 <template>
-  <v-textarea
-      v-model="message"
-      :label="$t('writeAMessage')"
-      :placeholder="hint"
-      rows="1"
-      :auto-grow="autoGrow"
-      :disabled="disabled"
-      :loading="loading"
-      :hide-details="true"
-      append-inner-icon="send"
-      @keyup.enter.exact="enterOnly"
-      @click:appendInner="clickSendBtn"
-  ></v-textarea>
+  <div
+      class="flex-grow-1 d-flex align-center justify-space-between"
+  >
+    <v-textarea
+        v-model="message"
+        :label="$t('writeAMessage')"
+        :placeholder="hint"
+        :rows="rows"
+        max-rows="8"
+        :auto-grow="autoGrow"
+        :disabled="disabled"
+        :loading="loading"
+        :hide-details="true"
+        clearable
+        variant="outlined"
+        @keydown.enter.exact="enterOnly"
+    ></v-textarea>
+    <v-btn
+        :disabled="loading"
+        icon="send"
+        title="Send"
+        class="ml-3"
+        @click="clickSendBtn"
+    ></v-btn>
+  </div>
 </template>
 
 <script>
@@ -39,7 +51,7 @@ export default {
     message(val) {
       const lines = val.split(/\r\n|\r|\n/).length;
       if (lines > 8) {
-        this.rows = lines;
+        this.rows = 8;
         this.autoGrow = false;
       } else {
         this.rows = 1;
@@ -65,7 +77,8 @@ export default {
     clickSendBtn () {
       this.send()
     },
-    enterOnly () {
+    enterOnly (event) {
+      event.preventDefault();
       if (!isMobile()) {
         this.send()
       }
