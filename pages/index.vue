@@ -182,6 +182,7 @@ const deleteMessage = (index) => {
                 :message="message"
                 :message-index="index"
                 :use-prompt="usePrompt"
+                :delete-message="deleteMessage"
             />
             <v-card
                 :color="message.is_bot ? '' : 'primary'"
@@ -197,6 +198,7 @@ const deleteMessage = (index) => {
                 :message="message"
                 :message-index="index"
                 :use-prompt="usePrompt"
+                :delete-message="deleteMessage"
             />
           </div>
         </v-col>

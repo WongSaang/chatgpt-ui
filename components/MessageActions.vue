@@ -13,6 +13,10 @@ const props = defineProps({
   usePrompt: {
     type: Function,
     required: true
+  },
+  deleteMessage: {
+    type: Function,
+    required: true
   }
 })
 
@@ -71,11 +75,12 @@ const deleteMessage = async () => {
           prepend-icon="edit"
       >
       </v-list-item>
-<!--      <v-list-item-->
-<!--          @click="deleteMessage()"-->
-<!--      >-->
-<!--        <v-list-item-title>{{ $t('delete') }}</v-list-item-title>-->
-<!--      </v-list-item>-->
+      <v-list-item
+          @click="deleteMessage()"
+          :title="$t('delete')"
+          prepend-icon="delete"
+      >
+      </v-list-item>
     </v-list>
   </v-menu>
 
