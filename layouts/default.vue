@@ -1,7 +1,7 @@
 <script setup>
 import {useDisplay} from "vuetify";
 
-const { $i18n } = useNuxtApp()
+const { $i18n, $auth } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const colorMode = useColorMode()
 const drawer = ref(null)
@@ -87,6 +87,15 @@ const {mdAndUp} = useDisplay()
 const drawerPermanent = computed(() => {
   return mdAndUp.value
 })
+
+const signOut = async () => {
+  const { data, error } = await useFetch('/api/account/logout/', {
+    method: 'POST'
+  })
+  if (!error.value) {
+    await $auth.logout()
+  }
+}
 
 onNuxtReady(async () => {
   loadConversations()
@@ -261,6 +270,14 @@ onNuxtReady(async () => {
                 :title="$t('feedback')"
                 @click="feedback"
             ></v-list-item>
+
+            <v-list-item
+                rounded="xl"
+                prepend-icon="logout"
+                :title="$t('signOut')"
+                @click="signOut"
+            ></v-list-item>
+
           </v-list>
         </div>
       </template>
@@ -281,24 +298,6 @@ onNuxtReady(async () => {
           @click="createNewConversion()"
       ></v-btn>
 
-<!--      <v-menu-->
-<!--      >-->
-<!--        <template v-slot:activator="{ props }">-->
-<!--          <v-btn-->
-<!--              v-bind="props"-->
-<!--              icon="help_outline"-->
-<!--              title="Feedback"-->
-<!--          ></v-btn>-->
-<!--        </template>-->
-<!--        <v-list-->
-<!--        >-->
-<!--          <v-list-item-->
-<!--              @click="feedback"-->
-<!--          >-->
-<!--            <v-list-item-title>{{ $t('feedback') }}</v-list-item-title>-->
-<!--          </v-list-item>-->
-<!--        </v-list>-->
-<!--      </v-menu>-->
     </v-app-bar>
 
     <v-main>
