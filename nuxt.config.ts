@@ -53,7 +53,7 @@ export default defineNuxtConfig({
             periodicSyncForUpdates: 20,
         },
         devOptions: {
-            enabled: true,
+            enabled: false,
             type: 'module',
         }
     },
@@ -83,7 +83,7 @@ export default defineNuxtConfig({
     nitro: {
         devProxy: {
             "/api": {
-                target: "http://localhost:8000/api",
+                target: process.env.NUXT_DEV_SERVER ?? 'http://localhost:8000/api',
                 prependPath: true,
                 changeOrigin: true,
             }
