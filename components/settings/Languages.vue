@@ -15,26 +15,23 @@
     </template>
     <v-card>
       <v-toolbar
-          dark
-          color="primary"
       >
         <v-btn
             icon
-            dark
             @click="dialog = false"
         >
-          <v-icon>close</v-icon>
+          <v-icon icon="close"></v-icon>
         </v-btn>
         <v-toolbar-title>{{ $t('language') }}</v-toolbar-title>
         <v-spacer></v-spacer>
-        <!--          <v-toolbar-items>-->
-        <!--            <v-btn-->
-        <!--                variant="text"-->
-        <!--                @click="dialog = false"-->
-        <!--            >-->
-        <!--              Save-->
-        <!--            </v-btn>-->
-        <!--          </v-toolbar-items>-->
+                  <v-toolbar-items>
+                    <v-btn
+                        variant="text"
+                        @click="dialog = false"
+                    >
+                      Save
+                    </v-btn>
+                  </v-toolbar-items>
       </v-toolbar>
       <v-list
       >
