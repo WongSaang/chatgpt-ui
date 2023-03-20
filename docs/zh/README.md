@@ -106,6 +106,7 @@ services:
       - DJANGO_SUPERUSER_USERNAME=admin # 默认超级用户
       - DJANGO_SUPERUSER_PASSWORD=password # 默认超级用户的密码
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # 默认超级用户邮箱
+      - ACCOUNT_EMAIL_VERIFICATION=none # 邮箱验证方式，可选值： none, optional, mandatory. 默认为 optional。如果你不需要验证用户的邮箱，可以设置为 none。
       # 如果您想使用电子邮件验证功能，需要配置以下参数：
     #      - EMAIL_HOST=SMTP server address
     #      - EMAIL_PORT=SMTP server port

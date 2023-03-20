@@ -108,6 +108,7 @@ services:
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
+      - ACCOUNT_EMAIL_VERIFICATION=none # Determines the e-mail verification method during signup – choose one of "none", "optional", or "mandatory". Default is "optional". If you don't need to verify the email, you can set it to "none".
       # If you want to use the email verification function, you need to configure the following parameters
     #      - EMAIL_HOST=SMTP server address
     #      - EMAIL_PORT=SMTP server port
