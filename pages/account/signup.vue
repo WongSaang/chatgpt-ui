@@ -75,7 +75,7 @@ const submit = async () => {
       }
     } else {
       $auth.setUser(data.value.user)
-      navigateTo('/account/onboarding')
+      navigateTo('/account/onboarding?email_verification_required='+data.value.email_verification_required)
     }
 
     submitting.value = false

@@ -45,24 +45,32 @@ onNuxtReady(() => {
               elevation="0"
           >
             <div class="text-center">
-              <h2 class="text-h4">Verify your email</h2>
-              <p class="text-body-2 mt-5">
-                We've sent a verification email to <strong>{{ $auth.user.email }}</strong>. <br>
-                Please check your inbox and click the link to verify your email address.
-              </p>
-              <p v-if="errorMsg"
-                 class="text-red"
-              >{{ errorMsg }}</p>
-              <v-btn
-                  variant="text"
-                  class="mt-5"
-                  color="primary"
-                  :loading="sending"
-                  @click="resendEmail"
-                  :disabled="resent"
-              >
-                {{ resent ? 'Resent' : 'Resend email'}}
-              </v-btn>
+              <div v-if="route.query.email_verification_required && route.query.email_verification_required === 'none'">
+                <h2 class="text-h4">Your registration is successful</h2>
+                <p class="mt-5">
+                  You can now <NuxtLink to="/account/signin">login</NuxtLink> to your account.
+                </p>
+              </div>
+              <div v-else>
+                <h2 class="text-h4">Verify your email</h2>
+                <p class="mt-5">
+                  We've sent a verification email to <strong>{{ $auth.user.email }}</strong>. <br>
+                  Please check your inbox and click the link to verify your email address.
+                </p>
+                <p v-if="errorMsg"
+                   class="text-red"
+                >{{ errorMsg }}</p>
+                <v-btn
+                    variant="text"
+                    class="mt-5"
+                    color="primary"
+                    :loading="sending"
+                    @click="resendEmail"
+                    :disabled="resent"
+                >
+                  {{ resent ? 'Resent' : 'Resend email'}}
+                </v-btn>
+              </div>
             </div>
           </v-card>
         </v-col>
