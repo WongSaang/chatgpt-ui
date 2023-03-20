@@ -65,6 +65,6 @@ sudo curl -L "https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/docker
 
 echo "Starting services..."
 
-sudo APP_DOMAIN="${APP_DOMAIN}:${SERVER_PORT}" CLIENT_PORT=${CLIENT_PORT} SERVER_PORT=${SERVER_PORT} WSGI_PORT=${WSGI_PORT}  docker-compose up --pull -d
+sudo APP_DOMAIN="${APP_DOMAIN}:${SERVER_PORT}" CLIENT_PORT=${CLIENT_PORT} SERVER_PORT=${SERVER_PORT} WSGI_PORT=${WSGI_PORT}  docker-compose up --pull always -d
 
 echo "Done"
