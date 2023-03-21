@@ -25,36 +25,18 @@ export default defineNuxtConfig({
         'highlight.js/styles/panda-syntax-dark.css',
     ],
     modules: [
-        '@vite-pwa/nuxt',
+        '@kevinmarrec/nuxt-pwa',
         '@nuxtjs/color-mode',
         '@nuxtjs/i18n',
     ],
     pwa: {
-        registerType: 'autoUpdate',
         manifest: {
             name: appName,
             short_name: appName,
-            icons: [
-                {
-                    src: 'icon-black.svg',
-                    sizes: '900x900',
-                    purpose: 'any maskable',
-                }
-            ],
+            description: 'A ChatGPT web Client'
         },
         workbox: {
-            navigateFallback: '/',
-            globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
-        },
-        client: {
-            installPrompt: true,
-            // you don't need to include this: only for testing purposes
-            // if enabling periodic sync for update use 1 hour or so (periodicSyncForUpdates: 3600)
-            periodicSyncForUpdates: 20,
-        },
-        devOptions: {
-            enabled: false,
-            type: 'module',
+            enabled: true
         }
     },
     i18n: {
