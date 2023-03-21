@@ -30,6 +30,7 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
     ],
     pwa: {
+        disable: false,
         registerType: 'autoUpdate',
         manifest: {
             name: appName,
@@ -44,6 +45,7 @@ export default defineNuxtConfig({
         },
         workbox: {
             navigateFallback: '/',
+            outDir: 'dist',
             globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
         },
         client: {
@@ -53,7 +55,7 @@ export default defineNuxtConfig({
             periodicSyncForUpdates: 20,
         },
         devOptions: {
-            enabled: false,
+            enabled: true,
             type: 'module',
         }
     },
