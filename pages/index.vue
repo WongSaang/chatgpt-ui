@@ -56,7 +56,7 @@ const fetchReply = async (message, parentMessageId) => {
   const data = Object.assign({}, currentModel.value, {
     openaiApiKey: openaiApiKey.value,
     message: message,
-    parentMessageId: parentMessageId,
+    // parentMessageId: parentMessageId,
     conversationId: currentConversation.value.id
   })
 
@@ -91,6 +91,13 @@ const fetchReply = async (message, parentMessageId) => {
 
         if (event === 'error') {
           throw new Error(data.error);
+        }
+
+        if (event === 'userMessageId') {
+          console.log(currentConversation.value.messages[currentConversation.value.messages.length - 1])
+          currentConversation.value.messages[currentConversation.value.messages.length - 1].id = data.userMessageId
+          console.log(currentConversation.value.messages[currentConversation.value.messages.length - 1])
+          return;
         }
 
         if (event === 'done') {
@@ -184,15 +191,7 @@ const deleteMessage = (index) => {
                 :use-prompt="usePrompt"
                 :delete-message="deleteMessage"
             />
-            <v-card
-                :color="message.is_bot ? '' : 'primary'"
-                rounded="lg"
-                elevation="2"
-            >
-              <v-card-text>
-                <MsgContent :content="message.message" />
-              </v-card-text>
-            </v-card>
+            <MsgContent :message="message" />
             <MessageActions
                 v-if="message.is_bot"
                 :message="message"

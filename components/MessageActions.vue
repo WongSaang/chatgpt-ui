@@ -41,7 +41,7 @@ const deleteMessage = async () => {
     method: 'DELETE'
   })
   if (!error.value) {
-    this.$emit('deleteMessage', props.messageIndex)
+    props.deleteMessage(props.messageIndex)
     showSnackbar('Deleted!')
   }
   showSnackbar('Delete failed')

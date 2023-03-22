@@ -12,14 +12,19 @@ const md = new MarkdownIt({
   },
 })
 
-const props = defineProps(['content'])
+const props = defineProps({
+  message: {
+    type: Object,
+    required: true
+  }
+})
 
 const contentHtml = ref('')
 
 const contentElm = ref(null)
 
 watchEffect(() => {
-  contentHtml.value = props.content ? md.render(props.content) : ''
+  contentHtml.value = props.message.message ? md.render(props.message.message) : ''
 })
 
 const bindCopyCodeToButtons = () => {
@@ -54,11 +59,19 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div
-      ref="contentElm"
-      v-html="contentHtml"
-      class="chat-msg-content"
-  ></div>
+  <v-card
+      :color="message.is_bot ? '' : 'primary'"
+      rounded="lg"
+      elevation="2"
+  >
+    <v-card-text>
+      <div
+          ref="contentElm"
+          v-html="contentHtml"
+          class="chat-msg-content"
+      ></div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <style>
