@@ -156,6 +156,16 @@ Before you can start chatting, you need to add an OpenAI API key. In the Setting
 
 Now you can access the web client at `http(s)://your.domain` or `http://123.123.123.123` to start chatting.
 
+## Donation
+
+> If it is helpful to you, it is also helping me. 
+
+If you want to support me, Buy me a coffee ❤️ [https://www.buymeacoffee.com/WongSaang](https://www.buymeacoffee.com/WongSaang)
+
+<p align="center">
+  <img height="150" src="https://github.com/WongSaang/chatgpt-ui/blob/main/demos/bmc_qr.png?raw=true"/>
+</p>
+
 ## Development
 
 ### Setup

@@ -154,6 +154,16 @@ networks:
 现在可以访问客户端地址 `http(s)://your.domain` / `http://123.123.123.123` 开始聊天。
 
 
+## 续杯咖啡
+
+> 如果对您有帮助，也是在帮助我自己.
+
+如果你想支持我，给我续杯咖啡吧 ❤️ [https://www.buymeacoffee.com/WongSaang](https://www.buymeacoffee.com/WongSaang)
+
+<p align="center">
+  <img height="150" src="https://github.com/WongSaang/chatgpt-ui/blob/main/demos/bmc_qr.png?raw=true"/>
+</p>
+
 ## Development
 
 ### Setup
