@@ -36,7 +36,7 @@ export default defineNuxtConfig({
             description: 'A ChatGPT web Client'
         },
         workbox: {
-            enabled: true
+            enabled: process.env.DEBUT_PWA === 'true',
         }
     },
     i18n: {
