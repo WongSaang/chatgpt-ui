@@ -50,13 +50,12 @@ const abortFetch = () => {
   }
   fetchingResponse.value = false
 }
-const fetchReply = async (message, parentMessageId) => {
+const fetchReply = async (message) => {
   ctrl = new AbortController()
 
   const data = Object.assign({}, currentModel.value, {
     openaiApiKey: openaiApiKey.value,
     message: message,
-    // parentMessageId: parentMessageId,
     conversationId: currentConversation.value.id
   })
 
@@ -94,9 +93,7 @@ const fetchReply = async (message, parentMessageId) => {
         }
 
         if (event === 'userMessageId') {
-          console.log(currentConversation.value.messages[currentConversation.value.messages.length - 1])
           currentConversation.value.messages[currentConversation.value.messages.length - 1].id = data.userMessageId
-          console.log(currentConversation.value.messages[currentConversation.value.messages.length - 1])
           return;
         }
 
@@ -136,15 +133,8 @@ const scrollChatWindow = () => {
 
 const send = (message) => {
   fetchingResponse.value = true
-  let parentMessageId = null
-  if (currentConversation.value.messages.length > 0) {
-    const lastMessage = currentConversation.value.messages[currentConversation.value.messages.length - 1]
-    if (lastMessage.is_bot && lastMessage.id !== null) {
-      parentMessageId = lastMessage.id
-    }
-  }
-  currentConversation.value.messages.push({parentMessageId: parentMessageId, message: message})
-  fetchReply(message, parentMessageId)
+  currentConversation.value.messages.push({message: message})
+  fetchReply(message)
   scrollChatWindow()
 }
 const stop = () => {
