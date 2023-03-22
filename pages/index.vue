@@ -197,21 +197,48 @@ const deleteMessage = (index) => {
     <div ref="grab" class="w-100" style="height: 200px;"></div>
   </div>
   <Welcome v-else />
-  <v-footer app class="d-flex flex-column">
-    <div class="px-md-16 w-100 d-flex align-center">
-      <Prompt v-show="!fetchingResponse" :use-prompt="usePrompt" />
-      <v-btn
-          v-show="fetchingResponse"
-          icon="close"
-          title="stop"
-          class="mr-3"
-          @click="stop"
-      ></v-btn>
-      <MsgEditor ref="editor" :send-message="send" :disabled="fetchingResponse" :loading="fetchingResponse" />
-    </div>
+  <v-footer app>
+    <div class="px-md-16 w-100 d-flex flex-column">
+      <div class="d-flex align-center">
+        <v-btn
+            v-show="fetchingResponse"
+            icon="close"
+            title="stop"
+            class="mr-3"
+            @click="stop"
+        ></v-btn>
+        <MsgEditor ref="editor" :send-message="send" :disabled="fetchingResponse" :loading="fetchingResponse" />
+      </div>
+      <v-toolbar>
+        <Prompt v-show="!fetchingResponse" :use-prompt="usePrompt" />
+        <v-switch
+            hide-details
+            inset
+            color="primary"
+            label="Search on the web"
+        ></v-switch>
+        <v-btn
+            icon
+            class="hidden-xs-only"
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
 
-    <div class="px-4 py-2 text-disabled text-caption font-weight-light text-center w-100">
-      © {{ new Date().getFullYear() }} {{ runtimeConfig.public.appName }}
+        <v-toolbar-title>Title</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn
+            icon
+            class="hidden-xs-only"
+        >
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+      </v-toolbar>
+
+<!--      <div class="py-2 text-disabled text-caption font-weight-light text-center">-->
+<!--        © {{ new Date().getFullYear() }} {{ runtimeConfig.public.appName }}-->
+<!--      </div>-->
     </div>
   </v-footer>
   <v-snackbar
