@@ -10,6 +10,13 @@ A ChatGPT web client that supports multiple users, multiple database connections
 
 ## 📢Updates
 <details open>
+<summary><strong>2023-03-23</strong></summary>
+Added web search capability to generate more relevant and up-to-date answers from ChatGPT!
+This feature is off by default, you can turn it on in `Chat->Settings` in the admin panel, there is a record `open_web_search` in Settings, set its value to True.
+
+</details>
+
+<details open>
 <summary><strong>2023-03-15</strong></summary>
 
 Add "open_registration" setting option in the admin panel to control whether user registration is enabled. You can log in to the admin panel and find this setting option under `Chat->Setting`. The default value of this setting is `True` (allow user registration). If you do not need it, please change it to `False`.

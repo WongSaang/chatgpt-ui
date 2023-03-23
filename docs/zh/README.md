@@ -10,6 +10,12 @@ ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数
 
 ## 📢 更新
 <details open>
+<summary><strong>2023-03-23</strong></summary>
+增加网页搜索能力，使得 ChatGPT 生成的回答更与时俱进！
+该功能默认处于关闭状态，你可以在管理后台的 `Chat->Settings` 中开启它，在 Settings 中有一个 `open_web_search` 的记录，把它的值设置为 True。
+</details>
+
+<details open>
 <summary><strong>2023-03-15</strong></summary>
 
 在管理后台增加 `open_registration` 设置项，用于控制是否开放用户注册。你可以登录管理后台，在 `Chat->Setting` 中看到这个设置项，默认是 `True` (允许用户注册)，如果不需要，请改成 `False`。
