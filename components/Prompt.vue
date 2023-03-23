@@ -96,10 +96,12 @@ onMounted( () => {
       <template v-slot:activator="{ props }">
         <v-btn
             v-bind="props"
-            icon="speaker_notes"
-            title="Common prompts"
-            class="mr-3"
-        ></v-btn>
+            icon
+        >
+          <v-icon
+              icon="speaker_notes"
+          ></v-icon>
+        </v-btn>
       </template>
 
       <v-container>

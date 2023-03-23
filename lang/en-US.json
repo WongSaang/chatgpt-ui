@@ -34,6 +34,7 @@
   "copied": "Copied",
   "delete": "Delete",
   "signOut": "Sign out",
+  "webSearch": "Web Search",
   "welcomeScreen": {
     "introduction1": "is an unofficial client for ChatGPT, but uses the official OpenAI API.",
     "introduction2": "You will need an OpenAI API Key before you can use this client.",

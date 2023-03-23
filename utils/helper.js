@@ -51,3 +51,22 @@ export const genTitle = async (conversationId) => {
     }
     return null
 }
+
+const transformData = (list) => {
+    const result = {};
+    for (let i = 0; i < list.length; i++) {
+        const item = list[i];
+        result[item.name] = item.value;
+    }
+    return result;
+}
+
+export const loadSettings = async () => {
+    const settings = useSettings()
+    const { data, error } = await useAuthFetch('/api/chat/settings/', {
+        method: 'GET'
+    })
+    if (!error.value) {
+        settings.value = transformData(data.value)
+    }
+}

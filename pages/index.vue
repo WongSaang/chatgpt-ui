@@ -5,8 +5,6 @@ definePageMeta({
   middleware: ["auth"]
 })
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
-import { nextTick } from 'vue'
-import MessageActions from "~/components/MessageActions.vue";
 
 const { $i18n, $auth } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
@@ -53,11 +51,19 @@ const abortFetch = () => {
 const fetchReply = async (message) => {
   ctrl = new AbortController()
 
+  let webSearchParams = {}
+  console.log(enableWebSearch.value)
+  if (enableWebSearch.value) {
+    webSearchParams['web_search'] = {
+      ua: navigator.userAgent
+    }
+  }
+
   const data = Object.assign({}, currentModel.value, {
     openaiApiKey: openaiApiKey.value,
     message: message,
     conversationId: currentConversation.value.id
-  })
+  }, webSearchParams)
 
   try {
     await fetchEventSource('/api/conversation/', {
@@ -157,6 +163,18 @@ const deleteMessage = (index) => {
   currentConversation.value.messages.splice(index, 1)
 }
 
+const showWebSearchToggle = ref(false)
+const enableWebSearch = ref(false)
+
+const settings = useSettings()
+
+watchEffect(() => {
+  if (settings.value) {
+    const settingsValue = toRaw(settings.value)
+    showWebSearchToggle.value = settingsValue.open_web_search && settingsValue.open_web_search === 'True'
+  }
+})
+
 </script>
 
 <template>
@@ -209,31 +227,19 @@ const deleteMessage = (index) => {
         ></v-btn>
         <MsgEditor ref="editor" :send-message="send" :disabled="fetchingResponse" :loading="fetchingResponse" />
       </div>
-      <v-toolbar>
+      <v-toolbar
+          density="comfortable"
+          color="transparent"
+      >
         <Prompt v-show="!fetchingResponse" :use-prompt="usePrompt" />
         <v-switch
+            v-if="showWebSearchToggle"
+            v-model="enableWebSearch"
             hide-details
-            inset
             color="primary"
-            label="Search on the web"
+            :label="$t('webSearch')"
         ></v-switch>
-        <v-btn
-            icon
-            class="hidden-xs-only"
-        >
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-
-        <v-toolbar-title>Title</v-toolbar-title>
-
         <v-spacer></v-spacer>
-
-        <v-btn
-            icon
-            class="hidden-xs-only"
-        >
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
       </v-toolbar>
 
 <!--      <div class="py-2 text-disabled text-caption font-weight-light text-center">-->

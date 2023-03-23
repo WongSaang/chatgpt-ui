@@ -84,6 +84,7 @@ const loadConversations = async () => {
 
 const {mdAndUp} = useDisplay()
 
+
 const drawerPermanent = computed(() => {
   return mdAndUp.value
 })
@@ -97,8 +98,9 @@ const signOut = async () => {
   }
 }
 
-onNuxtReady(async () => {
+onMounted(async () => {
   loadConversations()
+  loadSettings()
 })
 
 </script>
