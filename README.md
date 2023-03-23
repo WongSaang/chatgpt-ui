@@ -6,7 +6,7 @@
 
 A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
 
-https://github.com/WongSaang/chatgpt-ui/blob/main/demos/demo.mp4?raw=true
+https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-ab06-3f75b5235bfe.mp4
 
 
 ## 📢Updates
