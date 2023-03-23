@@ -6,7 +6,7 @@
 
 ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数据库连接进行数据持久化存储，支持多语言。提供 Docker 镜像和快速部署脚本。
 
-https://github.com/WongSaang/chatgpt-ui/blob/main/demos/demo.mp4?raw=true
+https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-ab06-3f75b5235bfe.mp4
 
 
 ## 📢 更新
