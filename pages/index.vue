@@ -52,10 +52,10 @@ const fetchReply = async (message) => {
   ctrl = new AbortController()
 
   let webSearchParams = {}
-  console.log(enableWebSearch.value)
   if (enableWebSearch.value) {
     webSearchParams['web_search'] = {
-      ua: navigator.userAgent
+      ua: navigator.userAgent,
+      default_prompt: $i18n.t('webSearchDefaultPrompt')
     }
   }
 
