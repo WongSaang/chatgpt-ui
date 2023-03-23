@@ -122,6 +122,7 @@ services:
     #      - EMAIL_HOST_USER=
     #      - EMAIL_HOST_PASSWORD=
     #      - EMAIL_USE_TLS=True
+    #      - EMAIL_FROM=no-reply@example.com  #Default sender email address
     ports:
       - '8000:8000'
     networks:
