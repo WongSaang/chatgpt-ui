@@ -1,12 +1,13 @@
-<p align="center">
-  <img alt="demo" src="../../demos/demo.gif?v=1">
-</p>
+<div align="center">
+<h1>ChatGPT UI</h1>
+</div>
 
 [English](../../README.md) | [中文](./docs/zh/README.md)
 
-# ChatGPT UI
-
 ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数据库连接进行数据持久化存储，支持多语言。提供 Docker 镜像和快速部署脚本。
+
+https://github.com/WongSaang/chatgpt-ui/blob/main/demos/demo.mp4?raw=true
+
 
 ## 📢 更新
 <details open>

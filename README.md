@@ -1,12 +1,13 @@
-<p align="center">
-  <img alt="demo" src="./demos/demo.gif?v=1">
-</p>
+<div align="center">
+<h1>ChatGPT UI</h1>
+</div>
 
 [English](./README.md) | [中文](./docs/zh/README.md)
 
-# ChatGPT UI
-
 A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
+
+https://github.com/WongSaang/chatgpt-ui/blob/main/demos/demo.mp4?raw=true
+
 
 ## 📢Updates
 <details open>
