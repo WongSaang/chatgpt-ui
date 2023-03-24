@@ -98,6 +98,7 @@ services:
       - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # App 名称，默认为 ChatGPT UI
       - NUXT_PUBLIC_TYPEWRITER=true # 是否启用打字机效果，默认关闭
       - NUXT_PUBLIC_TYPEWRITER_DELAY=100 # 打字机效果的延迟时间，默认 50毫秒
+      - NUXT_PUBLIC_CUSTOM_API_KEY=false # [true|false] 是否开启客户端设置 API 密钥功能，默认关闭
     depends_on:
       - backend-web-server
     ports:

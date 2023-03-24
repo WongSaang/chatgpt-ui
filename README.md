@@ -101,6 +101,7 @@ services:
       - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # App name
       - NUXT_PUBLIC_TYPEWRITER=true # Enable typewriter effect, default is false
       - NUXT_PUBLIC_TYPEWRITER_DELAY=100 # Typewriter effect delay time, default is 50ms
+      - NUXT_PUBLIC_CUSTOM_API_KEY=false # [true|false] Whether to enable the API Key setting module (default: false)
     depends_on:
       - backend-web-server
     ports:
