@@ -35,7 +35,7 @@
   "delete": "删除",
   "signOut": "退出登录",
   "webSearch": "网页搜索",
-  "webSearchDefaultPrompt": "网络搜索结果：\n\n{web_results}\n当前日期：{current_date}\n\n说明：使用提供的网络搜索结果，对给定的查询写出全面的回复。确保在引用参考文献后使用 [[number](URL)] 符号进行引用结果. 如果提供的搜索结果涉及到多个具有相同名称的主题，请针对每个主题编写单独的答案。\n查询：{query}",
+  "webSearchDefaultPrompt": "网络搜索结果：\n\n[web_results]\n当前日期：[current_date]\n\n说明：使用提供的网络搜索结果，对给定的查询写出全面的回复。确保在引用参考文献后使用 [[number](URL)] 符号进行引用结果. 如果提供的搜索结果涉及到多个具有相同名称的主题，请针对每个主题编写单独的答案。\n查询：[query]",
   "welcomeScreen": {
     "introduction1": "是一个非官方的ChatGPT客户端，但使用OpenAI的官方API",
     "introduction2": "在使用本客户端之前，您需要一个OpenAI API密钥。",
