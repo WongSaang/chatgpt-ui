@@ -1,6 +1,7 @@
 version: '3'
 services:
   client:
+    platform: linux/x86_64
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
@@ -15,6 +16,7 @@ services:
       - chatgpt_ui_network
     restart: always
   backend-wsgi-server:
+    platform: linux/x86_64
     image: wongsaang/chatgpt-ui-wsgi-server:latest
     environment:
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000}
@@ -36,6 +38,7 @@ services:
       - chatgpt_ui_network
     restart: always
   backend-web-server:
+    platform: linux/x86_64
     image: wongsaang/chatgpt-ui-web-server:latest
     environment:
       - BACKEND_URL=http://backend-wsgi-server:8000
