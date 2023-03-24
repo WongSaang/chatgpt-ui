@@ -60,7 +60,7 @@ const fetchReply = async (message) => {
   }
 
   const data = Object.assign({}, currentModel.value, {
-    openaiApiKey: openaiApiKey.value,
+    openaiApiKey: enableCustomApiKey.value ? openaiApiKey.value : null,
     message: message,
     conversationId: currentConversation.value.id
   }, webSearchParams)
@@ -165,6 +165,7 @@ const deleteMessage = (index) => {
 
 const showWebSearchToggle = ref(false)
 const enableWebSearch = ref(false)
+const enableCustomApiKey = ref(false)
 
 const settings = useSettings()
 
@@ -172,6 +173,7 @@ watchEffect(() => {
   if (settings.value) {
     const settingsValue = toRaw(settings.value)
     showWebSearchToggle.value = settingsValue.open_web_search && settingsValue.open_web_search === 'True'
+    enableCustomApiKey.value = settingsValue.open_api_key_setting && settingsValue.open_api_key_setting === 'True'
   }
 })
 

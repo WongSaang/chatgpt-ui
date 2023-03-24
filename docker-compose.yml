@@ -7,7 +7,6 @@ services:
       - NUXT_PUBLIC_APP_NAME='ChatGPT UI'
       - NUXT_PUBLIC_TYPEWRITER=true
       - NUXT_PUBLIC_TYPEWRITER_DELAY=100
-      - NUXT_PUBLIC_CUSTOM_API_KEY=false # [true|false] Whether to enable the API Key setting module (default: false)
     depends_on:
       - backend-web-server
     ports:
