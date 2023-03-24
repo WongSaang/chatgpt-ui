@@ -239,6 +239,10 @@ onMounted(async () => {
               </v-card>
             </v-dialog>
 
+            <ApiKeyDialog
+                v-if="runtimeConfig.public.customApiKey"
+            />
+
             <ModelParameters/>
 
             <v-menu
