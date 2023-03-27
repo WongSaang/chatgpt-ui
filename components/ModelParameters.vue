@@ -1,11 +1,15 @@
 <script setup>
+
 const dialog = ref(false)
 const currentModel = useCurrentModel()
 const availableModels = [
-  DEFAULT_MODEL.name
+    'gpt-3.5-turbo',
+    'gpt-4'
 ]
+const currentModelDefault = ref(MODELS[currentModel.value.name])
 
 watch(currentModel, (newVal, oldVal) => {
+  currentModelDefault.value = MODELS[newVal.name]
   saveCurrentModel(newVal)
 }, { deep: true })
 
@@ -83,7 +87,7 @@ watch(currentModel, (newVal, oldVal) => {
                   single-line
                   density="compact"
                   type="number"
-                  max="2048"
+                  :max="currentModelDefault.total_tokens"
                   step="1"
                   style="width: 100px"
                   class="flex-grow-0"
@@ -93,7 +97,7 @@ watch(currentModel, (newVal, oldVal) => {
           <v-col cols="12">
             <v-slider
                 v-model="currentModel.max_tokens"
-                :max="2048"
+                :max="currentModelDefault.total_tokens"
                 :step="1"
                 hide-details
             >

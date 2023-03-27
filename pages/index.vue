@@ -90,12 +90,13 @@ const fetchReply = async (message) => {
         throw err;
       },
       async onmessage(message) {
-        // console.log(message)
         const event = message.event
         const data = JSON.parse(message.data)
 
         if (event === 'error') {
-          throw new Error(data.error);
+          abortFetch()
+          showSnackbar(data.error)
+          return;
         }
 
         if (event === 'userMessageId') {

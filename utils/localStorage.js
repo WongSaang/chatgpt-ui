@@ -1,3 +1,4 @@
+import {MODELS} from "~/utils/enums";
 
 const get = (key) => {
     let val = localStorage.getItem(key)
@@ -17,13 +18,13 @@ export const setModels = (val) => {
     models.value = val
 }
 
-export const getStoredModels = () => {
-    let models = get(STORAGE_KEY.MODELS)
-    if (!models) {
-        models = [DEFAULT_MODEL]
-    }
-    return models
-}
+// export const getStoredModels = () => {
+//     let models = get(STORAGE_KEY.MODELS)
+//     if (!models) {
+//         models = [DEFAULT_MODEL]
+//     }
+//     return models
+// }
 
 export const saveCurrentModel = (val) => {
     set(STORAGE_KEY.CURRENT_MODEL, val)
@@ -32,7 +33,7 @@ export const saveCurrentModel = (val) => {
 export const getCurrentModel = () => {
     let model = get(STORAGE_KEY.CURRENT_MODEL)
     if (!model) {
-        model = DEFAULT_MODEL
+        model = MODELS[DEFAULT_MODEL_NAME]
     }
     return model
 }
