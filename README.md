@@ -10,6 +10,13 @@ https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-
 
 
 ## 📢Updates
+
+<details open>
+<summary><strong>2023-03-27</strong></summary>
+🚀 Support gpt-4 model. You can select the model in the "Model Parameters" of the front-end. 
+The GPT-4 model requires whitelist access from OpenAI.
+</details>
+
 <details open>
 <summary><strong>2023-03-23</strong></summary>
 Added web search capability to generate more relevant and up-to-date answers from ChatGPT!
@@ -25,17 +32,7 @@ Add "open_registration" setting option in the admin panel to control whether use
 
 </details>
 
-<details open>
-<summary><strong>2023-03-10</strong></summary>
-
-Add 2 environment variables to control the typewriter effect:
-
-- `NUXT_PUBLIC_TYPEWRITER=true` to enable/disable the typewriter effect
-- `NUXT_PUBLIC_TYPEWRITER_DELAY=50` to set the delay time for each character in milliseconds.
-
-</details>
-
-<details open>
+<details>
 <summary><strong>2023-03-04</strong></summary>
 
 **Update to the latest official chat model**  `gpt-3.5-turbo`
@@ -98,9 +95,6 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
-      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # App name
-      - NUXT_PUBLIC_TYPEWRITER=true # Enable typewriter effect, default is false
-      - NUXT_PUBLIC_TYPEWRITER_DELAY=100 # Typewriter effect delay time, default is 50ms
     depends_on:
       - backend-web-server
     ports:

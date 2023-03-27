@@ -10,6 +10,12 @@ https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-
 
 
 ## 📢 更新
+
+<details open>
+<summary><strong>2023-03-27</strong></summary>
+🚀 支持 gpt-4 模型。你可以在前端的“模型参数”中选择模型，gpt-4 模型需要通过 openai 的白名单才能使用。
+</details>
+
 <details open>
 <summary><strong>2023-03-23</strong></summary>
 增加网页搜索能力，使得 ChatGPT 生成的回答更与时俱进！
@@ -23,17 +29,7 @@ https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-
 
 </details>
 
-<details open>
-<summary><strong>2023-03-10</strong></summary>
-
-增加 2 个环境变量来控制打字机效果, 详见下方 docker-compose 配置的环境变量说明
-
-- `NUXT_PUBLIC_TYPEWRITER` 是否开启打字机效果
-- `NUXT_PUBLIC_TYPEWRITER_DELAY` 每个字的延迟时间，单位：毫秒
-
-</details>
-
-<details open>
+<details>
 <summary><strong>2023-03-04</strong></summary>
 
 **使用最新的官方聊天模型**  `gpt-3.5-turbo`
@@ -95,9 +91,6 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
-      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # App 名称，默认为 ChatGPT UI
-      - NUXT_PUBLIC_TYPEWRITER=true # 是否启用打字机效果，默认关闭
-      - NUXT_PUBLIC_TYPEWRITER_DELAY=100 # 打字机效果的延迟时间，默认 50毫秒
     depends_on:
       - backend-web-server
     ports:
