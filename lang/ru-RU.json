@@ -1,0 +1,64 @@
+{
+  "welcomeTo": "Добро пожаловать в",
+  "language": "Язык",
+  "setApiKey": "Установить ключ API",
+  "setOpenAIApiKey": "Установить ключ API OpenAI",
+  "openAIApiKey": "Ключ API OpenAI",
+  "getAKey": "Получить ключ",
+  "openAIModels": "Модели OpenAI",
+  "aboutTheModels": "О моделях",
+  "saveAndClose": "Сохранить & Закрыть",
+  "pleaseSelectAtLeastOneModelDot": "Выберите хотя бы одну модель.",
+  "writeAMessage": "Напишите сообщение",
+  "frequentlyPrompts": "Список подсказок",
+  "addPrompt": "Добавить подсказку",
+  "addNewPrompt": "Добавитьте новую подсказку",
+  "pressEnterToSendYourMessageOrShiftEnterToAddANewLine": "Нажмите Enter, чтобы отправить сообщение, или Shift+Enter, чтобы добавить новую строку.",
+  "lightMode": "Светлая",
+  "darkMode": "Темная",
+  "followSystem": "Системная",
+  "themeMode": "Тема",
+  "feedback": "Обратная связь",
+  "newConversation": "Новый чат",
+  "clearConversations": "Очистить чаты",
+  "modelParameters": "Параметры модели",
+  "model": "Модель",
+  "temperature": "Temperature",
+  "topP": "Top P",
+  "frequencyPenalty": "Frequency Penalty",
+  "presencePenalty": "Presence Penalty",
+  "maxTokens": "Max Tokens",
+  "roles": {
+    "me": "Я",
+    "ai": "AI"
+  },
+  "edit": "Редактировать",
+  "copy": "Копировать",
+  "copied": "Скопировано",
+  "delete": "Удалить",
+  "signOut": "Выход",
+  "webSearch": "Поиск в интернете",
+  "webSearchDefaultPrompt": "Результаты веб-поиска:\n\n[web_results]\nТекущая дата: [current_date]\n\nИнструкции: Используя предоставленные результаты веб-поиска, напишите развернутый ответ на заданный запрос. Обязательно цитируйте результаты, используя обозначение [[number](URL)] после ссылки. Если предоставленные результаты поиска относятся к нескольким темам с одинаковым названием, напишите отдельные ответы для каждой темы.\nЗапрос: [query]",
+  "welcomeScreen": {
+    "introduction1": "является неофициальным клиентом для ChatGPT, но использует официальный API OpenAI.",
+    "introduction2": "Вам понадобится ключ API OpenAI, прежде чем вы сможете использовать этот клиент.",
+    "examples": {
+      "title": "Примеры",
+      "item1": "\"Объясни, что такое квантовые вычисления простыми словами\"",
+      "item2": "\"Предложи несколько креативных идей для дня рождения 10-летнего ребенка?\"",
+      "item3": "\"Как сделать HTTP-запрос в Javascript?\""
+    },
+    "capabilities": {
+      "title": "Возможности",
+      "item1": "Помнит, что пользователь сказал ранее в разговоре",
+      "item2": "Позволяет пользователю вносить последующие исправления",
+      "item3": "Научен отклонять неуместные запросы"
+    },
+    "limitations": {
+      "title": "Ограничения",
+      "item1": "Иногда может генерировать неверную информацию",
+      "item2": "Иногда может создавать вредные инструкции или предвзятый контент",
+      "item3": "Ограниченное знание мира и событий после 2021 года"
+    }
+  }
+}
