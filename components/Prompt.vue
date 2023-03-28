@@ -110,7 +110,7 @@ onMounted( () => {
             max-width="500"
         >
           <v-card-title>
-            <span class="headline">Frequently prompts</span>
+            <span class="headline">{{ $t('frequentlyPrompts') }}</span>
           </v-card-title>
 
           <v-divider></v-divider>
@@ -193,7 +193,7 @@ onMounted( () => {
                 <v-textarea
                     rows="2"
                     v-model="newPrompt"
-                    label="Add a new prompt"
+                    :label="$t('addNewPrompt')"
                     variant="outlined"
                     density="compact"
                     :error-messages="promptInputErrorMessage"
@@ -211,7 +211,7 @@ onMounted( () => {
                   @click="addPrompt()"
               >
                 <v-icon icon="add"></v-icon>
-                Add prompt
+                {{ $t('addPrompt') }}
               </v-btn>
             </v-list-item>
           </v-list>
