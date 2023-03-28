@@ -1,0 +1,16 @@
+version: '3'
+services:
+  client:
+    platform: linux/x86_64
+    build: .
+    environment:
+      SERVER_DOMAIN: http://web-server
+    ports:
+      - '${CLIENT_PORT:-8080}:80'
+    networks:
+      - chatgpt_network
+    restart: always
+
+networks:
+  chatgpt_network:
+    external: True
