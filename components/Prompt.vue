@@ -2,6 +2,7 @@
 const menu = ref(false)
 const prompts = ref([])
 const editingPrompt = ref(null)
+const newTitlePrompt = ref(null)
 const newPrompt = ref('')
 const submittingNewPrompt = ref(false)
 const promptInputErrorMessage = ref('')
@@ -24,11 +25,13 @@ const addPrompt = async () => {
   const { data, error } = await useAuthFetch('/api/chat/prompts/', {
     method: 'POST',
     body: JSON.stringify({
+      title: newTitlePrompt.value,
       prompt: newPrompt.value
     })
   })
   if (!error.value) {
     prompts.value.push(data.value)
+    newTitlePrompt.value = null
     newPrompt.value = ''
   }
   submittingNewPrompt.value = false
@@ -43,6 +46,7 @@ const updatePrompt = async (index) => {
   const { data, error } = await useAuthFetch(`/api/chat/prompts/${editingPrompt.value.id}/`, {
     method: 'PUT',
     body: JSON.stringify({
+      title: editingPrompt.value.title,
       prompt: editingPrompt.value.prompt
     })
   })
@@ -127,35 +131,47 @@ onMounted( () => {
             >
               <v-list-item
                   active-color="primary"
-                  rounded="xl"
                   v-if="editingPrompt && editingPrompt.id === prompt.id"
               >
-                <v-textarea
-                    rows="2"
-                    v-model="editingPrompt.prompt"
-                    :loading="editingPrompt.updating"
-                    variant="underlined"
-                    hide-details
-                    density="compact"
-                >
-                  <template v-slot:append>
-                    <div class="d-flex flex-column">
-                      <v-btn
-                          icon="done"
-                          variant="text"
-                          :loading="editingPrompt.updating"
-                          @click="updatePrompt(idx)"
-                      >
-                      </v-btn>
-                      <v-btn
-                          icon="close"
-                          variant="text"
-                          @click="cancelEditPrompt()"
-                      >
-                      </v-btn>
-                    </div>
-                  </template>
-                </v-textarea>
+                <div class="d-flex flex-row" :style="{ marginTop: '5px' }">
+                  <div class="flex-grow-1">
+                    <v-text-field
+                      v-model="editingPrompt.title"
+                      :loading="editingPrompt.updating"
+                      :label="$t('titlePrompt')"
+                      variant="underlined"
+                      density="compact"
+                      hide-details
+                    >
+                    </v-text-field>
+                    <v-textarea
+                      rows="2"
+                      v-model="editingPrompt.prompt"
+                      :loading="editingPrompt.updating"
+                      variant="underlined"
+                      density="compact"
+                      hide-details
+                    >
+                    </v-textarea>
+                  </div>
+                  <div>
+                        <div class="d-flex flex-column">
+                          <v-btn
+                              icon="done"
+                              variant="text"
+                              :loading="editingPrompt.updating"
+                              @click="updatePrompt(idx)"
+                          >
+                          </v-btn>
+                          <v-btn
+                              icon="close"
+                              variant="text"
+                              @click="cancelEditPrompt()"
+                          >
+                          </v-btn>
+                        </div>
+                  </div>
+                </div>
               </v-list-item>
               <v-list-item
                   v-if="!editingPrompt || editingPrompt.id !== prompt.id"
@@ -163,7 +179,7 @@ onMounted( () => {
                   active-color="primary"
                   @click="selectPrompt(prompt)"
               >
-                <v-list-item-title>{{ prompt.prompt }}</v-list-item-title>
+                <v-list-item-title>{{ prompt.title ? prompt.title : prompt.prompt }}</v-list-item-title>
                 <template v-slot:append>
                   <v-btn
                       icon="edit"
@@ -183,6 +199,25 @@ onMounted( () => {
                 </template>
               </v-list-item>
             </template>
+
+            <v-list-item
+                active-color="primary"
+            >
+              <div
+                  class="pt-3"
+              >
+                <v-text-field
+                    rows="1"
+                    v-model="newTitlePrompt"
+                    :label="$t('titlePrompt')"
+                    variant="outlined"
+                    density="compact"
+                    hide-details
+                    clearable
+                >
+                </v-text-field>
+              </div>
+            </v-list-item>
 
             <v-list-item
                 active-color="primary"

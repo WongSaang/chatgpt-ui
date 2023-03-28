@@ -12,6 +12,7 @@
   "writeAMessage": "Напишите сообщение",
   "frequentlyPrompts": "Список подсказок",
   "addPrompt": "Добавить подсказку",
+  "titlePrompt": "Заголовок",
   "addNewPrompt": "Добавитьте новую подсказку",
   "pressEnterToSendYourMessageOrShiftEnterToAddANewLine": "Нажмите Enter, чтобы отправить сообщение, или Shift+Enter, чтобы добавить новую строку.",
   "lightMode": "Светлая",
