@@ -1,5 +1,5 @@
 
-export const getDefaultConversionData = () => {
+export const getDefaultConversationData = () => {
     return {
         id: null,
         topic: null,
@@ -8,7 +8,7 @@ export const getDefaultConversionData = () => {
     }
 }
 
-export const getConversions = async () => {
+export const getConversations = async () => {
     const { data, error } = await useAuthFetch('/api/chat/conversations/')
     if (!error.value) {
         return data.value
@@ -16,13 +16,13 @@ export const getConversions = async () => {
     return []
 }
 
-export const createNewConversion = () => {
-    const conversation = useConversion()
-    conversation.value = getDefaultConversionData()
+export const createNewConversation = () => {
+    const conversation = useConversation()
+    conversation.value = getDefaultConversationData()
 }
 
 export const openConversationMessages = async (currentConversation) => {
-    const conversation = useConversion()
+    const conversation = useConversation()
     conversation.value = Object.assign(conversation.value, currentConversation)
     conversation.value.loadingMessages = true
     const { data, error } = await useAuthFetch('/api/chat/messages/?conversationId=' + currentConversation.id)
@@ -44,7 +44,7 @@ export const genTitle = async (conversationId) => {
             id: conversationId,
             topic: data.value.title,
         }
-        const conversations = useConversions()
+        const conversations = useConversations()
         // prepend to conversations
         conversations.value = [conversation, ...conversations.value]
         return data.value.title

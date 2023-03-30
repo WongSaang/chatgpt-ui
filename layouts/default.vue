@@ -22,8 +22,8 @@ const setLang = (lang) => {
   setLocale(lang)
 }
 
-const conversations = useConversions()
-const currentConversation = useConversion()
+const conversations = useConversations()
+const currentConversation = useConversation()
 
 const editingConversation = ref(null)
 const deletingConversationIndex = ref(null)
@@ -54,7 +54,7 @@ const deleteConversation = async (index) => {
   deletingConversationIndex.value = null
   if (!error.value) {
     if (conversations.value[index].id === currentConversation.value.id) {
-      createNewConversion()
+      createNewConversation()
     }
     conversations.value.splice(index, 1)
   }
@@ -78,7 +78,7 @@ const loadingConversations = ref(false)
 
 const loadConversations = async () => {
   loadingConversations.value = true
-  conversations.value = await getConversions()
+  conversations.value = await getConversations()
   loadingConversations.value = false
 }
 
@@ -130,7 +130,7 @@ onMounted(async () => {
                 block
                 variant="outlined"
                 prepend-icon="add"
-                @click="createNewConversion()"
+                @click="createNewConversation()"
                 class="text-none"
             >
               {{ $t('newConversation') }}
@@ -172,7 +172,7 @@ onMounted(async () => {
               <v-list-item
                   rounded="xl"
                   active-color="primary"
-                  @click="openConversationMessages(conversation)"
+                  :to="`/${conversation.id}`"
                   v-bind="props"
               >
                 <v-list-item-title>{{ conversation.topic }}</v-list-item-title>
@@ -310,7 +310,7 @@ onMounted(async () => {
       <v-btn
           :title="$t('newConversation')"
           icon="add"
-          @click="createNewConversion()"
+          @click="createNewConversation()"
       ></v-btn>
 
     </v-app-bar>

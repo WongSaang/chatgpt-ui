@@ -5,8 +5,8 @@ export const useCurrentModel = () => useState('currentModel', () => getCurrentMo
 
 export const useApiKey = () => useState('apiKey', () => getStoredApiKey())
 
-export const useConversion = () => useState('conversion', () => getDefaultConversionData())
+export const useConversation = () => useState('conversation', () => getDefaultConversationData())
 
-export const useConversions = () => useState('conversions', () => [])
+export const useConversations = () => useState('conversations', () => [])
 
 export const useSettings = () => useState('settings', () => {})
