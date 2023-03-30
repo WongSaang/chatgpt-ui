@@ -1,5 +1,6 @@
 <script setup>
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
+import {addConversation} from "../utils/helper";
 
 const { $i18n, $auth } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
@@ -137,9 +138,17 @@ const scrollChatWindow = () => {
   grab.value.scrollIntoView({behavior: 'smooth'})
 }
 
+const checkOrAddConversation = () => {
+  if (props.conversation.messages.length === 0) {
+    props.conversation.messages.push({id: null, is_bot: true, message: ''})
+  }
+}
 
 const send = (message) => {
   fetchingResponse.value = true
+  if (props.conversation.messages.length === 0) {
+    addConversation(props.conversation)
+  }
   props.conversation.messages.push({message: message})
   fetchReply(message)
   scrollChatWindow()
@@ -182,42 +191,55 @@ watchEffect(() => {
 
 <template>
   <div
-      v-if="conversation.messages"
-      ref="chatWindow"
+      v-if="conversation.loadingMessages"
+      class="text-center"
   >
-    <v-container>
-      <v-row>
-        <v-col
-            v-for="(message, index) in conversation.messages" :key="index"
-            cols="12"
-        >
-          <div
-              class="d-flex align-center"
-              :class="message.is_bot ? 'justify-start' : 'justify-end'"
-          >
-            <MessageActions
-                v-if="!message.is_bot"
-                :message="message"
-                :message-index="index"
-                :use-prompt="usePrompt"
-                :delete-message="deleteMessage"
-            />
-            <MsgContent :message="message" />
-            <MessageActions
-                v-if="message.is_bot"
-                :message="message"
-                :message-index="index"
-                :use-prompt="usePrompt"
-                :delete-message="deleteMessage"
-            />
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <div ref="grab" class="w-100" style="height: 200px;"></div>
+    <v-progress-circular
+        indeterminate
+        color="primary"
+    ></v-progress-circular>
   </div>
-  <Welcome v-else />
+  <div v-else>
+    <div
+        v-if="conversation.messages.length > 0"
+        ref="chatWindow"
+    >
+      <v-container>
+        <v-row>
+          <v-col
+              v-for="(message, index) in conversation.messages" :key="index"
+              cols="12"
+          >
+            <div
+                class="d-flex align-center"
+                :class="message.is_bot ? 'justify-start' : 'justify-end'"
+            >
+              <MessageActions
+                  v-if="!message.is_bot"
+                  :message="message"
+                  :message-index="index"
+                  :use-prompt="usePrompt"
+                  :delete-message="deleteMessage"
+              />
+              <MsgContent :message="message" />
+              <MessageActions
+                  v-if="message.is_bot"
+                  :message="message"
+                  :message-index="index"
+                  :use-prompt="usePrompt"
+                  :delete-message="deleteMessage"
+              />
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <div ref="grab" class="w-100" style="height: 200px;"></div>
+    </div>
+    <Welcome v-if="conversation.id === null && conversation.messages.length === 0" />
+  </div>
+
+
   <v-footer app>
     <div class="px-md-16 w-100 d-flex flex-column">
       <div class="d-flex align-center">

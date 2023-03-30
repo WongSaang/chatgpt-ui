@@ -54,6 +54,7 @@ const deleteConversation = async (index) => {
   deletingConversationIndex.value = null
   if (!error.value) {
     if (conversations.value[index].id === currentConversation.value.id) {
+      console.log('delete current conversation')
       createNewConversation()
     }
     conversations.value.splice(index, 1)
@@ -130,8 +131,8 @@ onMounted(async () => {
                 block
                 variant="outlined"
                 prepend-icon="add"
-                @click="createNewConversation()"
                 class="text-none"
+                @click="createNewConversation"
             >
               {{ $t('newConversation') }}
             </v-btn>
@@ -172,19 +173,19 @@ onMounted(async () => {
               <v-list-item
                   rounded="xl"
                   active-color="primary"
-                  :to="`/${conversation.id}`"
+                  :to="conversation.id ? `/${conversation.id}` : undefined"
                   v-bind="props"
               >
                 <v-list-item-title>{{ conversation.topic }}</v-list-item-title>
                 <template v-slot:append>
                   <div
-                      v-show="isHovering"
+                      v-show="isHovering && conversation.id"
                   >
                     <v-btn
                         icon="edit"
                         size="small"
                         variant="text"
-                        @click.stop="editConversation(cIdx)"
+                        @click.prevent="editConversation(cIdx)"
                     >
                     </v-btn>
                     <v-btn
@@ -192,7 +193,7 @@ onMounted(async () => {
                         size="small"
                         variant="text"
                         :loading="deletingConversationIndex === cIdx"
-                        @click.stop="deleteConversation(cIdx)"
+                        @click.prevent="deleteConversation(cIdx)"
                     >
                     </v-btn>
                   </div>

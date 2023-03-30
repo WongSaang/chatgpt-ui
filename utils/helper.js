@@ -1,8 +1,9 @@
 
 export const getDefaultConversationData = () => {
+    const { $i18n } = useNuxtApp()
     return {
         id: null,
-        topic: null,
+        topic: $i18n.t('defaultConversationTitle'),
         messages: [],
         loadingMessages: false,
     }
@@ -19,34 +20,32 @@ export const getConversations = async () => {
 export const createNewConversation = () => {
     const conversation = useConversation()
     conversation.value = getDefaultConversationData()
+    navigateTo('/')
 }
 
-export const openConversationMessages = async (currentConversation) => {
-    const conversation = useConversation()
-    conversation.value = Object.assign(conversation.value, currentConversation)
-    conversation.value.loadingMessages = true
-    const { data, error } = await useAuthFetch('/api/chat/messages/?conversationId=' + currentConversation.id)
-    if (!error.value) {
-        conversation.value.messages = data.value
-    }
-    conversation.value.loadingMessages = true
+
+export const addConversation = (conversation) => {
+    const conversations = useConversations()
+    conversations.value = [conversation, ...conversations.value]
 }
+
 
 export const genTitle = async (conversationId) => {
+    const { $i18n } = useNuxtApp()
     const { data, error } = await useAuthFetch('/api/gen_title/', {
         method: 'POST',
         body: {
-            conversationId: conversationId
+            conversationId: conversationId,
+            prompt: $i18n.t('genTitlePrompt')
         }
     })
     if (!error.value) {
-        const conversation = {
-            id: conversationId,
-            topic: data.value.title,
-        }
         const conversations = useConversations()
-        // prepend to conversations
-        conversations.value = [conversation, ...conversations.value]
+        let index = conversations.value.findIndex(item => item.id === conversationId)
+        if (index === -1) {
+            index = 0
+        }
+        conversations.value[index].topic = data.value.title
         return data.value.title
     }
     return null
