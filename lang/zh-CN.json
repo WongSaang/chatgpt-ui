@@ -12,6 +12,7 @@
   "writeAMessage": "输入信息",
   "frequentlyPrompts": "Frequently prompts",
   "addPrompt": "Add prompt",
+  "titlePrompt": "Title",
   "addNewPrompt": "Add a new prompt",
   "pressEnterToSendYourMessageOrShiftEnterToAddANewLine": "按回车键发送您的信息，或按Shift+Enter键添加新行",
   "lightMode": "明亮模式",
