@@ -105,6 +105,7 @@ services:
     image: wongsaang/chatgpt-ui-wsgi-server:latest
     environment:
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000} # CSRF whitelist，Add the address of your chatgpt-ui-web-server here, default is localhost:9000
+      - SERVER_WORKERS=3 # Number of gunicorn workers, default is 3
       #- DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
       #- OPENAI_API_PROXY=https://openai.proxy.com/v1 # Proxy for https://api.openai.com/v1
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
