@@ -18,8 +18,6 @@ export const getConversations = async () => {
 }
 
 export const createNewConversation = () => {
-    const conversation = useConversation()
-    conversation.value = getDefaultConversationData()
     navigateTo('/')
 }
 

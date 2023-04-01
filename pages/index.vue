@@ -11,7 +11,8 @@ const conversation = ref(getDefaultConversationData())
 const loadConversation = async () => {
   const { data, error } = await useAuthFetch('/api/chat/conversations/' + route.params.id)
   if (!error.value) {
-    conversation.value = data.value
+    conversation.value = Object.assign(conversation.value, data.value)
+    console.log(conversation.value)
   }
 }
 
@@ -24,7 +25,6 @@ const loadMessage = async () => {
 
 onActivated(async () => {
   console.log('activated')
-  console.log(conversation.value)
   if (route.params.id) {
     conversation.value.loadingMessages = true
     await loadConversation()
@@ -33,8 +33,11 @@ onActivated(async () => {
   } else {
     conversation.value = getDefaultConversationData()
   }
-  console.log(conversation.value)
   currentConversation.value = Object.assign({}, conversation.value)
+})
+
+watchEffect(() => {
+  console.log('conversation.value', conversation.value)
 })
 </script>
 

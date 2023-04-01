@@ -54,7 +54,6 @@ const deleteConversation = async (index) => {
   deletingConversationIndex.value = null
   if (!error.value) {
     if (conversations.value[index].id === currentConversation.value.id) {
-      console.log('delete current conversation')
       createNewConversation()
     }
     conversations.value.splice(index, 1)
@@ -331,14 +330,14 @@ onMounted(async () => {
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>{{ currentConversation.topic ?? runtimeConfig.public.appName }}</v-toolbar-title>
+      <v-toolbar-title>{{ currentConversation.id ? currentConversation.topic : runtimeConfig.public.appName }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn
           :title="$t('newConversation')"
           icon="add"
-          @click="createNewConversation()"
+          @click="createNewConversation"
           class="d-md-none"
       ></v-btn>
       <v-btn
