@@ -83,7 +83,7 @@ const submit = async () => {
 }
 
 const handleFieldUpdate = (field) => {
-  // fieldErrors.value[field] = ''
+  fieldErrors.value[field] = ''
 }
 </script>
 
@@ -122,7 +122,7 @@ const handleFieldUpdate = (field) => {
                     :error-messages="fieldErrors.email"
                     label="Email"
                     variant="underlined"
-                    @@update:modelValue="handleFieldUpdate('email')"
+                    @update:modelValue="handleFieldUpdate('email')"
                     clearable
                 ></v-text-field>
 

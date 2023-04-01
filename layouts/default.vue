@@ -124,19 +124,48 @@ onMounted(async () => {
         :permanent="drawerPermanent"
         width="300"
     >
-      <div class="px-2 py-2">
+      <template
+          v-slot:prepend
+      >
         <v-list>
-          <v-list-item>
-            <v-btn
-                block
-                variant="outlined"
-                prepend-icon="add"
-                class="text-none"
-                @click="createNewConversation"
-            >
-              {{ $t('newConversation') }}
-            </v-btn>
+          <v-list-item
+              prepend-icon="face"
+              :title="$auth.user.username"
+              :subtitle="$auth.user.email"
+          >
+            <template v-slot:append>
+              <v-menu>
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                      v-bind="props"
+                      size="small"
+                      variant="text"
+                      icon="expand_more"
+                  ></v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                      :title="$t('resetPassword')"
+                      to="/account/resetPassword"
+                  >
+                  </v-list-item>
+                  <v-list-item
+                      :title="$t('signOut')"
+                      @click="signOut"
+                  >
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+
+            </template>
           </v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+      </template>
+
+      <div class="px-2">
+        <v-list>
           <v-list-item v-show="loadingConversations">
             <v-list-item-title class="d-flex justify-center">
               <v-progress-circular indeterminate></v-progress-circular>
@@ -287,24 +316,17 @@ onMounted(async () => {
                 @click="feedback"
             ></v-list-item>
 
-            <v-list-item
-                rounded="xl"
-                prepend-icon="logout"
-                :title="$t('signOut')"
-                @click="signOut"
-            ></v-list-item>
-
           </v-list>
         </div>
       </template>
     </v-navigation-drawer>
 
     <v-app-bar
-        class="d-md-none"
+        class=""
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>{{ runtimeConfig.public.appName }}</v-toolbar-title>
+      <v-toolbar-title>{{ currentConversation.topic ?? runtimeConfig.public.appName }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -312,7 +334,15 @@ onMounted(async () => {
           :title="$t('newConversation')"
           icon="add"
           @click="createNewConversation()"
+          class="d-md-none"
       ></v-btn>
+      <v-btn
+          variant="outlined"
+          class="text-none d-none d-md-block"
+          @click="createNewConversation"
+      >
+        {{ $t('newConversation') }}
+      </v-btn>
 
     </v-app-bar>
 

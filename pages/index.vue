@@ -7,25 +7,33 @@ definePageMeta({
 const route = useRoute()
 const currentConversation = useConversation()
 const conversation = ref(getDefaultConversationData())
-watchEffect(() => {
-  if (!route.params.id) {
-    conversation.value = getDefaultConversationData()
+
+const loadConversation = async () => {
+  const { data, error } = await useAuthFetch('/api/chat/conversations/' + route.params.id)
+  if (!error.value) {
+    conversation.value = data.value
   }
-})
+}
+
 const loadMessage = async () => {
-  conversation.value.loadingMessages = true
   const { data, error } = await useAuthFetch('/api/chat/messages/?conversationId=' + route.params.id)
   if (!error.value) {
     conversation.value.messages = data.value
   }
-  conversation.value.loadingMessages = false
 }
 
-onMounted(async () => {
+onActivated(async () => {
+  console.log('activated')
+  console.log(conversation.value)
   if (route.params.id) {
-    conversation.value.id = parseInt(route.params.id)
+    conversation.value.loadingMessages = true
+    await loadConversation()
     await loadMessage()
+    conversation.value.loadingMessages = false
+  } else {
+    conversation.value = getDefaultConversationData()
   }
+  console.log(conversation.value)
   currentConversation.value = Object.assign({}, conversation.value)
 })
 </script>
