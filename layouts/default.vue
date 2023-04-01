@@ -129,10 +129,15 @@ onMounted(async () => {
       >
         <v-list>
           <v-list-item
-              prepend-icon="face"
               :title="$auth.user.username"
               :subtitle="$auth.user.email"
           >
+            <template v-slot:prepend>
+              <v-icon
+                  icon="face"
+                  size="x-large"
+              ></v-icon>
+            </template>
             <template v-slot:append>
               <v-menu>
                 <template v-slot:activator="{ props }">
@@ -205,7 +210,7 @@ onMounted(async () => {
                   :to="conversation.id ? `/${conversation.id}` : undefined"
                   v-bind="props"
               >
-                <v-list-item-title>{{ conversation.topic }}</v-list-item-title>
+                <v-list-item-title>{{ conversation.topic !== "" ? conversation.topic : $t('defaultConversationTitle') }}</v-list-item-title>
                 <template v-slot:append>
                   <div
                       v-show="isHovering && conversation.id"
