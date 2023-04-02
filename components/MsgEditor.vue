@@ -1,3 +1,73 @@
+<script setup>
+import { isMobile } from 'is-mobile'
+const { $i18n } = useNuxtApp()
+
+const props = defineProps({
+  sendMessage: {
+    type: Function,
+    required: true
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
+    type: Boolean,
+    default: false
+  }
+})
+
+const message = ref('')
+const rows = ref(1)
+const autoGrow = ref(true)
+
+const hint = computed(() => {
+  return isMobile() ? '' : $i18n.t('pressEnterToSendYourMessageOrShiftEnterToAddANewLine')
+})
+
+watchEffect(() => {
+  const lines = message.value.split(/\r\n|\r|\n/).length
+  if (lines > 8) {
+    rows.value = 8
+    autoGrow.value = false
+  } else {
+    rows.value = 1
+    autoGrow.value = true
+  }
+})
+
+const send = () => {
+  let msg = message.value
+  // remove the last "\n"
+  if (msg[msg.length - 1] === "\n") {
+    msg = msg.slice(0, -1)
+  }
+  if (msg.length > 0) {
+    props.sendMessage(msg)
+  }
+  message.value = ""
+}
+
+const usePrompt = (prompt) => {
+  message.value = prompt
+}
+
+const clickSendBtn = () => {
+  send()
+}
+
+const enterOnly = (event) => {
+  event.preventDefault();
+  if (!isMobile()) {
+    send()
+  }
+}
+
+defineExpose({
+  usePrompt
+})
+</script>
+
 <template>
   <div
       class="flex-grow-1 d-flex align-center justify-space-between"
@@ -25,67 +95,3 @@
     ></v-btn>
   </div>
 </template>
-
-<script>
-import { isMobile } from 'is-mobile'
-export default {
-  name: "MsgEditor",
-  props: {
-    sendMessage: Function,
-    disabled: Boolean,
-    loading: Boolean,
-  },
-  data() {
-    return {
-      message: "",
-      rows: 1,
-      autoGrow: true,
-    };
-  },
-  computed: {
-    hint() {
-      return isMobile() ? "" : "Press Enter to send your message or Shift+Enter to add a new line";
-    },
-  },
-  watch: {
-    message(val) {
-      const lines = val.split(/\r\n|\r|\n/).length;
-      if (lines > 8) {
-        this.rows = 8;
-        this.autoGrow = false;
-      } else {
-        this.rows = 1;
-        this.autoGrow = true;
-      }
-    },
-  },
-  methods: {
-    send() {
-      let msg = this.message
-      // remove the last "\n"
-      if (msg[msg.length - 1] === "\n") {
-        msg = msg.slice(0, -1)
-      }
-      if (msg.length > 0) {
-        this.sendMessage(msg)
-      }
-      this.message = ""
-    },
-    usePrompt(prompt) {
-      this.message = prompt
-    },
-    clickSendBtn () {
-      this.send()
-    },
-    enterOnly (event) {
-      event.preventDefault();
-      if (!isMobile()) {
-        this.send()
-      }
-    }
-  },
-}
-</script>
-
-<style scoped>
-</style>
