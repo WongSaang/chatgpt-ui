@@ -64,18 +64,16 @@ onUpdated(() => {
       rounded="lg"
       elevation="2"
   >
-    <v-card-text>
-      <div
-          ref="contentElm"
-          v-html="contentHtml"
-          class="chat-msg-content"
-      ></div>
-    </v-card-text>
+    <div
+        ref="contentElm"
+        v-html="contentHtml"
+        class="chat-msg-content pa-3"
+    ></div>
   </v-card>
 </template>
 
 <style>
-.chat-msg-content ol {
+.chat-msg-content ol, .chat-msg-content ul {
   padding-left: 2em;
 }
 .hljs-code-container {
