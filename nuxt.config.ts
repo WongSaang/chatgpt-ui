@@ -2,8 +2,8 @@
 const appName = process.env.NUXT_PUBLIC_APP_NAME ?? 'ChatGPT UI'
 
 export default defineNuxtConfig({
-    dev: false,
-    ssr: false,
+    debug: process.env.NODE_ENV !== 'production',
+    ssr: true,
     app: {
         head: {
             title: appName,
@@ -73,7 +73,6 @@ export default defineNuxtConfig({
         devProxy: {
             "/api": {
                 target: process.env.NUXT_DEV_SERVER ?? 'http://localhost:8000/api',
-                prependPath: true,
                 changeOrigin: true,
             }
 

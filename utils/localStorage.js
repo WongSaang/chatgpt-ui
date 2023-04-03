@@ -1,6 +1,6 @@
-import {MODELS} from "~/utils/enums";
 
 const get = (key) => {
+    if (process.server) return
     let val = localStorage.getItem(key)
     if (val) {
         val = JSON.parse(val)
@@ -9,6 +9,7 @@ const get = (key) => {
 }
 
 const set = (key, val) => {
+    if (process.server) return
     localStorage.setItem(key, JSON.stringify(val))
 }
 

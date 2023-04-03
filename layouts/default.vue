@@ -107,6 +107,8 @@ watchEffect(() => {
   }
 })
 
+const user = useUser()
+
 onMounted(async () => {
   loadConversations()
   loadSettings()
@@ -125,11 +127,12 @@ onMounted(async () => {
     >
       <template
           v-slot:prepend
+          v-if="user"
       >
         <v-list>
           <v-list-item
-              :title="$auth.user.username"
-              :subtitle="$auth.user.email"
+              :title="user.username"
+              :subtitle="user.email"
           >
             <template v-slot:prepend>
               <v-icon

@@ -67,6 +67,8 @@
 </template>
 
 <script setup>
+import {useUser} from "~/composables/states";
+
 definePageMeta({
   layout: 'vuetify-app'
 })
@@ -85,7 +87,6 @@ const formRules = ref({
 const { $auth } = useNuxtApp()
 const errorMsg = ref(null)
 const signInForm = ref(null)
-const valid = ref(true)
 const submitting = ref(false)
 const route = useRoute()
 const passwordInputType = ref('password')
@@ -99,6 +100,7 @@ const submit = async () => {
       method: 'POST',
       body: JSON.stringify(formData.value)
     })
+    submitting.value = false
     if (error.value) {
       if (error.value.status === 400) {
         if (error.value.data.non_field_errors) {
@@ -108,10 +110,10 @@ const submit = async () => {
         errorMsg.value = 'Something went wrong. Please try again.'
       }
     } else {
-      $auth.setUser(data.value.user)
-      navigateTo(route.query.callback || '/')
+      setUser(data.value.user)
+      const callback = route.query.callback ? decodeURIComponent(route.query.callback) : '/'
+      await navigateTo(callback)
     }
-    submitting.value = false
   }
 }
 
