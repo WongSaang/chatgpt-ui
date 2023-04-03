@@ -22,7 +22,7 @@ const loadMessage = async () => {
   }
 }
 
-onActivated(async () => {
+onMounted(async () => {
   if (route.params.id) {
     conversation.value.loadingMessages = true
     await loadConversation()
@@ -30,7 +30,13 @@ onActivated(async () => {
     conversation.value.loadingMessages = false
   } else {
     conversation.value = getDefaultConversationData()
+    watch(currentConversation, (val) => {
+      conversation.value = Object.assign({}, val)
+    })
   }
+})
+
+onActivated(async () => {
   currentConversation.value = Object.assign({}, conversation.value)
 })
 

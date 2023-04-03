@@ -53,10 +53,11 @@ const deleteConversation = async (index) => {
   })
   deletingConversationIndex.value = null
   if (!error.value) {
-    if (conversations.value[index].id === currentConversation.value.id) {
-      createNewConversation()
-    }
+    const deletingConversation = conversations.value[index]
     conversations.value.splice(index, 1)
+    if (deletingConversation.id === currentConversation.value.id) {
+      await navigateTo('/')
+    }
   }
 }
 
