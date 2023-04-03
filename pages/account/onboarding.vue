@@ -7,6 +7,7 @@ const route = useRoute()
 const sending = ref(false)
 const resent = ref(false)
 const errorMsg = ref(null)
+const user = useUser()
 const resendEmail = async () => {
   errorMsg.value = null
   sending.value = true
@@ -54,7 +55,7 @@ onNuxtReady(() => {
               <div v-else>
                 <h2 class="text-h4">Verify your email</h2>
                 <p class="mt-5">
-                  We've sent a verification email to <strong>{{ $auth.user.email }}</strong>. <br>
+                  We've sent a verification email to <strong>{{ user.email }}</strong>. <br>
                   Please check your inbox and click the link to verify your email address.
                 </p>
                 <p v-if="errorMsg"

@@ -1,7 +1,7 @@
 <script setup>
 import {useDisplay} from "vuetify";
 
-const { $i18n, $auth } = useNuxtApp()
+const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const colorMode = useColorMode()
 const drawer = ref(null)
@@ -94,7 +94,7 @@ const signOut = async () => {
     method: 'POST'
   })
   if (!error.value) {
-    await $auth.logout()
+    await logout()
   }
 }
 

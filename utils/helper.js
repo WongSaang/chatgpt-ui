@@ -69,17 +69,16 @@ export const loadSettings = async () => {
 }
 
 export const fetchUser = async () => {
-    const { data, error } = await useFetch('/api/account/user/', {
-        // withCredentials: true
-    })
-    if (!error.value) {
-        setUser(data.value)
-        return null
-    }
-    return error
+    return useFetch('/api/account/user/')
 }
 
 export const setUser = (userData) => {
     const user = useUser()
     user.value = userData
+}
+
+export const logout = () => {
+    const user = useUser()
+    user.value = null
+    return navigateTo('/account/signin');
 }

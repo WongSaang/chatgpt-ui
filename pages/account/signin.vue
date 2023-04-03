@@ -84,7 +84,6 @@ const formRules = ref({
       v => !!v || 'Password is required'
   ]
 })
-const { $auth } = useNuxtApp()
 const errorMsg = ref(null)
 const signInForm = ref(null)
 const submitting = ref(false)

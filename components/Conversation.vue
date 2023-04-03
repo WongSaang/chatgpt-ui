@@ -2,7 +2,7 @@
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 import {addConversation} from "../utils/helper";
 
-const { $i18n, $auth } = useNuxtApp()
+const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()

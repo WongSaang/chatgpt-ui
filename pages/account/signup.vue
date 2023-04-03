@@ -3,8 +3,6 @@ definePageMeta({
   layout: 'vuetify-app'
 })
 
-const { $auth } = useNuxtApp()
-
 const formData = ref({
   username: '',
   email: '',
@@ -74,7 +72,7 @@ const submit = async () => {
         }
       }
     } else {
-      $auth.setUser(data.value.user)
+      setUser(data.value.user)
       navigateTo('/account/onboarding?email_verification_required='+data.value.email_verification_required)
     }
 

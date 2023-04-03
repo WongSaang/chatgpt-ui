@@ -24,7 +24,6 @@ const fieldErrors = ref({
   new_password1: '',
   new_password2: '',
 })
-const { $auth } = useNuxtApp()
 const errorMsg = ref(null)
 const resetForm = ref(null)
 const valid = ref(true)
@@ -37,7 +36,7 @@ const signOut = async () => {
     method: 'POST'
   })
   if (!error.value) {
-    await $auth.logout()
+    await logout()
   }
 }
 
