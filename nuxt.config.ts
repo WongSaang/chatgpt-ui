@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     modules: [
         '@kevinmarrec/nuxt-pwa',
         '@nuxtjs/color-mode',
-        '@nuxtjs/i18n',
+        '@nuxtjs/i18n'
     ],
     pwa: {
         manifest: {
@@ -69,13 +69,13 @@ export default defineNuxtConfig({
             fallbackLocale: 'en',
         },
     },
-    nitro: {
-        devProxy: {
-            "/api": {
-                target: process.env.NUXT_DEV_SERVER ?? 'http://localhost:8000/api',
-                changeOrigin: true,
-            }
-
-        }
-    },
+    // nitro: {
+    //     devProxy: {
+    //         "/api": {
+    //             target: process.env.NUXT_DEV_SERVER ?? 'http://localhost:8000/api',
+    //             changeOrigin: true,
+    //         }
+    //
+    //     }
+    // },
 })

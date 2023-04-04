@@ -1,6 +1,5 @@
 <script setup>
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
-import {addConversation} from "../utils/helper";
 
 const { $i18n } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
@@ -26,6 +25,8 @@ const processMessageQueue = () => {
   }
   isProcessingQueue = true
   const nextMessage = messageQueue.shift()
+  console.log(runtimeConfig.public.typewriter)
+  console.log(process.evn.NUXT_PUBLIC_TYPEWRITER)
   if (runtimeConfig.public.typewriter) {
     let wordIndex = 0;
     const intervalId = setInterval(() => {
@@ -108,12 +109,12 @@ const fetchReply = async (message) => {
         }
 
         if (event === 'done') {
-          if (props.conversation.id === null) {
+          abortFetch()
+          props.conversation.messages[props.conversation.messages.length - 1].id = data.messageId
+          if (!props.conversation.topic || props.conversation.topic === '') {
             props.conversation.id = data.conversationId
             genTitle(props.conversation.id)
           }
-          props.conversation.messages[props.conversation.messages.length - 1].id = data.messageId
-          abortFetch()
           return;
         }
 
@@ -190,53 +191,54 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div
-      v-if="conversation.loadingMessages"
-      class="text-center"
-  >
-    <v-progress-circular
-        indeterminate
-        color="primary"
-    ></v-progress-circular>
-  </div>
-  <div v-else>
+  <div v-if="conversation">
     <div
-        v-if="conversation.messages.length > 0"
-        ref="chatWindow"
+        v-if="conversation.loadingMessages"
+        class="text-center"
     >
-      <v-container>
-        <v-row>
-          <v-col
-              v-for="(message, index) in conversation.messages" :key="index"
-              cols="12"
-          >
-            <div
-                class="d-flex align-center"
-                :class="message.is_bot ? 'justify-start' : 'justify-end'"
-            >
-              <MessageActions
-                  v-if="!message.is_bot"
-                  :message="message"
-                  :message-index="index"
-                  :use-prompt="usePrompt"
-                  :delete-message="deleteMessage"
-              />
-              <MsgContent :message="message" />
-              <MessageActions
-                  v-if="message.is_bot"
-                  :message="message"
-                  :message-index="index"
-                  :use-prompt="usePrompt"
-                  :delete-message="deleteMessage"
-              />
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-
-      <div ref="grab" class="w-100" style="height: 200px;"></div>
+      <v-progress-circular
+          indeterminate
+          color="primary"
+      ></v-progress-circular>
     </div>
-    <Welcome v-if="conversation.id === null && conversation.messages.length === 0" />
+    <div v-else>
+      <div
+          v-if="conversation.messages"
+          ref="chatWindow"
+      >
+        <v-container>
+          <v-row>
+            <v-col
+                v-for="(message, index) in conversation.messages" :key="index"
+                cols="12"
+            >
+              <div
+                  class="d-flex align-center"
+                  :class="message.is_bot ? 'justify-start' : 'justify-end'"
+              >
+                <MessageActions
+                    v-if="!message.is_bot"
+                    :message="message"
+                    :message-index="index"
+                    :use-prompt="usePrompt"
+                    :delete-message="deleteMessage"
+                />
+                <MsgContent :message="message" />
+                <MessageActions
+                    v-if="message.is_bot"
+                    :message="message"
+                    :message-index="index"
+                    :use-prompt="usePrompt"
+                    :delete-message="deleteMessage"
+                />
+              </div>
+            </v-col>
+          </v-row>
+        </v-container>
+
+        <div ref="grab" class="w-100" style="height: 200px;"></div>
+      </div>
+    </div>
   </div>
 
 

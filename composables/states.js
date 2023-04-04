@@ -9,6 +9,6 @@ export const useConversation = () => useState('conversation', () => getDefaultCo
 
 export const useConversations = () => useState('conversations', () => [])
 
-export const useSettings = () => useState('settings', () => {})
+export const useSettings = () => useState('settings', () => getSystemSettings())
 
 export const useUser = () => useState('user', () => null)

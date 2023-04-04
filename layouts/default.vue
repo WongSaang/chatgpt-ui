@@ -110,9 +110,15 @@ watchEffect(() => {
 
 const user = useUser()
 
-onMounted(async () => {
+const navTitle = computed(() => {
+  if (currentConversation.value && currentConversation.value.topic !== null) {
+    return currentConversation.value.topic === '' ? $i18n.t('defaultConversationTitle') : currentConversation.value.topic
+  }
+  return runtimeConfig.public.appName
+})
+
+onNuxtReady(async () => {
   loadConversations()
-  loadSettings()
 })
 
 </script>
@@ -213,7 +219,7 @@ onMounted(async () => {
                   :to="conversation.id ? `/${conversation.id}` : undefined"
                   v-bind="props"
               >
-                <v-list-item-title>{{ conversation.topic !== "" ? conversation.topic : $t('defaultConversationTitle') }}</v-list-item-title>
+                <v-list-item-title>{{ (conversation.topic && conversation.topic !== '') ? conversation.topic : $t('defaultConversationTitle') }}</v-list-item-title>
                 <template v-slot:append>
                   <div
                       v-show="isHovering && conversation.id"
@@ -334,7 +340,7 @@ onMounted(async () => {
     >
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>{{ currentConversation.id ? currentConversation.topic : runtimeConfig.public.appName }}</v-toolbar-title>
+      <v-toolbar-title>{{ navTitle }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
 

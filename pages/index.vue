@@ -22,14 +22,18 @@ const loadMessage = async () => {
   }
 }
 
+const updateCurrentConversation = () => {
+  currentConversation.value = Object.assign({}, conversation.value)
+}
+
 onMounted(async () => {
   if (route.params.id) {
     conversation.value.loadingMessages = true
     await loadConversation()
     await loadMessage()
     conversation.value.loadingMessages = false
+    updateCurrentConversation()
   } else {
-    conversation.value = getDefaultConversationData()
     watch(currentConversation, (val) => {
       conversation.value = Object.assign({}, val)
     })
@@ -37,11 +41,12 @@ onMounted(async () => {
 })
 
 onActivated(async () => {
-  currentConversation.value = Object.assign({}, conversation.value)
+  updateCurrentConversation()
 })
 
 </script>
 
 <template>
-    <Conversation :conversation="conversation" />
+  <Welcome v-if="!route.params.id && conversation.messages.length === 0" />
+  <Conversation :conversation="conversation" />
 </template>
