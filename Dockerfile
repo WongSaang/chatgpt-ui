@@ -14,4 +14,6 @@ RUN yarn build
 
 EXPOSE 80
 
+# TODO: You can use NITRO_PRESET=node_cluster in order to leverage multi-process performance using Node.js cluster module. https://nuxt.com/docs/getting-started/deployment
+
 ENTRYPOINT ["node", ".output/server/index.mjs"]

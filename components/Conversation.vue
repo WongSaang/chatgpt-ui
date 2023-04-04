@@ -26,7 +26,7 @@ const processMessageQueue = () => {
   isProcessingQueue = true
   const nextMessage = messageQueue.shift()
   console.log(runtimeConfig.public.typewriter)
-  console.log(process.evn.NUXT_PUBLIC_TYPEWRITER)
+  // console.log(process.env.NUXT_PUBLIC_TYPEWRITER)
   if (runtimeConfig.public.typewriter) {
     let wordIndex = 0;
     const intervalId = setInterval(() => {
