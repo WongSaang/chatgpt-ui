@@ -234,7 +234,10 @@ watchEffect(() => {
   </div>
 
 
-  <v-footer app>
+  <v-footer
+      app
+      class="w-100"
+  >
     <div class="px-md-16 w-100 d-flex flex-column">
       <div class="d-flex align-center">
         <v-btn
