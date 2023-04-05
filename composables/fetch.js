@@ -2,6 +2,7 @@ export const useMyFetch = (url, options = {}) => {
     let defaultOptions = {
         headers: {
             Accept: 'application/json',
+            'Content-Type': 'application/json',
         }
     }
     if (process.server) {

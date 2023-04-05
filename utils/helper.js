@@ -17,19 +17,6 @@ export const getConversations = async () => {
     return []
 }
 
-export const createNewConversation = () => {
-    const route = useRoute()
-    const { $i18n } = useNuxtApp()
-    const currentConversation = useConversation()
-    currentConversation.value = Object.assign(getDefaultConversationData(), {
-        topic: $i18n.t('newConversation')
-    })
-    if (route.path !== '/') {
-        return navigateTo('/')
-    }
-}
-
-
 export const addConversation = (conversation) => {
     const conversations = useConversations()
     conversations.value = [conversation, ...conversations.value]
@@ -46,17 +33,12 @@ export const genTitle = async (conversationId) => {
         }
     })
     if (!error.value) {
-        const route = useRoute()
         const conversations = useConversations()
-        const currentConversation = useConversation()
         let index = conversations.value.findIndex(item => item.id === conversationId)
         if (index === -1) {
             index = 0
         }
         conversations.value[index].topic = data.value.title
-        if (route.path === '/') {
-            currentConversation.value.topic = data.value.title
-        }
         return data.value.title
     }
     return null

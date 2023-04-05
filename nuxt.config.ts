@@ -68,14 +68,5 @@ export default defineNuxtConfig({
         vueI18n: {
             fallbackLocale: 'en',
         },
-    },
-    // nitro: {
-    //     devProxy: {
-    //         "/api": {
-    //             target: process.env.NUXT_DEV_SERVER ?? 'http://localhost:8000/api',
-    //             changeOrigin: true,
-    //         }
-    //
-    //     }
-    // },
+    }
 })

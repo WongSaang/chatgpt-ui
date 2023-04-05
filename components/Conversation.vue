@@ -25,8 +25,6 @@ const processMessageQueue = () => {
   }
   isProcessingQueue = true
   const nextMessage = messageQueue.shift()
-  console.log(runtimeConfig.public.typewriter)
-  // console.log(process.env.NUXT_PUBLIC_TYPEWRITER)
   if (runtimeConfig.public.typewriter) {
     let wordIndex = 0;
     const intervalId = setInterval(() => {
@@ -111,7 +109,7 @@ const fetchReply = async (message) => {
         if (event === 'done') {
           abortFetch()
           props.conversation.messages[props.conversation.messages.length - 1].id = data.messageId
-          if (!props.conversation.topic || props.conversation.topic === '') {
+          if (!props.conversation.id) {
             props.conversation.id = data.conversationId
             genTitle(props.conversation.id)
           }
@@ -137,12 +135,6 @@ const scrollChatWindow = () => {
     return;
   }
   grab.value.scrollIntoView({behavior: 'smooth'})
-}
-
-const checkOrAddConversation = () => {
-  if (props.conversation.messages.length === 0) {
-    props.conversation.messages.push({id: null, is_bot: true, message: ''})
-  }
 }
 
 const send = (message) => {
