@@ -1,4 +1,3 @@
-import {getRequestURL} from "h3";
 
 const PayloadMethods = new Set(["PATCH", "POST", "PUT", "DELETE"]);
 

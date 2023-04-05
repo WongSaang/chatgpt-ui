@@ -292,9 +292,21 @@ const drawer = useDrawer()
               <v-list-item
                   v-bind="props"
                   rounded="xl"
-                  :prepend-icon="$colorMode.value === 'light' ? 'light_mode' : 'dark_mode'"
                   :title="$t('themeMode')"
-              ></v-list-item>
+              >
+                <template
+                    v-slot:prepend
+                >
+                  <v-icon
+                      v-show="$colorMode.value === 'light'"
+                      icon="light_mode"
+                  ></v-icon>
+                  <v-icon
+                      v-show="$colorMode.value !== 'light'"
+                      icon="dark_mode"
+                  ></v-icon>
+                </template>
+              </v-list-item>
             </template>
             <v-list
                 bg-color="white"
