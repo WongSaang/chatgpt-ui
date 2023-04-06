@@ -23,8 +23,10 @@ const contentHtml = ref('')
 
 const contentElm = ref(null)
 
-watchEffect(() => {
+watchEffect(async () => {
   contentHtml.value = props.message.message ? md.render(props.message.message) : ''
+  await nextTick()
+  bindCopyCodeToButtons()
 })
 
 const bindCopyCodeToButtons = () => {
@@ -49,10 +51,7 @@ const bindCopyCodeToButtons = () => {
 }
 
 onMounted(() => {
-  bindCopyCodeToButtons()
-})
-
-onUpdated(() => {
+  console.log('mounted')
   bindCopyCodeToButtons()
 })
 
