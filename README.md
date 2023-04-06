@@ -6,10 +6,17 @@
 
 A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
 
+The server of this project：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
+
 https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-ab06-3f75b5235bfe.mp4
 
 
 ## 📢Updates
+
+<details open>
+<summary><strong>2023-04-06</strong></summary>
+The client is now deployed as server-side rendering (SSR), and the environment variables are now available, see docker-compose configuration below for available environment variables. Improved first screen loading speed and reduced white screen time.
+</details>
 
 <details open>
 <summary><strong>2023-03-27</strong></summary>
@@ -95,6 +102,9 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
+    #      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # The name of the application
+    #      - NUXT_PUBLIC_TYPEWRITER=true # Whether to enable the typewriter effect, default false
+    #      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # The delay time of the typewriter effect, default 50ms      
     depends_on:
       - backend-web-server
     ports:

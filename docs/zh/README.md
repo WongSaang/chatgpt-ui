@@ -6,10 +6,17 @@
 
 ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数据库连接进行数据持久化存储，支持多语言。提供 Docker 镜像和快速部署脚本。
 
+本项目的服务端：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
+
 https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-ab06-3f75b5235bfe.mp4
 
 
 ## 📢 更新
+
+<details open>
+<summary><strong>2023-04-06</strong></summary>
+客户端改成服务端渲染（SSR）的方式部署，现在可以使用环境变量了，可用环境变量请看下方 docker-compose 配置。提升了首屏加载速度，减少白屏时间。
+</details>
 
 <details open>
 <summary><strong>2023-03-27</strong></summary>
@@ -91,6 +98,9 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
+    #      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # APP 名称
+    #      - NUXT_PUBLIC_TYPEWRITER=true # 是否开启 打字机 效果
+    #      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # 打字机效果的延迟时间，单位：毫秒，默认：50
     depends_on:
       - backend-web-server
     ports:
