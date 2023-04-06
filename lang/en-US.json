@@ -52,6 +52,8 @@
   "genTitlePrompt": "Generate a short title for the following content, no more than 10 words. \n\nContent: ",
   "maxTokenTips1": "The maximum context length of the current model is",
   "maxTokenTips2": "token, which includes the length of the prompt and the length of the generated text. The `Max Tokens` here refers to the length of the generated text. Therefore, you should leave some space for your prompt and not set it too large or to the maximum.",
+  "frugalMode": "Frugal mode",
+  "frugalModeTip": "Activate frugal mode, the client will not send historical messages to ChatGPT, which can save token consumption. If you want ChatGPT to understand the context of the conversation, please turn off frugal mode.",
   "welcomeScreen": {
     "introduction1": "is an unofficial client for ChatGPT, but uses the official OpenAI API.",
     "introduction2": "You will need an OpenAI API Key before you can use this client.",

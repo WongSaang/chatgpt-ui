@@ -51,7 +51,6 @@ const bindCopyCodeToButtons = () => {
 }
 
 onMounted(() => {
-  console.log('mounted')
   bindCopyCodeToButtons()
 })
 
