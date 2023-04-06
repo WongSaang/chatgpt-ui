@@ -89,12 +89,8 @@ const loadConversations = async () => {
 }
 
 const settings = useSettings()
-const showApiKeySetting = ref(false)
-watchEffect(() => {
-  if (settings.value) {
-    const settingsValue = toRaw(settings.value)
-    showApiKeySetting.value = settingsValue.open_api_key_setting && settingsValue.open_api_key_setting === 'True'
-  }
+const showApiKeySetting = computed(() => {
+  return settings.value && settings.value.open_api_key_setting && settings.value.open_api_key_setting === 'True'
 })
 
 const signOut = async () => {

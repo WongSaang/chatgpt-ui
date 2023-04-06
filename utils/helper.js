@@ -53,14 +53,14 @@ const transformData = (list) => {
     return result;
 }
 
-export const getSystemSettings = async () => {
+export const fetchSystemSettings = async () => {
     const { data, error } = await useAuthFetch('/api/chat/settings/', {
         method: 'GET',
     })
     if (!error.value) {
-        return transformData(data.value)
+        const settings = useSettings()
+        settings.value = transformData(data.value)
     }
-    return {}
 }
 
 export const fetchUser = async () => {

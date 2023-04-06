@@ -166,19 +166,17 @@ const deleteMessage = (index) => {
   props.conversation.messages.splice(index, 1)
 }
 
-const showWebSearchToggle = ref(false)
-const enableWebSearch = ref(false)
-const enableCustomApiKey = ref(false)
-
 const settings = useSettings()
+const enableWebSearch = ref(false)
 
-watchEffect(() => {
-  if (settings.value) {
-    const settingsValue = toRaw(settings.value)
-    showWebSearchToggle.value = settingsValue.open_web_search && settingsValue.open_web_search === 'True'
-    enableCustomApiKey.value = settingsValue.open_api_key_setting && settingsValue.open_api_key_setting === 'True'
-  }
+const showWebSearchToggle = computed(() => {
+  return settings.value && settings.value.open_web_search && settings.value.open_web_search === 'True'
 })
+
+const enableCustomApiKey = computed(() => {
+  return settings.value && settings.value.open_api_key_setting && settings.value.open_api_key_setting === 'True'
+})
+
 
 onNuxtReady(() => {
   currentModel.value = getCurrentModel()
