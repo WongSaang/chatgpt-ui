@@ -8,10 +8,13 @@ const availableModels = [
 ]
 const currentModelDefault = ref(MODELS[currentModel.value.name])
 
-watch(currentModel, (newVal, oldVal) => {
-  currentModelDefault.value = MODELS[newVal.name]
-  saveCurrentModel(newVal)
-}, { deep: true })
+onNuxtReady(() => {
+  currentModel.value = getCurrentModel()
+  watch(currentModel, (newVal, oldVal) => {
+    currentModelDefault.value = MODELS[newVal.name]
+    saveCurrentModel(newVal)
+  }, { deep: true })
+})
 
 </script>
 
@@ -53,7 +56,7 @@ watch(currentModel, (newVal, oldVal) => {
             <div class="d-flex justify-space-between align-center">
               <v-list-subheader>{{ $t('temperature') }}</v-list-subheader>
               <v-text-field
-                  v-model="currentModel.temperature"
+                  v-model.number="currentModel.temperature"
                   hide-details
                   single-line
                   density="compact"
@@ -82,7 +85,7 @@ watch(currentModel, (newVal, oldVal) => {
             <div class="d-flex justify-space-between align-center">
               <v-list-subheader>{{ $t('maxTokens') }}</v-list-subheader>
               <v-text-field
-                  v-model="currentModel.max_tokens"
+                  v-model.number="currentModel.max_tokens"
                   hide-details
                   single-line
                   density="compact"
@@ -92,6 +95,9 @@ watch(currentModel, (newVal, oldVal) => {
                   style="width: 100px"
                   class="flex-grow-0"
               ></v-text-field>
+            </div>
+            <div class="text-caption">
+              {{ $t('maxTokenTips1') }} <b>{{ currentModelDefault.total_tokens }}</b> {{ $t('maxTokenTips2') }}
             </div>
           </v-col>
           <v-col cols="12">
@@ -111,7 +117,7 @@ watch(currentModel, (newVal, oldVal) => {
             <div class="d-flex justify-space-between align-center">
               <v-list-subheader>{{ $t('topP') }}</v-list-subheader>
               <v-text-field
-                  v-model="currentModel.top_p"
+                  v-model.number="currentModel.top_p"
                   hide-details
                   single-line
                   density="compact"
@@ -138,7 +144,7 @@ watch(currentModel, (newVal, oldVal) => {
             <div class="d-flex justify-space-between align-center">
               <v-list-subheader>{{ $t('frequencyPenalty') }}</v-list-subheader>
               <v-text-field
-                  v-model="currentModel.frequency_penalty"
+                  v-model.number="currentModel.frequency_penalty"
                   hide-details
                   single-line
                   density="compact"
@@ -164,7 +170,7 @@ watch(currentModel, (newVal, oldVal) => {
             <div class="d-flex justify-space-between align-center">
               <v-list-subheader>{{ $t('presencePenalty') }}</v-list-subheader>
               <v-text-field
-                  v-model="currentModel.presence_penalty"
+                  v-model.number="currentModel.presence_penalty"
                   hide-details
                   single-line
                   density="compact"

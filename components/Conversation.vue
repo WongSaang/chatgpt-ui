@@ -180,6 +180,10 @@ watchEffect(() => {
   }
 })
 
+onNuxtReady(() => {
+  currentModel.value = getCurrentModel()
+})
+
 </script>
 
 <template>
