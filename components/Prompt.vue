@@ -86,7 +86,7 @@ const selectPrompt = (prompt) => {
   menu.value = false
 }
 
-onMounted( () => {
+onNuxtReady( () => {
   loadPrompts()
 })
 </script>

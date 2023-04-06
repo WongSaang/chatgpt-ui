@@ -236,7 +236,7 @@ watchEffect(() => {
 
   <v-footer
       app
-      class="w-100"
+      class="footer"
   >
     <div class="px-md-16 w-100 d-flex flex-column">
       <div class="d-flex align-center">
@@ -284,3 +284,9 @@ watchEffect(() => {
   </v-snackbar>
 
 </template>
+
+<style scoped>
+  .footer {
+    width: 100%;
+  }
+</style>
