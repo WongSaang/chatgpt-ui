@@ -4,6 +4,8 @@
 
 [English](../../README.md) | [中文](./docs/zh/README.md)
 
+用户指南: [https://wongsaang.github.io/chatgpt-ui-docs/zh/](https://wongsaang.github.io/chatgpt-ui-docs/zh/)
+
 ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数据库连接进行数据持久化存储，支持多语言。提供 Docker 镜像和快速部署脚本。
 
 本项目的服务端：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
