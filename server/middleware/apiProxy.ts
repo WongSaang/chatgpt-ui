@@ -1,33 +1,14 @@
-
-const PayloadMethods = new Set(["PATCH", "POST", "PUT", "DELETE"]);
-
+import { createProxyMiddleware } from 'http-proxy-middleware'
 export default defineEventHandler(async (event) => {
-    // @ts-ignore
-    if (event.node.req.url.startsWith('/api/')) {
-        // TODO: fix fetch failed
-        const target = (process.env.SERVER_DOMAIN || 'http://localhost:8000') + event.node.req.url
-        // Method
-        const method = getMethod(event)
-        // Body
-        let body;
-        if (PayloadMethods.has(method)) {
-            body = await readRawBody(event).catch(() => undefined);
-        }
-        // Headers
-        const headers = getProxyRequestHeaders(event);
-
-        if (method === 'DELETE') {
-            delete headers['content-length']
-        }
-
-        return sendProxy(event, target, {
-            sendStream: event.node.req.url === '/api/conversation/',
-            fetchOptions: {
-                headers,
-                method,
-                body,
-            },
-        });
-
-    }
+    await new Promise((resolve, reject) => {
+        createProxyMiddleware({
+            target: 'http://localhost:8001',
+            pathFilter: '/api',
+        })(event.node.req, event.node.res, (err) => {
+            if (err)
+                reject(err)
+            else
+                resolve(true)
+        })
+    })
 })
