@@ -2,9 +2,7 @@
 <h1>ChatGPT UI</h1>
 </div>
 
-[English](./README.md) | [中文](./docs/zh/README.md)
-
-User guide: [https://wongsaang.github.io/chatgpt-ui-docs/](https://wongsaang.github.io/chatgpt-ui-docs/)
+User guide: [English](https://wongsaang.github.io/chatgpt-ui/) | [中文](https://wongsaang.github.io/chatgpt-ui/zh/)
 
 A ChatGPT web client that supports multiple users, multiple database connections for persistent data storage, supports i18n. Provides Docker images and quick deployment scripts.
 
