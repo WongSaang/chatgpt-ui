@@ -17,20 +17,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-          run_install: true
-
-      - name: Setup Node.js
+      - name: Setup yarn
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: pnpm
+          cache: yarn
+        run: yarn install
 
       - name: Build VuePress site
-        run: pnpm docs:build
+        run: yarn docs:build
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
