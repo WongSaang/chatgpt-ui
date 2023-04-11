@@ -1,4 +1,6 @@
 node_modules
-database.sqlite
+dist
 .idea
+.output
+.nuxt
 .env

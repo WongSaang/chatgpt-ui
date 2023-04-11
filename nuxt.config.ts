@@ -1,9 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 const appName = process.env.NUXT_PUBLIC_APP_NAME ?? 'ChatGPT UI'
-
 export default defineNuxtConfig({
     debug: process.env.NODE_ENV !== 'production',
-    ssr: true,
+    ssr: process.env.SSR !== 'false',
     app: {
         head: {
             title: appName,
