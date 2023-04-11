@@ -78,6 +78,7 @@ const fetchReply = async (message) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+      openWhenHidden: true,
       onopen(response) {
         if (response.ok && response.headers.get('content-type') === EventStreamContentType) {
           return;
