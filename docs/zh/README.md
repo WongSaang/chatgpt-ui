@@ -1,207 +1,39 @@
-<div align="center">
-<h1>ChatGPT UI</h1>
-</div>
+# 介绍
 
-[English](../../README.md) | [中文](./docs/zh/README.md)
+ChatGPT UI 是一个非官方的 ChatGPT Web 客户端。它支持多用户，多语言，多种数据库连接进行数据持久化存储，例如：Mysql、PostgreSQL 和 Sqlite 等。
 
-用户指南: [https://wongsaang.github.io/chatgpt-ui-docs/zh/](https://wongsaang.github.io/chatgpt-ui-docs/zh/)
+本项目项目包括客户端和服务端两部分。
 
-ChatGPT Web 客户端，支持多用户，支持 Mysql、PostgreSQL 等多种数据库连接进行数据持久化存储，支持多语言。提供 Docker 镜像和快速部署脚本。
-
-本项目的服务端：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
-
-https://user-images.githubusercontent.com/46235412/227156264-ca17ab17-999b-414f-ab06-3f75b5235bfe.mp4
+- 客户端，基于 [Nuxt](https://nuxt.com/)，项目地址：[https://github.com/WongSaang/chatgpt-ui](https://github.com/WongSaang/chatgpt-ui)
+- 服务端，基于 [Django](https://djangoproject.com/)，项目地址：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
 
 
-## 📢 更新
+## 功能与特性
 
-<details open>
-<summary><strong>2023-04-06</strong></summary>
-客户端改成服务端渲染（SSR）的方式部署，现在可以使用环境变量了，可用环境变量请看下方 docker-compose 配置。提升了首屏加载速度，减少白屏时间。
-</details>
+### 客户端
+- 用户系统，支持用户注册、登录、修改密码等。
+- 用户界面多语言，支持多种语言。
+- 数据持久化，支持 Mysql、PostgreSQL 和 Sqlite 等数据库。
+- 异步对话，支持多个对话同时进行。
+- 历史对话管理。
+- 持续聊天，让 ChatGPT 客户历史聊天记录回答问题，得出更好的答案。
+- 网页搜索能力，让 ChatGPT 获取最新信息。
+- 便捷的工具，支持一键复制消息和代码块，以及重新编辑消息等。
+- 常用指令管理，用户可存储和编辑自己的常用指令。
 
-<details open>
-<summary><strong>2023-03-27</strong></summary>
-🚀 支持 gpt-4 模型。你可以在前端的“模型参数”中选择模型，gpt-4 模型需要通过 openai 的白名单才能使用。
-</details>
-
-<details open>
-<summary><strong>2023-03-23</strong></summary>
-增加网页搜索能力，使得 ChatGPT 生成的回答更与时俱进！
-该功能默认处于关闭状态，你可以在管理后台的 `Chat->Settings` 中开启它，在 Settings 中有一个 `open_web_search` 的记录，把它的值设置为 True。
-</details>
-
-<details open>
-<summary><strong>2023-03-15</strong></summary>
-
-在管理后台增加 `open_registration` 设置项，用于控制是否开放用户注册。你可以登录管理后台，在 `Chat->Setting` 中看到这个设置项，默认是 `True` (允许用户注册)，如果不需要，请改成 `False`。
-
-</details>
-
-<details>
-<summary><strong>2023-03-04</strong></summary>
-
-**使用最新的官方聊天模型**  `gpt-3.5-turbo`
-
-**🎉🎉🎉 提供一个 shell 脚本，用于快速部署到服务器** [使用方法](#one-click-depolyment)
-
-</details>
-
-<details>
-
-<summary><strong>2023-02-24</strong></summary>
-V2 是一个重要的更新，将后端功能分离为一个独立的项目，托管在 [chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server), 该项目使用基于 Python 的 Django 框架。 
-
-如果您仍然希望使用旧版本，请访问 [v1 branch](https://github.com/WongSaang/chatgpt-ui/tree/v1) （不推荐，不再更新）.
-
-</details>
-
-## V2 的功能特性:
-
-- 😉 前后端分离，后端使用基于 Python 的 Django 框架。
-- 😘 用户身份验证，支持多个用户。
-- 😀 能够将数据存储在外部数据库中，支持 Mysql、PostgreSQL 等数据库（默认为 Sqlite）。
-- 😎 持续对话，让AI根据上下文回答问题。
+### 服务端
+- 服务端拥有一个管理面板
+- 用户管理
+- 对话和消息管理
+- 常用配置
 
 
-## 🚀 一行命令部署到服务器 <a name="one-click-depolyment"></a>
+## 初衷
 
-注意：此脚本仅在 Ubuntu Server 22.04 LTS 上验证过。
+自从使用 ChatGPT ，它已经成为工作中的好帮手。可惜的是，就像大家知道的，它在有些地方无法访问。但好在 OpenAI 开放了 API，于是我开始为自己写用户界面。
 
-```bash
-bash <(curl -Ls https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/deployment.sh)
-```
+> 世上无难事，只怕有心人。
 
-> 如果您拥有一个域名，可以使用 DNS 解析将其指向服务器的 IP 地址。当然，直接使用服务器的 IP 地址也是可以的。
-> 在脚本执行期间，会提示您输入域名。如果您没有域名，可以直接输入服务器的 IP 地址。
+后来，有多位朋友询问我怎么样才能使用 ChatGPT，因为他们没有技术能力。于是我又着手于多用户系统的开发，这样除了自己用，还能帮助到身边的亲朋好友。
 
-### 部署完成之后
-
-访问 `http(s)://your.domain:9000/admin` / IP `http(s)://123.123.123.123:9000/admin` 登录管理面板。
-
-默认超级用户: `admin`
-
-默认密码: `password`
-
-在可以开始聊天之前，您需要添加一个 OpenAI 的 API 密钥。在管理面板的设置模型中，添加一个名称为 openai_api_key 的记录，将值设置为您的 API 密钥。
-
-现在可以访问客户端地址 `http(s)://your.domain` / `http://123.123.123.123` 开始聊天。
-
-🎉🎉🎉 享受吧！
-
-## 通过 Docker Compose 快速开始
-
-以下是一个 docker-compose.yml 模板，您可以使用它来快速启动服务。
-
-```yaml
-version: '3'
-services:
-  client:
-    image: wongsaang/chatgpt-ui-client:latest
-    environment:
-      - SERVER_DOMAIN=http://backend-web-server
-    #      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # APP 名称
-    #      - NUXT_PUBLIC_TYPEWRITER=true # 是否开启 打字机 效果
-    #      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # 打字机效果的延迟时间，单位：毫秒，默认：50
-    depends_on:
-      - backend-web-server
-    ports:
-      - '80:80'
-    networks:
-      - chatgpt_ui_network
-  backend-wsgi-server:
-    image: wongsaang/chatgpt-ui-wsgi-server:latest
-    environment:
-      - APP_DOMAIN=${APP_DOMAIN:-localhost:9000} # CSRF 白名单，在这里设置为 chatgpt-ui-web-server 的地址+端口, 默认： localhost:9000
-      - SERVER_WORKERS=3 # gunicorn 的工作进程数，默认为 3
-      - WORKER_TIMEOUT=180 # 请求超时时间，默认为 180 秒
-      #- DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # 连接外部数据库，如果不设置这个参数，则默认使用内置的 Sqlite。需要注意的是，如果不连接外部数据库，数据将在容器销毁后丢失。链接格式请看下面的 DB_URL 格式对照表
-      #- OPENAI_API_PROXY=https://openai.proxy.com/v1 # https://api.openai.com/v1 的代理地址
-      - DJANGO_SUPERUSER_USERNAME=admin # 默认超级用户
-      - DJANGO_SUPERUSER_PASSWORD=password # 默认超级用户的密码
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com # 默认超级用户邮箱
-      - ACCOUNT_EMAIL_VERIFICATION=none # 邮箱验证方式，可选值： none, optional, mandatory. 默认为 optional。如果你不需要验证用户的邮箱，可以设置为 none。
-      # 如果您想使用电子邮件验证功能，需要配置以下参数：
-    #      - EMAIL_HOST=SMTP server address
-    #      - EMAIL_PORT=SMTP server port
-    #      - EMAIL_HOST_USER=
-    #      - EMAIL_HOST_PASSWORD=
-    #      - EMAIL_USE_TLS=True
-    #      - EMAIL_FROM=no-reply@example.com  #默认发件邮箱地址
-    ports:
-      - '8000:8000'
-    networks:
-      - chatgpt_ui_network
-  backend-web-server:
-    image: wongsaang/chatgpt-ui-web-server:latest
-    environment:
-      - BACKEND_URL=http://backend-wsgi-server:8000
-    ports:
-      - '9000:80'
-    depends_on:
-      - backend-wsgi-server
-    networks:
-      - chatgpt_ui_network
-
-networks:
-  chatgpt_ui_network:
-    driver: bridge
-```
-
-### DB_URL 格式对照表
-
-| 数据库                | 链接                                              |
-|----------------------|--------------------------------------------------|
-| PostgreSQL           | ``postgres://USER:PASSWORD@HOST:PORT/NAME``      |
-| MySQL                | ``mysql://USER:PASSWORD@HOST:PORT/NAME``         |
-| SQLite               | ``sqlite:///PATH``                               |
-
-### 设置 API 密钥
-
-访问 `http(s)://your.domain:9000/admin` / IP `http(s)://123.123.123.123:9000/admin` 登录管理面板。
-
-默认超级用户: `admin`
-
-默认密码: `password`
-
-在可以开始聊天之前，您需要添加一个 OpenAI 的 API 密钥。在管理面板的设置模型中，添加一个名称为 openai_api_key 的记录，将值设置为您的 API 密钥。
-
-现在可以访问客户端地址 `http(s)://your.domain` / `http://123.123.123.123` 开始聊天。
-
-
-## 续杯咖啡
-
-> 如果对您有帮助，也是在帮助我自己.
-
-如果你想支持我，给我续杯咖啡吧 ❤️ [https://www.buymeacoffee.com/WongSaang](https://www.buymeacoffee.com/WongSaang)
-
-<p align="center">
-  <img height="150" src="https://github.com/WongSaang/chatgpt-ui/blob/main/demos/bmc_qr.png?raw=true"/>
-</p>
-
-## Development
-
-### Setup
-
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-```
-
-### Development Server
-
-Start the development server on http://localhost:3000
-
-```bash
-yarn dev
-```
-
-### Production
-
-Build the application for production:
-
-```bash
-yarn build
-```
+项目开源后，有很多人提了 issue，也有人提了 PR，项目就发展到如今的样子。我在这个过程中也学到了很多，正如我一直坚信的，帮助他人也是帮助自己。
