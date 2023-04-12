@@ -21,6 +21,7 @@ This project consists of two parts, the client-side and the server-side:
 - Web search capability, allowing ChatGPT to retrieve the latest information.
 - Convenient tools, supporting one-click message and code block copying, as well as message editing.
 - Common command management, allowing users to store and edit their own common commands.
+- PWA, supporting installation to the desktop.
 
 ### Server-side
 - The server-side has an administrative panel.

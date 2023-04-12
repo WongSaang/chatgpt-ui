@@ -4,7 +4,9 @@
 
 您还需要一个 OpenAI 的API Key，网上有获取多种方案，请自行搜索。
 
-## 通过脚本快速部署
+## 部署
+
+### 快速部署脚本
 
 *对于技术知识了解不多的选手，如果你看不懂下面的内容，可以看我之前写的博客文章[《一行命令部署自己的ChatGPT客户端》](https://wongsnotes.com/p/deploying-your-own-chatgpt-client-with-one-line-of-command/)*
 
@@ -15,10 +17,10 @@
 bash <(curl -Ls https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/deployment.sh)
 ```
 
-## 通过 Docker Compose 部署
+### Docker Compose
 
 
-### 准备 docker-compose.yml
+#### 准备 docker-compose.yml
 
 项目中提供了一个 `docker-compose.yml` 示例，如果你想自定义配置，请看 [配置参考](/zh/guide/configuration) 部分。
 
@@ -82,7 +84,7 @@ networks:
     driver: bridge
 ```
 
-### 启动服务
+#### 启动服务
 
 你可以自行修改配置后，运行下面的命令来启动服务。
 

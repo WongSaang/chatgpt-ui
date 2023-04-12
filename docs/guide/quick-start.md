@@ -4,7 +4,9 @@ This project provides related docker images for deployment on a VPS or your loca
 
 You also need an OpenAI API Key, and there are multiple ways to obtain it online, please search for it yourself.
 
-## Quick deployment through script
+## Deploying
+
+### Quickly deploy script
 
 **Note: This script has only been verified on Ubuntu Server 22.04 LTS.**
 
@@ -12,10 +14,10 @@ You also need an OpenAI API Key, and there are multiple ways to obtain it online
 bash <(curl -Ls https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/deployment.sh)
 ```
 
-## Deployment through Docker Compose
+### Docker Compose
 
 
-### Prepare docker-compose.yml
+#### Prepare docker-compose.yml
 
 The project provides a sample `docker-compose.yml`. If you want to customize the configuration, please refer to the [configuration reference](/en/guide/configuration) section.
 
@@ -84,7 +86,7 @@ networks:
     driver: bridge
 ```
 
-### Starting the Service
+#### Starting the Service
 
 After modifying the configuration as needed, you can start the service by running the following command:
 
