@@ -22,7 +22,7 @@ services:
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000}
       - SERVER_WORKERS=3 # The number of worker processes for handling requests.
       - WORKER_TIMEOUT=180 # Workers silent for more than this many seconds are killed and restarted. default 180s
-      #      - DB_URL=postgres://postgres:postgrespw@localhost:49153/chatgpt # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
+      - DB_URL=${DB_URL:-sqlite:///db.sqlite3} # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
