@@ -22,6 +22,8 @@ This project consists of two parts, the client-side and the server-side:
 - Convenient tools, supporting one-click message and code block copying, as well as message editing.
 - Common command management, allowing users to store and edit their own common commands.
 - PWA, supporting installation to the desktop.
+- User Token Usage Statistics.
+- Supports configuring multiple API Keys.
 
 ### Server-side
 - The server-side has an administrative panel.

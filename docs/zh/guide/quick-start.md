@@ -107,7 +107,9 @@ docker-compose up --pull always -d
 
 默认密码: **password**
 
-在可以开始聊天之前，您需要添加一个 OpenAI 的 API 密钥。在管理面板的设置模型中，有一个名称为 `openai_api_key` 的记录，将值设置为您的 API 密钥。
+~~在可以开始聊天之前，您需要添加一个 OpenAI 的 API 密钥。在管理面板的设置模型中，有一个名称为 `openai_api_key` 的记录，将值设置为您的 API 密钥。~~
+
+在最新版本中，管理面板增加了一个独立的 API Key 的管理，位于管理面板的 `Provider/ Api keys`。你可以在这里添加多个 API Key，后端程序会统计每个 Key 的 token 使用量，并根据 token 使用量来平衡使用 Key。**想要这个功能生效，需要删除之前的`openai_api_key`设置**
 
 现在可以访问客户端地址 `http(s)://your.domain` 或 IP `http://123.123.123.123` 开始聊天。
 

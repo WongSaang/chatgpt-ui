@@ -107,7 +107,9 @@ Access the management panel at `http(s)://your.domain:9000/admin` or `http(s)://
 - username: **admin**
 - password: **password**
 
-Before starting a chat, you need to add an OpenAI API key. In the management panel, in the "Settings" section, there is a record named `openai_api_key`. Set the value to your API key.
+~~Before starting a chat, you need to add an OpenAI API key. In the management panel, in the "Settings" section, there is a record named `openai_api_key`. Set the value to your API key.~~
+
+In the latest version, a separate API Key management has been added to the admin panel, located under "Provider/Api keys". You can add multiple API Keys here, and the backend program will track the usage of each key's token and balance the usage based on token usage. **To enable this feature, you need to delete the previous "openai_api_key" setting.**
 
 Now you can access the client at `http(s)://your.domain` or `http://123.123.123.123` to start chatting.
 
