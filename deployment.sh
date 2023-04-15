@@ -70,8 +70,12 @@ echo "Downloading configuration files..."
 
 sudo curl -L "https://raw.githubusercontent.com/WongSaang/chatgpt-ui/main/docker-compose.yml" -o docker-compose.yml
 
+echo "Pulling images..."
+
+sudo docker-compose pull
+
 echo "Starting services..."
 
-sudo APP_DOMAIN="${APP_DOMAIN}:${SERVER_PORT}" CLIENT_PORT=${CLIENT_PORT} SERVER_PORT=${SERVER_PORT} WSGI_PORT=${WSGI_PORT} DB_URL=${DATABASE_URL}  docker-compose up --pull always -d
+sudo APP_DOMAIN="${APP_DOMAIN}:${SERVER_PORT}" CLIENT_PORT=${CLIENT_PORT} SERVER_PORT=${SERVER_PORT} WSGI_PORT=${WSGI_PORT} DB_URL=${DATABASE_URL}  docker-compose up -d
 
 echo "Done"
