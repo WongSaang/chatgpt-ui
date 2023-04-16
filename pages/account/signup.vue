@@ -64,15 +64,15 @@ const submit = async () => {
       if (error.value.status === 400) {
         for (const key in formData.value) {
           if (error.value.data[key]) {
-            fieldErrors.value[key] = error.value.data[key][0]
+            fieldErrors.value[key] = $i18n.t(error.value.data[key][0])
           }
         }
         if (error.value.data.non_field_errors) {
-          errorMsg.value = error.value.data.non_field_errors[0]
+          errorMsg.value = $i18n.t(error.value.data.non_field_errors[0])
         }
       } else {
         if (error.value.data.detail) {
-          errorMsg.value = error.value.data.detail
+          errorMsg.value = $i18n.t(error.value.data.detail)
         } else {
           errorMsg.value = 'Something went wrong. Please try again.'
         }
