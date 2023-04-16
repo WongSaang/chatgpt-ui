@@ -15,20 +15,20 @@
               class="mt-15"
               elevation="0"
           >
-            <div class="text-center text-h4">Sign in</div>
+            <div class="text-center text-h4">{{$t('signIn')}}</div>
             <v-card-text>
               <v-form ref="signInForm">
                 <v-text-field
                     v-model="formData.username"
                     :rules="formRules.username"
-                    label="User name"
+                    :label="$t('username')"
                     variant="underlined"
                     clearable
                 ></v-text-field>
                 <v-text-field
                     v-model="formData.password"
                     :rules="formRules.password"
-                    label="Password"
+                    :label="$t('password')"
                     variant="underlined"
                     @keyup.enter="submit"
                     clearable
@@ -48,14 +48,14 @@
                     @click="navigateTo('/account/signup')"
                     variant="text"
                     color="primary"
-                >Create account</v-btn>
+                >{{$t('createAccount')}}</v-btn>
 
                 <v-btn
                     color="primary"
                     :loading="submitting"
                     @click="submit"
                     size="large"
-                >Submit</v-btn>
+                >{{$t('signIn')}}</v-btn>
               </div>
 
             </v-card-text>
@@ -69,7 +69,7 @@
 
 <script setup>
 import {useUser} from "~/composables/states";
-
+const { $i18n } = useNuxtApp()
 definePageMeta({
   layout: 'vuetify-app'
 })
@@ -79,10 +79,10 @@ const formData = ref({
 })
 const formRules = ref({
   username: [
-      v => !!v || 'Username is required'
+      v => !!v || $i18n.t('Username is required')
   ],
   password: [
-      v => !!v || 'Password is required'
+      v => !!v || $i18n.t('Password is required')
   ]
 })
 const errorMsg = ref(null)
