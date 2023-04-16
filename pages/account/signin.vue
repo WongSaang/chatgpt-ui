@@ -3,6 +3,7 @@
       style="height: 100vh"
   >
     <v-container>
+      <SettingsLanguages/>
       <v-row>
         <v-col
             sm="9"
