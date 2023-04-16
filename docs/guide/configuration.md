@@ -66,6 +66,7 @@ backend-wsgi-server:
 | Parameter             | Description                                 | Default Value              |
 |-----------------------|---------------------------------------------|----------------------------|
 | SERVER_DOMAIN         | Server Address                              | http://backend-web-server |
+| DEFAULT_LOCALE         | Default Language                           | en                        |
 | NUXT_PUBLIC_APP_NAME  | Application Name                            | ChatGPT UI                 |
 | NUXT_PUBLIC_TYPEWRITER| Enable Typewriter Effect [true/false]       | true                       |
 | NUXT_PUBLIC_TYPEWRITER_DELAY | Typewriter Effect Delay in milliseconds | 50                         |

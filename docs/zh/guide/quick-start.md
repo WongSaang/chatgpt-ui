@@ -37,6 +37,7 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
+      - DEFAULT_LOCALE=zh
     #      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # APP 名称
     #      - NUXT_PUBLIC_TYPEWRITER=true # 是否开启 打字机 效果
     #      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # 打字机效果的延迟时间，单位：毫秒，默认：50
