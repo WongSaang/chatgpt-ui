@@ -9,6 +9,7 @@ const formData = ref({
   email: '',
   password1: '',
   password2: '',
+  code:'',
 })
 
 const fieldErrors = ref({
@@ -16,6 +17,7 @@ const fieldErrors = ref({
   email: '',
   password1: '',
   password2: '',
+  code:'',
 })
 
 const formRules = ref({
@@ -35,7 +37,10 @@ const formRules = ref({
     v => !!v || $i18n.t('Please confirm your password'),
     v => v.length >= 8 || $i18n.t('Password must be at least 8 characters'),
     v => v === formData.value.password1 || $i18n.t('Confirm password must match password')
-  ]
+  ],
+  code: [
+    v => !!v || $i18n.t('Please enter your code'),
+  ],
 })
 
 const submitting = ref(false)
@@ -142,6 +147,15 @@ const handleFieldUpdate = (field) => {
                     :label="$t('confirmPassword')"
                     variant="underlined"
                     @update:modelValue="handleFieldUpdate('password2')"
+                    clearable
+                ></v-text-field>
+
+                <v-text-field
+                    v-model="formData.code"
+                    :rules="formRules.code"
+                    :label="$t('invitation code')"
+                    variant="underlined"
+                    @keyup.enter="submit"
                     clearable
                 ></v-text-field>
 

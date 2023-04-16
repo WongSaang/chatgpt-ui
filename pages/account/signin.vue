@@ -36,7 +36,6 @@
                     :append-inner-icon="passwordInputType === 'password' ? 'visibility' : 'visibility_off'"
                     @click:append-inner="passwordInputType = passwordInputType === 'password' ? 'text' : 'password'"
                 ></v-text-field>
-
               </v-form>
 
               <div v-if="errorMsg" class="text-red">{{ errorMsg }}</div>
