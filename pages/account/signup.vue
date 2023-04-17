@@ -1,4 +1,5 @@
 <script setup>
+const { $i18n } = useNuxtApp()
 definePageMeta({
   layout: 'vuetify-app'
 })
@@ -8,6 +9,7 @@ const formData = ref({
   email: '',
   password1: '',
   password2: '',
+  code:'',
 })
 
 const fieldErrors = ref({
@@ -15,26 +17,30 @@ const fieldErrors = ref({
   email: '',
   password1: '',
   password2: '',
+  code:'',
 })
 
 const formRules = ref({
   username: [
-    v => !!v || 'Please enter your username',
-    v => v.length >= 4 || 'Username must be at least 4 characters'
+    v => !!v || $i18n.t('Please enter your username'),
+    v => v.length >= 4 || $i18n.t('Username must be at least 4 characters')
   ],
   email: [
-    v => !!v || 'Please enter your e-mail address',
-    v => /.+@.+\..+/.test(v) || 'E-mail address must be valid'
+    v => !!v || $i18n.t('Please enter your e-mail address'),
+    v => /.+@.+\..+/.test(v) || $i18n.t('E-mail address must be valid')
   ],
   password1: [
-    v => !!v || 'Please enter your password',
-    v => v.length >= 8 || 'Password must be at least 8 characters'
+    v => !!v || $i18n.t('Please enter your password'),
+    v => v.length >= 8 || $i18n.t('Password must be at least 8 characters')
   ],
   password2: [
-    v => !!v || 'Please confirm your password',
-    v => v.length >= 8 || 'Password must be at least 8 characters',
-    v => v === formData.value.password1 || 'Confirm password must match password'
-  ]
+    v => !!v || $i18n.t('Please confirm your password'),
+    v => v.length >= 8 || $i18n.t('Password must be at least 8 characters'),
+    v => v === formData.value.password1 || $i18n.t('Confirm password must match password')
+  ],
+  code: [
+    v => !!v || $i18n.t('Please enter your code'),
+  ],
 })
 
 const submitting = ref(false)
@@ -58,15 +64,15 @@ const submit = async () => {
       if (error.value.status === 400) {
         for (const key in formData.value) {
           if (error.value.data[key]) {
-            fieldErrors.value[key] = error.value.data[key][0]
+            fieldErrors.value[key] = $i18n.t(error.value.data[key][0])
           }
         }
         if (error.value.data.non_field_errors) {
-          errorMsg.value = error.value.data.non_field_errors[0]
+          errorMsg.value = $i18n.t(error.value.data.non_field_errors[0])
         }
       } else {
         if (error.value.data.detail) {
-          errorMsg.value = error.value.data.detail
+          errorMsg.value = $i18n.t(error.value.data.detail)
         } else {
           errorMsg.value = 'Something went wrong. Please try again.'
         }
@@ -101,14 +107,14 @@ const handleFieldUpdate = (field) => {
               class="mt-15"
               elevation="0"
           >
-            <div class="text-center text-h4">Create your account</div>
+            <div class="text-center text-h4">{{$t('Create your account')}}</div>
             <v-card-text>
               <v-form ref="signUpForm" class="mt-5">
                 <v-text-field
                     v-model="formData.username"
                     :rules="formRules.username"
                     :error-messages="fieldErrors.username"
-                    label="User name"
+                    :label="$t('username')"
                     variant="underlined"
                     @update:modelValue="handleFieldUpdate('username')"
                     clearable
@@ -118,7 +124,7 @@ const handleFieldUpdate = (field) => {
                     v-model="formData.email"
                     :rules="formRules.email"
                     :error-messages="fieldErrors.email"
-                    label="Email"
+                    :label="$t('email')"
                     variant="underlined"
                     @update:modelValue="handleFieldUpdate('email')"
                     clearable
@@ -128,7 +134,7 @@ const handleFieldUpdate = (field) => {
                     v-model="formData.password1"
                     :rules="formRules.password1"
                     :error-messages="fieldErrors.password1"
-                    label="Password"
+                    :label="$t('password')"
                     variant="underlined"
                     @update:modelValue="handleFieldUpdate('password1')"
                     clearable
@@ -138,9 +144,18 @@ const handleFieldUpdate = (field) => {
                     v-model="formData.password2"
                     :rules="formRules.password2"
                     :error-messages="fieldErrors.password2"
-                    label="Confirm password"
+                    :label="$t('confirmPassword')"
                     variant="underlined"
                     @update:modelValue="handleFieldUpdate('password2')"
+                    clearable
+                ></v-text-field>
+
+                <v-text-field
+                    v-model="formData.code"
+                    :rules="formRules.code"
+                    :label="$t('invitation code')"
+                    variant="underlined"
+                    @keyup.enter="submit"
                     clearable
                 ></v-text-field>
 
@@ -155,14 +170,14 @@ const handleFieldUpdate = (field) => {
                     @click="navigateTo('/account/signin')"
                     variant="text"
                     color="primary"
-                >Sign in instead</v-btn>
+                >{{$t('Sign in instead')}}</v-btn>
 
                 <v-btn
                     size="large"
                     color="primary"
                     :loading="submitting"
                     @click="submit"
-                >Submit</v-btn>
+                >{{$t('signUp')}}</v-btn>
               </div>
 
             </v-card-text>

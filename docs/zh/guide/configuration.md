@@ -66,6 +66,7 @@ backend-wsgi-server:
 | 参数                  | 说明                                      | 默认值                    |
 |----------------------|-------------------------------------------|---------------------------|
 | SERVER_DOMAIN                     | 服务端地址                    | http://backend-web-server |
+| DEFAULT_LOCALE                    | 默认语言                      | en                        |
 | NUXT_PUBLIC_APP_NAME              | 应用名称                      |  ChatGPT UI               |
 | NUXT_PUBLIC_TYPEWRITER            | 是否开启 打字机 效果[true/false]|  true                    |
 | NUXT_PUBLIC_TYPEWRITER_DELAY      | 打字机效果的延迟时间，单位：毫秒|  50                       |

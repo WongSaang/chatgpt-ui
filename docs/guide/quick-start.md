@@ -35,6 +35,7 @@ services:
     image: wongsaang/chatgpt-ui-client:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
+      - DEFAULT_LOCALE=en
 #      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # The name of the application
 #      - NUXT_PUBLIC_TYPEWRITER=true # Whether to enable the typewriter effect, default false
 #      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # The delay time of the typewriter effect, default 50ms
