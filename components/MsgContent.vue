@@ -3,7 +3,6 @@ import hljs from "highlight.js"
 import MarkdownIt from 'markdown-it'
 import copy from 'copy-to-clipboard'
 import mathjax3 from 'markdown-it-mathjax3'
-import mk from 'markdown-it-katex'
 
 
 const md = new MarkdownIt({
