@@ -48,8 +48,11 @@ const send = () => {
   message.value = ""
 }
 
+const textArea = ref()
+
 const usePrompt = (prompt) => {
   message.value = prompt
+  textArea.value.focus()
 }
 
 const clickSendBtn = () => {
@@ -73,6 +76,7 @@ defineExpose({
       class="flex-grow-1 d-flex align-center justify-space-between"
   >
     <v-textarea
+        ref="textArea"
         v-model="message"
         :label="$t('writeAMessage')"
         :placeholder="hint"
