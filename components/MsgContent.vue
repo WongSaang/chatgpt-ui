@@ -2,6 +2,8 @@
 import hljs from "highlight.js"
 import MarkdownIt from 'markdown-it'
 import copy from 'copy-to-clipboard'
+import mathjax3 from 'markdown-it-mathjax3'
+import mk from 'markdown-it-katex'
 
 
 const md = new MarkdownIt({
@@ -11,6 +13,8 @@ const md = new MarkdownIt({
     return `<pre class="hljs-code-container my-3"><div class="hljs-code-header d-flex align-center justify-space-between bg-grey-darken-3 pa-1"><span class="pl-2 text-caption">${language}</span><button class="hljs-copy-button" data-copied="false">Copy</button></div><code class="hljs language-${language}">${hljs.highlight(code, { language: language, ignoreIllegals: true }).value}</code></pre>`
   },
 })
+md.use(mathjax3)
+// md.use(mk)
 
 const props = defineProps({
   message: {
@@ -71,6 +75,23 @@ onMounted(() => {
 </template>
 
 <style>
+.chat-msg-content {
+  font-size: 0.875rem !important;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+.chat-msg-content p,
+.chat-msg-content table,
+.chat-msg-content ul,
+.chat-msg-content ol,
+.chat-msg-content h1,
+.chat-msg-content h2,
+.chat-msg-content h3,
+.chat-msg-content h4,
+.chat-msg-content h5,
+.chat-msg-content h6 {
+  margin-bottom: 1rem;
+}
 .chat-msg-content ol, .chat-msg-content ul {
   padding-left: 2em;
 }
@@ -89,4 +110,10 @@ onMounted(() => {
 .hljs-copy-button:active{border-color:#ffffff66}
 .hljs-copy-button[data-copied="true"]{text-indent:0;width:auto;background-image:none}
 @media(prefers-reduced-motion){.hljs-copy-button{transition:none}}
+
+/*MathJax*/
+.MathJax svg {
+  max-width: 100%;
+  overflow: auto;
+}
 </style>
