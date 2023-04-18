@@ -79,3 +79,7 @@ backend-wsgi-server:
 ## 网页搜索功能控制
 
 该功能默认处于关闭状态，你可以在管理后台的 `Chat->Settings` 中开启它，在 Settings 中有一个 `open_web_search` 的设置项，把它的值设置为 `True`。
+
+## 节俭模式控制
+
+该功能默认处于开启状态，你可以在管理后台的 `Chat->Settings` 中关闭它，在 Settings 中有一个 `open_frugal_mode_control` 的设置项，把它的值设置为 `False`。

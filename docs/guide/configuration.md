@@ -78,3 +78,7 @@ After deployment, there is an `open_registration` setting under `Chat->Settings`
 ## Web Search Function Control
 
 This feature is disabled by default. You can enable it in the admin panel under `Chat->Settings`. There is a setting called `open_web_search`, set its value to `True`.
+
+## Frugal Mode Control
+
+This feature is enabled by default. You can disable it in the `Chat->Settings` section of the management backend. There is a setting called `open_frugal_mode_control` in Settings. Set its value to `False`.
