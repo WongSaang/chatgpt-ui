@@ -20,6 +20,7 @@ services:
     platform: linux/x86_64
     image: wongsaang/chatgpt-ui-wsgi-server:latest
     environment:
+      - DEBUG=${DEBUG:-False} # Whether to enable debug mode, default False
       - APP_DOMAIN=${APP_DOMAIN:-localhost:9000}
       - SERVER_WORKERS=3 # The number of worker processes for handling requests.
       - WORKER_TIMEOUT=180 # Workers silent for more than this many seconds are killed and restarted. default 180s
