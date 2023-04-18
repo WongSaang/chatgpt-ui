@@ -150,14 +150,14 @@ const handleFieldUpdate = (field) => {
                     clearable
                 ></v-text-field>
 
-                <v-text-field
-                    v-model="formData.code"
-                    :rules="formRules.code"
-                    :label="$t('invitation code')"
-                    variant="underlined"
-                    @keyup.enter="submit"
-                    clearable
-                ></v-text-field>
+<!--                <v-text-field-->
+<!--                    v-model="formData.code"-->
+<!--                    :rules="formRules.code"-->
+<!--                    :label="$t('invitation code')"-->
+<!--                    variant="underlined"-->
+<!--                    @keyup.enter="submit"-->
+<!--                    clearable-->
+<!--                ></v-text-field>-->
 
               </v-form>
 
