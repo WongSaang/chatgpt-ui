@@ -3,7 +3,7 @@ import { useDisplay } from 'vuetify'
 import {useDrawer} from "../composables/states";
 
 const route = useRoute()
-const { $i18n } = useNuxtApp()
+const { $i18n, $settings } = useNuxtApp()
 const colorMode = useColorMode()
 const {mdAndUp} = useDisplay()
 const drawerPermanent = computed(() => {
@@ -87,11 +87,6 @@ const loadConversations = async () => {
   conversations.value = await getConversations()
   loadingConversations.value = false
 }
-
-const settings = useSettings()
-const showApiKeySetting = computed(() => {
-  return settings.value && settings.value.open_api_key_setting && settings.value.open_api_key_setting === 'True'
-})
 
 const signOut = async () => {
   const { data, error } = await useFetch('/api/account/logout/', {
@@ -277,7 +272,7 @@ const drawer = useDrawer()
           </v-dialog>
 
           <ApiKeyDialog
-              v-if="showApiKeySetting"
+              v-if="$settings.open_api_key_setting === 'True'"
           />
 
           <ModelParameters/>

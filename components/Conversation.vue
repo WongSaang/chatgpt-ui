@@ -1,7 +1,7 @@
 <script setup>
 import {EventStreamContentType, fetchEventSource} from '@microsoft/fetch-event-source'
 
-const { $i18n } = useNuxtApp()
+const { $i18n, $settings } = useNuxtApp()
 const runtimeConfig = useRuntimeConfig()
 const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
@@ -63,7 +63,7 @@ const fetchReply = async (message) => {
   }
 
   const data = Object.assign({}, currentModel.value, {
-    openaiApiKey: enableCustomApiKey.value ? openaiApiKey.value : null,
+    openaiApiKey: $settings.open_api_key_setting === 'True' ? openaiApiKey.value : null,
     message: message,
     conversationId: props.conversation.id,
     frugalMode: frugalMode.value
@@ -169,16 +169,7 @@ const deleteMessage = (index) => {
   props.conversation.messages.splice(index, 1)
 }
 
-const settings = useSettings()
 const enableWebSearch = ref(false)
-
-const showWebSearchToggle = computed(() => {
-  return settings.value && settings.value.open_web_search && settings.value.open_web_search === 'True'
-})
-
-const enableCustomApiKey = computed(() => {
-  return settings.value && settings.value.open_api_key_setting && settings.value.open_api_key_setting === 'True'
-})
 
 
 onNuxtReady(() => {
@@ -260,7 +251,7 @@ onNuxtReady(() => {
       >
         <Prompt v-show="!fetchingResponse" :use-prompt="usePrompt" />
         <v-switch
-            v-if="showWebSearchToggle"
+            v-if="$settings.open_web_search === 'True'"
             v-model="enableWebSearch"
             inline
             hide-details
@@ -268,36 +259,43 @@ onNuxtReady(() => {
             :label="$t('webSearch')"
         ></v-switch>
         <v-spacer></v-spacer>
-        <v-switch
-            v-model="frugalMode"
-            inline
-            hide-details
-            color="primary"
-            :label="$t('frugalMode')"
-        ></v-switch>
-        <v-dialog
-            transition="dialog-bottom-transition"
-            width="auto"
+        <div
+            v-if="$settings.open_frugal_mode_control === 'True'"
+            class="d-flex align-center"
         >
-          <template v-slot:activator="{ props }">
-            <v-icon
-                color="grey"
-                v-bind="props"
-                icon="help_outline"
-            ></v-icon>
-          </template>
-          <template v-slot:default="{ isActive }">
-            <v-card>
-              <v-toolbar
-                  color="primary"
-                  :title="$t('frugalMode')"
-              ></v-toolbar>
-              <v-card-text>
-                {{ $t('frugalModeTip') }}
-              </v-card-text>
-            </v-card>
-          </template>
-        </v-dialog>
+          <v-switch
+              v-model="frugalMode"
+              inline
+              hide-details
+              color="primary"
+              :label="$t('frugalMode')"
+          ></v-switch>
+          <v-dialog
+              transition="dialog-bottom-transition"
+              width="auto"
+          >
+            <template v-slot:activator="{ props }">
+              <v-icon
+                  color="grey"
+                  v-bind="props"
+                  icon="help_outline"
+                  class="ml-3"
+              ></v-icon>
+            </template>
+            <template v-slot:default="{ isActive }">
+              <v-card>
+                <v-toolbar
+                    color="primary"
+                    :title="$t('frugalMode')"
+                ></v-toolbar>
+                <v-card-text>
+                  {{ $t('frugalModeTip') }}
+                </v-card-text>
+              </v-card>
+            </template>
+          </v-dialog>
+        </div>
+
       </v-toolbar>
     </div>
   </v-footer>

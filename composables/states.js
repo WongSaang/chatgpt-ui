@@ -7,8 +7,6 @@ export const useApiKey = () => useState('apiKey', () => getStoredApiKey())
 
 export const useConversations = () => useState('conversations', () => [])
 
-export const useSettings = () => useState('settings', () => {})
-
 export const useUser = () => useState('user', () => null)
 
 export const useDrawer = () => useState('drawer', () => false)
