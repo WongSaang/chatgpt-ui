@@ -13,7 +13,6 @@ const md = new MarkdownIt({
   },
 })
 md.use(mathjax3)
-// md.use(mk)
 
 const props = defineProps({
   message: {
@@ -90,6 +89,16 @@ onMounted(() => {
 .chat-msg-content h5,
 .chat-msg-content h6 {
   margin-bottom: 1rem;
+}
+.chat-msg-content table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: .5rem;
+}
+.chat-msg-content table th,
+.chat-msg-content table td {
+  padding: .5rem 1rem;
+  border: 1px solid gray;
 }
 .chat-msg-content ol, .chat-msg-content ul {
   padding-left: 2em;
