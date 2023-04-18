@@ -24,12 +24,14 @@ export const addConversation = (conversation) => {
 
 
 export const genTitle = async (conversationId) => {
-    const { $i18n } = useNuxtApp()
+    const { $i18n, $settings } = useNuxtApp()
+    const openaiApiKey = useApiKey()
     const { data, error } = await useAuthFetch('/api/gen_title/', {
         method: 'POST',
         body: {
             conversationId: conversationId,
-            prompt: $i18n.t('genTitlePrompt')
+            prompt: $i18n.t('genTitlePrompt'),
+            openaiApiKey: $settings.open_api_key_setting === 'True' ? openaiApiKey.value : null,
         }
     })
     if (!error.value) {
