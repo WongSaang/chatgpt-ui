@@ -47,9 +47,9 @@ onNuxtReady(() => {
           >
             <div class="text-center">
               <div v-if="route.query.email_verification_required && route.query.email_verification_required === 'none'">
-                <h2 class="text-h4">{{$('Your registration is successful')}}</h2>
+                <h2 class="text-h4">{{$t('Your registration is successful')}}</h2>
                 <p class="mt-5">
-                  {{$('You can now')}} <NuxtLink to="/account/signin">{{$('signIn')}}</NuxtLink> {{$t('to your account.')}}
+                  {{$t('You can now')}} <NuxtLink to="/account/signin">{{$t('signIn')}}</NuxtLink> {{$t('to your account.')}}
                 </p>
               </div>
               <div v-else>
