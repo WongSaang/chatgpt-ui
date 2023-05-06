@@ -18,6 +18,18 @@ const props = defineProps({
   message: {
     type: Object,
     required: true
+  },
+  index: {
+    type: Number,
+    required: true,
+  },
+  usePrompt: {
+    type: Function,
+    required: true
+  },
+  deleteMessage: {
+    type: Function,
+    required: true
   }
 })
 
@@ -69,6 +81,7 @@ onMounted(() => {
         v-html="contentHtml"
         class="chat-msg-content pa-3"
     ></div>
+    <v-divider :color='message.is_bot? "rgb(var(--v-theme-on-background))" : "rgb(var(--v-theme-on-primary))"'></v-divider>
   </v-card>
 </template>
 

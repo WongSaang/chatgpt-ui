@@ -1,5 +1,7 @@
 <script setup>
 
+const { $i18n } = useNuxtApp()
+
 const dialog = ref(false)
 const currentModel = useCurrentModel()
 const availableModels = [
@@ -49,6 +51,25 @@ onNuxtReady(() => {
             variant="underlined"
         ></v-select>
 
+        <v-row
+            no-gutters
+        >
+          <v-col cols="12">
+            <div class="d-flex justify-space-between align-center">
+              <v-list-subheader>{{ $t('systemContent') }}</v-list-subheader>
+              <v-combobox
+                  v-model="currentModel.system_content"
+                  :placeholder="$t('systemContentInit')"
+                  append-icon="restart_alt"
+                  hide-details
+                  single-line
+                  density="compact"
+                  :items = "currentModelDefault.system_content_items"
+                  @click:append="currentModel.system_content = currentModelDefault.system_content"
+              ></v-combobox>
+            </div>
+          </v-col>
+        </v-row>
         <v-row
             no-gutters
         >

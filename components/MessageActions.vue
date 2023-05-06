@@ -47,17 +47,32 @@ const deleteMessage = async () => {
   showSnackbar('Delete failed')
 }
 
+function selectMessageIcon(message) {
+  if (message.is_bot) return ""
+  if (message.message_type == 100) {
+    return "travel_explore"
+  } else if (message.message_type == 110) {
+    return "local_library"
+  } else if (message.message_type == 120) {
+    return "article"
+  } 
+  return ""
+}
+
+const message_icon = selectMessageIcon(props.message)
+
 </script>
 
 <template>
   <v-menu
   >
     <template v-slot:activator="{ props }">
+      <v-icon v-if="message_icon" :icon="message_icon"></v-icon>
       <v-btn
           v-bind="props"
           icon
           variant="text"
-          class="mx-1"
+          class="mx-1 ma-2"
       >
         <v-icon icon="more_horiz"></v-icon>
       </v-btn>

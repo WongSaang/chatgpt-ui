@@ -7,7 +7,7 @@ const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
 const fetchingResponse = ref(false)
 const messageQueue = []
-const frugalMode = ref(true)
+const frugalMode = ref(false)
 let isProcessingQueue = false
 
 const props = defineProps({
@@ -54,12 +54,27 @@ const abortFetch = () => {
 const fetchReply = async (message) => {
   ctrl = new AbortController()
 
+  let msg = message
+  if (Array.isArray(message)) {
+    msg = message[message.length - 1]
+  } else {
+    message = [message]
+  }
+
   let webSearchParams = {}
-  if (enableWebSearch.value) {
+  if (enableWebSearch.value || msg.tool == 'web_search') {
     webSearchParams['web_search'] = {
       ua: navigator.userAgent,
       default_prompt: $i18n.t('webSearchDefaultPrompt')
     }
+  }
+
+  if (msg.tool == 'web_search') {
+    msg.tool_args = webSearchParams['web_search']
+    msg.type = 100
+  } else if (msg.tool == 'arxiv') {
+    msg.tool_args = null
+    msg.type = 110
   }
 
   const data = Object.assign({}, currentModel.value, {
@@ -116,6 +131,9 @@ const fetchReply = async (message) => {
             props.conversation.id = data.conversationId
             genTitle(props.conversation.id)
           }
+          if (data.newDocId) {
+            editor.value.refreshDocList()
+          }
           return;
         }
 
@@ -145,7 +163,11 @@ const send = (message) => {
   if (props.conversation.messages.length === 0) {
     addConversation(props.conversation)
   }
-  props.conversation.messages.push({message: message})
+  if (Array.isArray(message)) {
+    props.conversation.messages.push(...message.map(i => ({message: i.content, message_type: i.message_type})))
+  } else {
+    props.conversation.messages.push({ message: message.content, message_type: message.message_type })
+  }
   fetchReply(message)
   scrollChatWindow()
 }
@@ -211,7 +233,12 @@ onNuxtReady(() => {
                     :use-prompt="usePrompt"
                     :delete-message="deleteMessage"
                 />
-                <MsgContent :message="message" />
+                <MsgContent
+                  :message="message"
+                  :index="index"
+                  :use-prompt="usePrompt"
+                  :delete-message="deleteMessage"
+                />
                 <MessageActions
                     v-if="message.is_bot"
                     :message="message"
@@ -250,14 +277,6 @@ onNuxtReady(() => {
           color="transparent"
       >
         <Prompt v-show="!fetchingResponse" :use-prompt="usePrompt" />
-        <v-switch
-            v-if="$settings.open_web_search === 'True'"
-            v-model="enableWebSearch"
-            inline
-            hide-details
-            color="primary"
-            :label="$t('webSearch')"
-        ></v-switch>
         <v-spacer></v-spacer>
         <div
             v-if="$settings.open_frugal_mode_control === 'True'"
@@ -320,6 +339,11 @@ onNuxtReady(() => {
 </template>
 
 <style scoped>
+  .main_message_list {
+    width: 98%;
+    max-width: 54em;
+  }
+  
   .footer {
     width: 100%;
   }
