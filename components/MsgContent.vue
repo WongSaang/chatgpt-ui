@@ -18,6 +18,18 @@ const props = defineProps({
   message: {
     type: Object,
     required: true
+  },
+  index: {
+    type: Number,
+    required: true,
+  },
+  usePrompt: {
+    type: Function,
+    required: true
+  },
+  deleteMessage: {
+    type: Function,
+    required: true
   }
 })
 
@@ -63,12 +75,14 @@ onMounted(() => {
       :color="message.is_bot ? '' : 'primary'"
       rounded="lg"
       elevation="2"
+      :class="{card_disabled: message.is_disabled}"
   >
     <div
         ref="contentElm"
         v-html="contentHtml"
         class="chat-msg-content pa-3"
     ></div>
+    <v-divider :color='message.is_bot? "rgb(var(--v-theme-on-background))" : "rgb(var(--v-theme-on-primary))"'></v-divider>
   </v-card>
 </template>
 
@@ -123,5 +137,8 @@ onMounted(() => {
 .MathJax svg {
   max-width: 100%;
   overflow: auto;
+}
+.card_disabled {
+  opacity: 0.5;
 }
 </style>

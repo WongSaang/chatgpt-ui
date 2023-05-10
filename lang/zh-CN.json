@@ -81,6 +81,11 @@
   "frugalModeTip": "开启节俭模式，客户端不会把历史消息发送给ChatGPT，可以节省 token 的消耗。如果你想让 ChatGPT 了解对话的上下文，请关闭节俭模式。",
   "settingDraw": "配置",
   "importConversation": "导入对话",
+  "messageLabel": {
+    "chat": "输入信息",
+    "web_search": "输入关键词",
+    "arxiv": "输入 ArXiv 号"
+  },
   "welcomeScreen": {
     "introduction1": "是一个非官方的ChatGPT客户端，但使用OpenAI的官方API",
     "introduction2": "在使用本客户端之前，您需要一个OpenAI API密钥。",
