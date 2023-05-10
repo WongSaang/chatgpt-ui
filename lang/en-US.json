@@ -71,6 +71,8 @@
   "maxTokenTips2": "token, which includes the length of the prompt and the length of the generated text. The `Max Tokens` here refers to the length of the generated text. Therefore, you should leave some space for your prompt and not set it too large or to the maximum.",
   "frugalMode": "Frugal mode",
   "frugalModeTip": "Activate frugal mode, the client will not send historical messages to ChatGPT, which can save token consumption. If you want ChatGPT to understand the context of the conversation, please turn off frugal mode.",
+  "settingDraw": "Settings",
+  "importConversation": "Import Conversation",
   "messageLabel": {
     "chat": "Write a message",
     "web_search": "Search keywords",
