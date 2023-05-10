@@ -54,12 +54,27 @@ const abortFetch = () => {
 const fetchReply = async (message) => {
   ctrl = new AbortController()
 
+  let msg = message
+  if (Array.isArray(message)) {
+    msg = message[message.length - 1]
+  } else {
+    message = [message]
+  }
+
   let webSearchParams = {}
-  if (enableWebSearch.value) {
+  if (enableWebSearch.value || msg.tool == 'web_search') {
     webSearchParams['web_search'] = {
       ua: navigator.userAgent,
       default_prompt: $i18n.t('webSearchDefaultPrompt')
     }
+  }
+
+  if (msg.tool == 'web_search') {
+    msg.tool_args = webSearchParams['web_search']
+    msg.type = 100
+  } else if (msg.tool == 'arxiv') {
+    msg.tool_args = null
+    msg.type = 110
   }
 
   const data = Object.assign({}, currentModel.value, {
@@ -116,6 +131,9 @@ const fetchReply = async (message) => {
             props.conversation.id = data.conversationId
             genTitle(props.conversation.id)
           }
+          if (data.newDocId) {
+            editor.value.refreshDocList()
+          }
           return;
         }
 
@@ -145,7 +163,11 @@ const send = (message) => {
   if (props.conversation.messages.length === 0) {
     addConversation(props.conversation)
   }
-  props.conversation.messages.push({message: message})
+  if (Array.isArray(message)) {
+    props.conversation.messages.push(...message.map(i => ({message: i.content, message_type: i.message_type})))
+  } else {
+    props.conversation.messages.push({ message: message.content, message_type: message.message_type })
+  }
   fetchReply(message)
   scrollChatWindow()
 }
@@ -167,6 +189,10 @@ const usePrompt = (prompt) => {
 
 const deleteMessage = (index) => {
   props.conversation.messages.splice(index, 1)
+}
+
+const toggleMessage = (index) => {
+  props.conversation.messages[index].is_disabled = !props.conversation.messages[index].is_disabled
 }
 
 const enableWebSearch = ref(false)
@@ -210,8 +236,14 @@ onNuxtReady(() => {
                     :message-index="index"
                     :use-prompt="usePrompt"
                     :delete-message="deleteMessage"
+                    :toggle-message="toggleMessage"
                 />
-                <MsgContent :message="message" />
+                <MsgContent
+                  :message="message"
+                  :index="index"
+                  :use-prompt="usePrompt"
+                  :delete-message="deleteMessage"
+                />
                 <MessageActions
                     v-if="message.is_bot"
                     :message="message"

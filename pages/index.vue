@@ -22,6 +22,7 @@ const loadMessage = async () => {
   const { data, error } = await useAuthFetch('/api/chat/messages/?conversationId=' + route.params.id)
   if (!error.value) {
     conversation.value.messages = data.value
+    conversation.value.id = route.params.id
   }
 }
 
@@ -72,7 +73,7 @@ onActivated(async () => {
         :title="$t('newConversation')"
         icon="add"
         @click="createNewConversation"
-        class="d-md-none"
+        class="d-md-none ma-3"
     ></v-btn>
     <v-btn
         variant="outlined"

@@ -43,16 +43,22 @@ const send = () => {
     msg = msg.slice(0, -1)
   }
   if (msg.length > 0) {
-    props.sendMessage(msg)
+    let item = toolSelector.value.list[toolSelector.value.selected]
+    props.sendMessage({content: msg, tool: item.name, message_type: item.type})
   }
   message.value = ""
+  toolSelector.value.selected = 0
 }
 
 const textArea = ref()
+const documentMan = ref(null)
 
 const usePrompt = (prompt) => {
   message.value = prompt
   textArea.value.focus()
+}
+const refreshDocList = () => {
+  documentMan.value.loadDocs()
 }
 
 const clickSendBtn = () => {
@@ -67,7 +73,34 @@ const enterOnly = (event) => {
 }
 
 defineExpose({
-  usePrompt
+  usePrompt, refreshDocList
+})
+
+const toolSelector = ref({
+  list: [
+    { title: "Chat", icon: "add", name: "chat", type: 0 },
+    { title: "Web Search", icon: "travel_explore", name: "web_search", type: 100 },
+    { title: "ArXiv", icon: "local_library", name: "arxiv", type: 110 },
+  ],
+  selected: 0,
+})
+function getToolIcon() {
+  let v = toolSelector.value
+  let icon = v.list[v.selected].icon
+  return icon
+}
+function getLabel() {
+  let v = toolSelector.value
+  let name = v.list[v.selected].name
+  return "messageLabel." + name
+}
+function selectTool(idx) {
+  let v = toolSelector.value
+  v.selected = idx
+  let name = v.list[idx].name
+}
+const docDialogCtl = ref({
+  dialog: false,
 })
 </script>
 
@@ -75,10 +108,40 @@ defineExpose({
   <div
       class="flex-grow-1 d-flex align-center justify-space-between"
   >
+    <v-btn
+      title="Tools"
+      :icon="getToolIcon()"
+      density="compact"
+      size="default"
+      class="mr-3"
+      id="tools_btn"
+    >
+    </v-btn>
+    <v-menu
+      activator="#tools_btn"
+      open-on-hover
+    >
+      <v-list density="compact">
+        <v-list-item
+          v-for="(item, index) in toolSelector.list"
+          :key="index"
+          :prepend-icon="item.icon"
+          @click="selectTool(index)"
+        >
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+          prepend-icon="article"
+          @click="docDialogCtl.dialog = true"
+        >
+          Documents
+        </v-list-item>
+      </v-list>
+    </v-menu>
     <v-textarea
         ref="textArea"
         v-model="message"
-        :label="$t('writeAMessage')"
+        :label="$t(getLabel())"
         :placeholder="hint"
         :rows="rows"
         max-rows="8"
@@ -88,6 +151,7 @@ defineExpose({
         :hide-details="true"
         clearable
         variant="outlined"
+        class="userinputmsg"
         @keydown.enter.exact="enterOnly"
     ></v-textarea>
     <v-btn
@@ -98,4 +162,9 @@ defineExpose({
         @click="clickSendBtn"
     ></v-btn>
   </div>
+  <DocumentsManage
+    :send-message="sendMessage" 
+    :control="docDialogCtl"
+    ref="documentMan"
+  />
 </template>
