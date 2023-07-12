@@ -58,12 +58,18 @@ else
 fi
 if [[ $(which docker-compose) ]]; then
     echo "Docker Compose is already installed"
+    echo "Docker Compose is already installed as 'docker-compose'"
+    DOCKER_COMPOSE_CMD="docker-compose"
+elif [[ $(which docker) && $(docker compose version) ]]; then
+    echo "Docker Compose is available as 'docker compose'"
+    DOCKER_COMPOSE_CMD="docker compose"
 else
     echo "Docker Compose is not installed, installing now..."
 
     sudo curl -L "https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
     sudo chmod +x /usr/local/bin/docker-compose
+    DOCKER_COMPOSE_CMD="docker-compose"
 fi
 
 echo "Downloading configuration files..."
@@ -75,7 +81,7 @@ fi
 
 echo "Starting services..."
 
-touch ./db_sqlite3/db.sqlite3
+touch ./db.sqlite3
 
 sudo APP_DOMAIN="${APP_DOMAIN}:${SERVER_PORT}" CLIENT_PORT=${CLIENT_PORT} SERVER_PORT=${SERVER_PORT} WSGI_PORT=${WSGI_PORT} DB_URL=${DATABASE_URL}  docker-compose up -d
 
