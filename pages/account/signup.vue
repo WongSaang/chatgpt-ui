@@ -61,7 +61,7 @@ const submit = async () => {
     console.log(error.value)
 
     if (error.value) {
-      if (error.value.status === 400) {
+      if (error.value.statusCode === 400) {
         for (const key in formData.value) {
           if (error.value.data[key]) {
             fieldErrors.value[key] = $i18n.t(error.value.data[key][0])

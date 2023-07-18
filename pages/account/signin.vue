@@ -101,7 +101,7 @@ const submit = async () => {
     })
     submitting.value = false
     if (error.value) {
-      if (error.value.status === 400) {
+      if (error.value.statusCode === 400) {
         if (error.value.data.non_field_errors) {
           errorMsg.value = error.value.data.non_field_errors[0]
         }
