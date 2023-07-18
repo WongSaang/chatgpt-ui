@@ -2,29 +2,31 @@ version: '3'
 services:
   client:
     platform: linux/x86_64
-    image: wongsaang/chatgpt-ui-client:latest
+    image: sharpchris/citt-chatgpt-ui:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
       - DEFAULT_LOCALE=en
-#      - NUXT_PUBLIC_APP_NAME='ChatGPT UI' # The name of the application
+      - NUXT_PUBLIC_APP_NAME='UF CITT ChatGPT UI' # The name of the application
 #      - NUXT_PUBLIC_TYPEWRITER=true # Whether to enable the typewriter effect, default false
 #      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # The delay time of the typewriter effect, default 50ms
     depends_on:
       - backend-web-server
     ports:
-      - '${CLIENT_PORT:-80}:80'
+      - '80:80'
     networks:
       - chatgpt_ui_network
     restart: always
   backend-wsgi-server:
     platform: linux/x86_64
     image: wongsaang/chatgpt-ui-wsgi-server:latest
+    extra_hosts:
+      - "host.docker.internal:host-gateway"    
     environment:
       - DEBUG=${DEBUG:-False} # Whether to enable debug mode, default False
-      - APP_DOMAIN=${APP_DOMAIN:-localhost:9000}
+      - APP_DOMAIN=sharpchris.com:9000
       - SERVER_WORKERS=3 # The number of worker processes for handling requests.
       - WORKER_TIMEOUT=180 # Workers silent for more than this many seconds are killed and restarted. default 180s
-      - DB_URL=${DB_URL:-sqlite:///db.sqlite3} # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
+      - DB_URL=[postgres connection string]
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=admin@example.com # default superuser email
@@ -36,8 +38,8 @@ services:
 #      - EMAIL_HOST_PASSWORD=
 #      - EMAIL_USE_TLS=True
 #      - EMAIL_FROM=no-reply@example.com  #Default sender email address
-    volumes:
-      - db_sqlite3:/app/db.sqlite3
+#    volumes:
+#      - db_sqlite3:/app/db.sqlite3
     ports:
       - '${WSGI_PORT:-8000}:8000'
     networks:
@@ -45,11 +47,11 @@ services:
     restart: always
   backend-web-server:
     platform: linux/x86_64
-    image: wongsaang/chatgpt-ui-web-server:latest
+    image: sharpchris/citt-chatgpt-ui-webserver:latest
     environment:
       - BACKEND_URL=http://backend-wsgi-server:8000
     ports:
-      - '${SERVER_PORT:-9000}:80'
+      - '9000:80'
     depends_on:
       - backend-wsgi-server
     networks:
