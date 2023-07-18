@@ -7,7 +7,7 @@ const currentModel = useCurrentModel()
 const openaiApiKey = useApiKey()
 const fetchingResponse = ref(false)
 const messageQueue = []
-const frugalMode = ref(true)
+const frugalMode = ref(false)
 let isProcessingQueue = false
 
 const props = defineProps({
