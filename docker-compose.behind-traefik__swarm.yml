@@ -1,0 +1,146 @@
+# This helps run the project in a docker SWARM, behind Traefik Reverse Proxy (traefik manages ssl, and you can add middlewares to add basic auth, ip limits and other features.)
+# To make this work in Single Docker daemon (no swarm); move the 'labels' key to each service's top level and remove the 'deploy' keys in 'clien' and 'backend-web-server' services.
+#
+# This file contains a Postgres DB service, make sure to set its corresponding env vars in your .env variables, and have the volume mount directory created.
+# In this example, we mount into the db, the local directory: /data/EXAMPLE/containers/apps/chatgpt/db/
+#
+# Here are my example .env file, which works correctly:
+# APP_DOMAIN=chatgpt.example.com
+# DB_URL=postgresql://username:password@database/appdb?sslmode=disable
+# ACCOUNT_EMAIL_VERIFICATION=none
+# POSTGRES_USER=username
+# POSTGRES_PASSWORD=password
+# POSTGRES_DB=appdb
+
+# Note: You need to have the 'proxy_external' network already created and setup correctly in your Traefik configurations (out of scope here)
+# Note: The domain example.com shall be updated and setup correctly in you DNS.
+# Note: The platform key in each service has been disabled as it creates incompatibility in swarm.
+
+version: '3.9'
+
+services:
+
+  client:
+#   platform: linux/x86_64
+    image: wongsaang/chatgpt-ui-client:latest
+    environment:
+      - SERVER_DOMAIN=http://backend-web-server
+      - DEFAULT_LOCALE=en
+      - NUXT_PUBLIC_APP_NAME='Private ChatGPT UI' # The name of the application
+#      - NUXT_PUBLIC_TYPEWRITER=true # Whether to enable the typewriter effect, default false
+#      - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # The delay time of the typewriter effect, default 50ms
+    depends_on:
+      - backend-web-server
+#    ports:
+#      - '${CLIENT_PORT:-80}:80'
+    deploy:
+      mode: 'global'
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=proxy_external"
+        - "traefik.tags=proxy_external"
+        # Services
+        - "traefik.http.services.chatgpt-client-prod.loadbalancer.server.port=80"
+        - "traefik.port=80"
+        # Routers
+        - "traefik.http.routers.chatgpt-client-prod.entrypoints=https"
+        - "traefik.http.routers.chatgpt-client-prod.rule=Host(`chatgpt.example.com`)"
+        - "traefik.http.routers.chatgpt-client-prod.service=chatgpt-client-prod"
+        - "traefik.http.routers.chatgpt-client-prod.tls=true"
+        - "traefik.http.routers.chatgpt-client-prod.tls.certresolver=http"
+    networks:
+      - default
+      - proxy_external
+    restart: always
+
+  backend-wsgi-server:
+#   platform: linux/x86_64
+    image: wongsaang/chatgpt-ui-wsgi-server:latest
+    environment:
+      - DEBUG=${DEBUG:-False} # Whether to enable debug mode, default False
+      - APP_DOMAIN=${APP_DOMAIN:-localhost:9000}
+      - SERVER_WORKERS=3 # The number of worker processes for handling requests.
+      - WORKER_TIMEOUT=180 # Workers silent for more than this many seconds are killed and restarted. default 180s
+      - DB_URL=${DB_URL:-sqlite:///db.sqlite3} # If this parameter is not set, the built-in Sqlite will be used by default. It should be noted that if you do not connect to an external database, the data will be lost after the container is destroyed.
+      - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
+      - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
+      - DJANGO_SUPERUSER_EMAIL=user@example.com # default superuser email
+      - ACCOUNT_EMAIL_VERIFICATION=${ACCOUNT_EMAIL_VERIFICATION:-none} # Determines the e-mail verification method during signup – choose one of "none", "optional", or "mandatory". Default is "optional". If you don't need to verify the email, you can set it to "none".
+      # If you want to use the email verification function, you need to configure the following parameters
+#      - EMAIL_HOST=SMTP server address
+#      - EMAIL_PORT=SMTP server port
+#      - EMAIL_HOST_USER=
+#      - EMAIL_HOST_PASSWORD=
+#      - EMAIL_USE_TLS=True
+#      - EMAIL_FROM=no-reply@example.com  #Default sender email address
+#    volumes:
+#      - ./db_sqlite3:/app/db.sqlite3
+#    ports:
+#      - '${WSGI_PORT:-8000}:8000'
+    depends_on:
+      - database
+    networks:
+      - default
+    restart: always
+
+
+  backend-web-server:
+#   platform: linux/x86_64
+    image: wongsaang/chatgpt-ui-web-server:latest
+    environment:
+      - BACKEND_URL=http://backend-wsgi-server:8000
+#    ports:
+#      - '${SERVER_PORT:-9000}:80'
+    depends_on:
+      - backend-wsgi-server
+    deploy:
+      mode: 'global'
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=proxy_external"
+        - "traefik.tags=proxy_external"
+        # Services
+        - "traefik.http.services.chatgpt-prod.loadbalancer.server.port=80"
+        - "traefik.port=80"
+        # Routers
+        - "traefik.http.routers.chatgpt-prod.entrypoints=https"
+        - "traefik.http.routers.chatgpt-prod.rule=Host(`chatgpt.example.com`) && PathPrefix(`/admin`)"
+        - "traefik.http.routers.chatgpt-prod.service=chatgpt-prod"
+        - "traefik.http.routers.chatgpt-prod.tls=true"
+        - "traefik.http.routers.chatgpt-prod.tls.certresolver=http"
+    networks:
+      - default
+      - proxy_external
+    restart: always
+
+  database:
+    image: "postgres:14.2"
+#   ports:
+#     - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-username} # The PostgreSQL user (useful to connect to the database)
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password} # The PostgreSQL password (useful to connect to the database)
+      POSTGRES_DB: ${POSTGRES_DB:-appdb} # The PostgreSQL default database (automatically created at first launch)
+    volumes:
+      - "/data/EXAMPLE/containers/apps/chatgpt/db/:/var/lib/postgresql/data/"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-username} -d ${POSTGRES_DB:-appdb}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    labels:
+      - "traefik.enable=false"
+    networks:
+      - default
+    deploy:
+      labels:
+        - "traefik.enable=false"
+
+networks:
+  proxy_external:
+    external: true
+    name: "proxy_external"
