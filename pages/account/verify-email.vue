@@ -10,7 +10,7 @@ const status = ref('')
 
 const verifyEmail = async () => {
   verifying.value = true
-  const { data, error } = await useFetch(`/api/account/registration/verify-email/`, {
+  const { data, error } = await useFetch(`/api/account/verify-email/`, {
     method: 'POST',
     body: JSON.stringify({
       key: route.params.token
