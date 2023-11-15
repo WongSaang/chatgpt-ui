@@ -4,14 +4,16 @@ services:
     platform: linux/x86_64
     build: .
     environment:
-      SERVER_DOMAIN: ${SERVER_DOMAIN:-http://web-server}
+      SERVER_DOMAIN: 0.0.0.0:8000
       NUXT_PUBLIC_TYPEWRITER: false
     ports:
       - '${CLIENT_PORT:-80}:80'
     networks:
-      - chatgpt_network
+      - chatgpt_ui_network
     restart: always
 
 networks:
-  chatgpt_network:
+  chatgpt_ui_network:
+    name: chatgpt_ui_network
     driver: bridge
+    external: true
