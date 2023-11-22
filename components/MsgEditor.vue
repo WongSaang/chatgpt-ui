@@ -152,7 +152,7 @@ const docDialogCtl = ref({
         clearable
         variant="outlined"
         class="userinputmsg"
-        @keydown.enter.exact="enterOnly"
+        @keypress.enter.exact="enterOnly"
     ></v-textarea>
     <v-btn
         :disabled="loading"
