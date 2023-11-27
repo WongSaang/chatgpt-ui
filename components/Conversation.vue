@@ -226,7 +226,8 @@ onNuxtReady(() => {
                 v-for="(message, index) in conversation.messages" :key="index"
                 cols="12"
             >
-              <div
+              
+              <div v-if="!message.is_hidden_from_user"
                   class="d-flex align-center"
                   :class="message.is_bot ? 'justify-start' : 'justify-end'"
               >
