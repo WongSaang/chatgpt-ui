@@ -292,42 +292,6 @@ onNuxtReady(() => {
             :label="$t('webSearch')"
         ></v-switch>
         <v-spacer></v-spacer>
-        <div
-            v-if="$settings.open_frugal_mode_control === 'True'"
-            class="d-flex align-center"
-        >
-          <v-switch
-              v-model="frugalMode"
-              inline
-              hide-details
-              color="primary"
-              :label="$t('frugalMode')"
-          ></v-switch>
-          <v-dialog
-              transition="dialog-bottom-transition"
-              width="auto"
-          >
-            <template v-slot:activator="{ props }">
-              <v-icon
-                  color="grey"
-                  v-bind="props"
-                  icon="help_outline"
-                  class="ml-3"
-              ></v-icon>
-            </template>
-            <template v-slot:default="{ isActive }">
-              <v-card>
-                <v-toolbar
-                    color="primary"
-                    :title="$t('frugalMode')"
-                ></v-toolbar>
-                <v-card-text>
-                  {{ $t('frugalModeTip') }}
-                </v-card-text>
-              </v-card>
-            </template>
-          </v-dialog>
-        </div>
 
       </v-toolbar>
     </div>
