@@ -28,7 +28,7 @@ services:
       - WORKER_TIMEOUT=180 # Workers silent for more than this many seconds are killed and restarted. default 180s
       # This ip address for WSL2 where the postgresql database is running changes on reboot
       # Determing the ip address using this command in WSL2: ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-      - DB_URL=postgresql://doadmin:AVNS_5VrO7hc1eIJDx0btNr6@private-dbaas-db-8746702-do-user-15260627-0.c.db.ondigitalocean.com:25060/defaultdb?sslmode=require
+      - DB_URL=
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=email@domain.tld # default superuser email
