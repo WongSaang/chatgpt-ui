@@ -2,11 +2,11 @@ version: '3'
 services:
   client:
     platform: linux/x86_64
-    image: sharpchris/citt-chatgpt-ui:test
+    image: sharpchris/chatgpt-ui:latest
     environment:
       - SERVER_DOMAIN=http://backend-web-server
       - DEFAULT_LOCALE=en
-      - NUXT_PUBLIC_APP_NAME='UF CITT ChatGPT UI' # The name of the application
+      - NUXT_PUBLIC_APP_NAME='UF Legal Psychology Jury Selection' # The name of the application
       # - NUXT_PUBLIC_TYPEWRITER=false # Whether to enable the typewriter effect, default false
       # - NUXT_PUBLIC_TYPEWRITER_DELAY=50 # The delay time of the typewriter effect, default 50ms
     depends_on:
@@ -18,17 +18,17 @@ services:
     restart: always
   backend-wsgi-server:
     platform: linux/x86_64
-    image: wongsaang/chatgpt-ui-wsgi-server:latest
+    image: sharpchris/chatgpt-ui-wsgi-server:latest
     extra_hosts:
       - "host.docker.internal:host-gateway"    
     environment:
       - DEBUG=${DEBUG:-False} # Whether to enable debug mode, default False
-      - APP_DOMAIN=127.0.0.1:9000
+      - APP_DOMAIN=167.172.253.171:9000
       - SERVER_WORKERS=3 # The number of worker processes for handling requests.
       - WORKER_TIMEOUT=180 # Workers silent for more than this many seconds are killed and restarted. default 180s
       # This ip address for WSL2 where the postgresql database is running changes on reboot
       # Determing the ip address using this command in WSL2: ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-      - DB_URL=postgres:##POSTGRES CONNECTION STRING
+      - DB_URL=postgresql://doadmin:AVNS_5VrO7hc1eIJDx0btNr6@private-dbaas-db-8746702-do-user-15260627-0.c.db.ondigitalocean.com:25060/defaultdb?sslmode=require
       - DJANGO_SUPERUSER_USERNAME=admin # default superuser name
       - DJANGO_SUPERUSER_PASSWORD=password # default superuser password
       - DJANGO_SUPERUSER_EMAIL=email@domain.tld # default superuser email
@@ -50,7 +50,7 @@ services:
     restart: always
   backend-web-server:
     platform: linux/x86_64
-    image: sharpchris/citt-chatgpt-ui-webserver:test
+    image: sharpchris/chatgpt-ui-server:latest
     environment:
       - BACKEND_URL=http://backend-wsgi-server:8000
     ports:
@@ -65,4 +65,4 @@ networks:
   chatgpt_ui_network:
     name: chatgpt_ui_network
     driver: bridge
-    external: true
+#   external: true
