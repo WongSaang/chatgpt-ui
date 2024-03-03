@@ -79,7 +79,7 @@
     "arxiv": "ArXiv code"
   },
   "welcomeScreen": {
-    "introduction1": "is an unofficial client for ChatGPT, but uses the official OpenAI API.",
+    "introduction1": "Select potential jurors using the menu on the left.",
     "introduction2": "You will need an OpenAI API Key before you can use this client.",
     "examples": {
       "title": "Examples",
