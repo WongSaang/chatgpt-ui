@@ -291,21 +291,6 @@ const drawer = useDrawer()
                     v-show="isHovering && conversation.id"
                 >
                   <v-btn
-                      icon="edit"
-                      size="small"
-                      variant="text"
-                      @click.prevent="editConversation(cIdx)"
-                  >
-                  </v-btn>
-                  <v-btn
-                      icon="delete"
-                      size="small"
-                      variant="text"
-                      :loading="deletingConversationIndex === cIdx"
-                      @click.prevent="deleteConversation(cIdx)"
-                  >
-                  </v-btn>
-                  <v-btn
                       icon="download"
                       size="small"
                       variant="text"
@@ -330,60 +315,9 @@ const drawer = useDrawer()
           <v-expansion-panel-text>
             <div class="px-1">
               <v-list density="compact">
-      
-                <v-dialog
-                    v-model="clearConfirmDialog"
-                    persistent
-                >
-                  <template v-slot:activator="{ props }">
-                    <v-list-item
-                        v-bind="props"
-                        rounded="xl"
-                        prepend-icon="delete_forever"
-                        :title="$t('clearConversations')"
-                    ></v-list-item>
-                  </template>
-                  <v-card>
-                    <v-card-title class="text-h5">
-                      Are you sure you want to delete all conversations?
-                    </v-card-title>
-                    <v-card-text>This will be a permanent deletion and cannot be retrieved once deleted. Please proceed with caution.</v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn
-                          color="green-darken-1"
-                          variant="text"
-                          @click="clearConfirmDialog = false"
-                          class="text-none"
-                      >
-                        Cancel deletion
-                      </v-btn>
-                      <v-btn
-                          color="green-darken-1"
-                          variant="text"
-                          @click="clearConversations"
-                          class="text-none"
-                          :loading="deletingConversations"
-                      >
-                        Confirm deletion
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-
-                <v-list-item
-                  rounded="xl"
-                  prepend-icon="input"
-                  :title="$t('importConversation')"
-                  @click="openImportFileChooser()"
-                ></v-list-item>
-      
                 <ApiKeyDialog
                     v-if="$settings.open_api_key_setting === 'True'"
                 />
-      
-                <ModelParameters/>
-      
                 <v-menu
                 >
                   <template v-slot:activator="{ props }">
@@ -418,16 +352,6 @@ const drawer = useDrawer()
                     </v-list-item>
                   </v-list>
                 </v-menu>
-      
-                <SettingsLanguages/>
-      
-                <v-list-item
-                    rounded="xl"
-                    prepend-icon="help_outline"
-                    :title="$t('feedback')"
-                    @click="feedback"
-                ></v-list-item>
-
               </v-list>
             </div>
           </v-expansion-panel-text>

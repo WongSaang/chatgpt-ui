@@ -108,36 +108,6 @@ const docDialogCtl = ref({
   <div
       class="flex-grow-1 d-flex align-center justify-space-between"
   >
-    <v-btn
-      title="Tools"
-      :icon="getToolIcon()"
-      density="compact"
-      size="default"
-      class="mr-3"
-      id="tools_btn"
-    >
-    </v-btn>
-    <v-menu
-      activator="#tools_btn"
-      open-on-hover
-    >
-      <v-list density="compact">
-        <v-list-item
-          v-for="(item, index) in toolSelector.list"
-          :key="index"
-          :prepend-icon="item.icon"
-          @click="selectTool(index)"
-        >
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-        <v-list-item
-          prepend-icon="article"
-          @click="docDialogCtl.dialog = true"
-        >
-          Documents
-        </v-list-item>
-      </v-list>
-    </v-menu>
     <v-textarea
         ref="textArea"
         v-model="message"

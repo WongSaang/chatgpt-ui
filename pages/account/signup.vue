@@ -108,6 +108,7 @@ const handleFieldUpdate = (field) => {
               elevation="0"
           >
             <div class="text-center text-h4">{{$t('Create your account')}}</div>
+            <div class="text-center text">Do not use the same password you use for UF systems! Please save your username and password securely.</div>
             <v-card-text>
               <v-form ref="signUpForm" class="mt-5">
                 <v-text-field
