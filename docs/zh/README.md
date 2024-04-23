@@ -5,13 +5,13 @@ ChatGPT UI 是一个非官方的 ChatGPT Web 客户端。它支持多用户，�
 ## 特别赞助
 - [Aissts](https://aissts.com/) - 支持多种类型的机器人，提供灵活的按需支付方式，无需高额订阅费。现在注册有机会获得免费额度。
 
+
+## 功能与特性
+
 本项目项目包括客户端和服务端两部分。
 
 - 客户端，基于 [Nuxt](https://nuxt.com/)，项目地址：[https://github.com/WongSaang/chatgpt-ui](https://github.com/WongSaang/chatgpt-ui)
 - 服务端，基于 [Django](https://djangoproject.com/)，项目地址：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
-
-
-## 功能与特性
 
 ### 客户端
 - 用户系统，支持用户注册、登录、修改密码等。

@@ -6,13 +6,12 @@ ChatGPT UI is an unofficial ChatGPT web client. It supports multiple users, mult
 ## Special sponsors
 - [Aissts](https://aissts.com/) - Support multiple types of robots, Pay as you go, no need for high subscription fees. Register now for a chance to get free credit.
 
+## Features
+
 This project consists of two parts, the client-side and the server-side:
 
 - Client-side, based on [Nuxt](https://nuxt.com/), project address: [https://github.com/WongSaang/chatgpt-ui](https://github.com/WongSaang/chatgpt-ui)
 - Server-side, based on [Django](https://djangoproject.com/), project address: [https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
-
-
-## Features
 
 ### Client-side
 - User system, supporting user registration, login, password modification, and more.
