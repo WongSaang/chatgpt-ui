@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-603f36a2","path":"/zh/guide/buymeacoffee.html","title":"续杯咖啡","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1681222096000,"contributors":[{"name":"Rafi","email":"rafiwx@gmail.com","commits":1}]},"filePathRelative":"zh/guide/buymeacoffee.md"}');export{e as data};
