@@ -29,6 +29,12 @@ export default defineNuxtConfig({
         '@nuxtjs/color-mode',
         '@nuxtjs/i18n'
     ],
+    colorMode: {
+        preference: 'system',
+        fallback: 'light',
+        classSuffix: '',
+        storageKey: 'nuxt-color-mode',
+    },
     pwa: {
         manifest: {
             name: appName,

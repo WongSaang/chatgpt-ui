@@ -8,6 +8,9 @@ export default defineNuxtPlugin(nuxtApp => {
     const vuetify = createVuetify({
         ssr: true,
         blueprint: md3,
+        theme: {
+            defaultTheme: 'light',
+        },
         icons: {
             defaultSet: 'md',
             aliases,
@@ -20,4 +23,13 @@ export default defineNuxtPlugin(nuxtApp => {
     })
 
     nuxtApp.vueApp.use(vuetify)
+
+    if (process.client) {
+        const colorMode = useColorMode()
+        watch(() => colorMode.value, (val) => {
+            if (val === 'dark' || val === 'light') {
+                vuetify.theme.global.name.value = val
+            }
+        }, { immediate: true })
+    }
 })
