@@ -6,9 +6,6 @@ A ChatGPT web client that supports multiple users, multiple languages, and multi
 
 The server of this project：[https://github.com/WongSaang/chatgpt-ui-server](https://github.com/WongSaang/chatgpt-ui-server)
 
-## Special sponsors
-- [ModelDance](https://modeldance.ai/) - Pay-as-you-go AI Assistant Platform.
-
 ## Documentation
 - [English](https://wongsaang.github.io/chatgpt-ui/)
 - [中文](https://wongsaang.github.io/chatgpt-ui/zh/)
